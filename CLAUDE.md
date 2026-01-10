@@ -34,6 +34,9 @@ open iosApp/iosApp.xcodeproj
 # Run all tests
 ./gradlew allTests
 
+# Run commonTest (use desktop target)
+./gradlew :composeApp:desktopTest
+
 # Run shared module tests only
 ./gradlew :shared:test
 
