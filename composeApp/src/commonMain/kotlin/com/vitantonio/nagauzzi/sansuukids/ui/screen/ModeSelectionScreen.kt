@@ -49,51 +49,56 @@ fun ModeSelectionScreen(
     ) {
         Text(
             text = stringResource(Res.string.mode_selection_title),
-            style = MaterialTheme.typography.headlineLarge,
+            style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.testTag("mode_selection_title")
         )
 
-        Spacer(modifier = Modifier.height(56.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             LargeButton(
+                containerColor = MaterialTheme.colorScheme.primary,
                 text = stringResource(Res.string.mode_addition),
+                textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onAdditionClick,
-                modifier = Modifier.testTag("addition_button"),
-                containerColor = MaterialTheme.colorScheme.primary
+                modifier = Modifier.height(56.dp).testTag("addition_button")
             )
 
             LargeButton(
+                containerColor = MaterialTheme.colorScheme.secondary,
                 text = stringResource(Res.string.mode_subtraction),
+                textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onSubtractionClick,
-                modifier = Modifier.testTag("subtraction_button"),
-                containerColor = MaterialTheme.colorScheme.secondary
+                modifier = Modifier.height(56.dp).testTag("subtraction_button")
             )
 
             LargeButton(
+                containerColor = MaterialTheme.colorScheme.tertiary,
                 text = stringResource(Res.string.mode_multiplication),
+                textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onMultiplicationClick,
-                modifier = Modifier.testTag("multiplication_button"),
-                containerColor = MaterialTheme.colorScheme.tertiary
+                modifier = Modifier.height(56.dp).testTag("multiplication_button")
             )
 
             LargeButton(
+                containerColor = Color(0xFF9C27B0),
                 text = stringResource(Res.string.mode_division),
+                textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onDivisionClick,
-                modifier = Modifier.testTag("division_button"),
-                containerColor = Color(0xFF9C27B0)
+                modifier = Modifier.height(56.dp).testTag("division_button")
             )
 
             LargeButton(
+                containerColor = Color(0xFFE91E63),
                 text = stringResource(Res.string.mode_all),
+                textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onAllClick,
-                modifier = Modifier.testTag("all_button"),
-                containerColor = Color(0xFFE91E63)
+                modifier = Modifier.height(56.dp).testTag("all_button")
             )
         }
     }
