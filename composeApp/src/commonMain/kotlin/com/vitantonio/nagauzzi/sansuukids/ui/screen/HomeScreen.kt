@@ -17,7 +17,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.ui.component.LargeButton
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import sansuukids.composeapp.generated.resources.Res
+import sansuukids.composeapp.generated.resources.app_title
+import sansuukids.composeapp.generated.resources.medal_collection
+import sansuukids.composeapp.generated.resources.settings
+import sansuukids.composeapp.generated.resources.start
 
 @Composable
 fun HomeScreen(
@@ -36,7 +42,7 @@ fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically)
     ) {
         Text(
-            text = "さんすう\nキッズ",
+            text = stringResource(Res.string.app_title),
             style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
@@ -45,19 +51,19 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         LargeButton(
-            text = "スタート",
+            text = stringResource(Res.string.start),
             onClick = onStartClick,
             containerColor = MaterialTheme.colorScheme.primary
         )
 
         LargeButton(
-            text = "メダルずかん",
+            text = stringResource(Res.string.medal_collection),
             onClick = onMedalCollectionClick,
             containerColor = MaterialTheme.colorScheme.secondary
         )
 
         LargeButton(
-            text = "せってい",
+            text = stringResource(Res.string.settings),
             onClick = onSettingsClick,
             containerColor = MaterialTheme.colorScheme.tertiary
         )
