@@ -4,4 +4,10 @@
     <string name="start">スタート</string>
     <string name="medal_collection">メダルずかん</string>
     <string name="settings">せってい</string>
+    <string name="mode_selection_title">モードをえらんでね</string>
+    <string name="mode_addition">たしざん</string>
+    <string name="mode_subtraction">ひきざん</string>
+    <string name="mode_multiplication">かけざん</string>
+    <string name="mode_division">わりざん</string>
+    <string name="mode_all">すべて</string>
 </resources>
