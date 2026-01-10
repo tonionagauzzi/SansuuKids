@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.ui.component.LargeButton
@@ -45,7 +46,8 @@ fun HomeScreen(
             text = stringResource(Res.string.app_title),
             style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.testTag("home_title")
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -53,18 +55,21 @@ fun HomeScreen(
         LargeButton(
             text = stringResource(Res.string.start),
             onClick = onStartClick,
+            modifier = Modifier.testTag("start_button"),
             containerColor = MaterialTheme.colorScheme.primary
         )
 
         LargeButton(
             text = stringResource(Res.string.medal_collection),
             onClick = onMedalCollectionClick,
+            modifier = Modifier.testTag("medal_collection_button"),
             containerColor = MaterialTheme.colorScheme.secondary
         )
 
         LargeButton(
             text = stringResource(Res.string.settings),
             onClick = onSettingsClick,
+            modifier = Modifier.testTag("settings_button"),
             containerColor = MaterialTheme.colorScheme.tertiary
         )
     }
