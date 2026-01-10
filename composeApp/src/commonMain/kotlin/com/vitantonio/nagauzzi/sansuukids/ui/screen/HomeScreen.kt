@@ -40,7 +40,7 @@ fun HomeScreen(
             .safeContentPadding()
             .padding(horizontal = 32.dp, vertical = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically)
+        verticalArrangement = Arrangement.Center
     ) {
         Text(
             text = stringResource(Res.string.app_title),
@@ -50,28 +50,33 @@ fun HomeScreen(
             modifier = Modifier.testTag("home_title")
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(56.dp))
 
-        LargeButton(
-            text = stringResource(Res.string.start),
-            onClick = onStartClick,
-            modifier = Modifier.testTag("start_button"),
-            containerColor = MaterialTheme.colorScheme.primary
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            LargeButton(
+                text = stringResource(Res.string.start),
+                onClick = onStartClick,
+                modifier = Modifier.testTag("start_button"),
+                containerColor = MaterialTheme.colorScheme.primary
+            )
 
-        LargeButton(
-            text = stringResource(Res.string.medal_collection),
-            onClick = onMedalCollectionClick,
-            modifier = Modifier.testTag("medal_collection_button"),
-            containerColor = MaterialTheme.colorScheme.secondary
-        )
+            LargeButton(
+                text = stringResource(Res.string.medal_collection),
+                onClick = onMedalCollectionClick,
+                modifier = Modifier.testTag("medal_collection_button"),
+                containerColor = MaterialTheme.colorScheme.secondary
+            )
 
-        LargeButton(
-            text = stringResource(Res.string.settings),
-            onClick = onSettingsClick,
-            modifier = Modifier.testTag("settings_button"),
-            containerColor = MaterialTheme.colorScheme.tertiary
-        )
+            LargeButton(
+                text = stringResource(Res.string.settings),
+                onClick = onSettingsClick,
+                modifier = Modifier.testTag("settings_button"),
+                containerColor = MaterialTheme.colorScheme.tertiary
+            )
+        }
     }
 }
 
