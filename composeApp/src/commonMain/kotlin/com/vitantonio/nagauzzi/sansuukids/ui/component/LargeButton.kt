@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun LargeButton(
     text: String,
+    textColor: Color,
     textStyle: TextStyle,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -38,6 +39,7 @@ fun LargeButton(
     ) {
         Text(
             text = text,
+            color = textColor,
             style = textStyle,
             fontWeight = FontWeight.Bold
         )

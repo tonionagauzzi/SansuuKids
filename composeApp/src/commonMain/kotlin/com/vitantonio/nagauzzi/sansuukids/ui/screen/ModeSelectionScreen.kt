@@ -62,40 +62,45 @@ fun ModeSelectionScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             LargeButton(
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
                 text = stringResource(Res.string.mode_addition),
+                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onAdditionClick,
                 modifier = Modifier.height(56.dp).testTag("addition_button")
             )
 
             LargeButton(
-                containerColor = MaterialTheme.colorScheme.secondary,
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 text = stringResource(Res.string.mode_subtraction),
+                textColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onSubtractionClick,
                 modifier = Modifier.height(56.dp).testTag("subtraction_button")
             )
 
             LargeButton(
-                containerColor = MaterialTheme.colorScheme.tertiary,
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 text = stringResource(Res.string.mode_multiplication),
+                textColor = MaterialTheme.colorScheme.onTertiaryContainer,
                 textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onMultiplicationClick,
                 modifier = Modifier.height(56.dp).testTag("multiplication_button")
             )
 
             LargeButton(
-                containerColor = Color(0xFF9C27B0),
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
                 text = stringResource(Res.string.mode_division),
+                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onDivisionClick,
                 modifier = Modifier.height(56.dp).testTag("division_button")
             )
 
             LargeButton(
-                containerColor = Color(0xFFE91E63),
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 text = stringResource(Res.string.mode_all),
+                textColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onAllClick,
                 modifier = Modifier.height(56.dp).testTag("all_button")

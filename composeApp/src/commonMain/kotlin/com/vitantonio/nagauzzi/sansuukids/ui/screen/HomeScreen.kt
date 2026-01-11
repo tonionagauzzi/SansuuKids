@@ -57,24 +57,27 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             LargeButton(
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
                 text = stringResource(Res.string.start),
+                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 textStyle = MaterialTheme.typography.headlineMedium,
                 onClick = onStartClick,
                 modifier = Modifier.height(72.dp).testTag("start_button")
             )
 
             LargeButton(
-                containerColor = MaterialTheme.colorScheme.secondary,
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 text = stringResource(Res.string.medal_collection),
+                textColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 textStyle = MaterialTheme.typography.headlineMedium,
                 onClick = onMedalCollectionClick,
                 modifier = Modifier.height(72.dp).testTag("medal_collection_button")
             )
 
             LargeButton(
-                containerColor = MaterialTheme.colorScheme.tertiary,
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 text = stringResource(Res.string.settings),
+                textColor = MaterialTheme.colorScheme.onTertiaryContainer,
                 textStyle = MaterialTheme.typography.headlineMedium,
                 onClick = onSettingsClick,
                 modifier = Modifier.height(72.dp).testTag("settings_button")
