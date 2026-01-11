@@ -1,11 +1,11 @@
-package com.vitantonio.nagauzzi.sansuukids.navigation
+package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 
 @Stable
 internal class NavigationState(

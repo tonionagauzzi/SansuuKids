@@ -1,4 +1,4 @@
-package com.vitantonio.nagauzzi.sansuukids.navigation
+package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.test.ExperimentalTestApi
@@ -8,10 +8,10 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.navigation3.ui.NavDisplay
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.HomeRoute
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.LevelSelectionRoute
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.ModeSelectionRoute
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import kotlin.test.Test
 import kotlin.test.assertEquals

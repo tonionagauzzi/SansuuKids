@@ -1,11 +1,11 @@
-package com.vitantonio.nagauzzi.sansuukids.navigation
+package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
 import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.HomeRoute
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.LevelSelectionRoute
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.ModeSelectionRoute
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.HomeScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.LevelSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
