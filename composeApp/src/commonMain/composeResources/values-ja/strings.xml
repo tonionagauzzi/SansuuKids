@@ -10,4 +10,8 @@
     <string name="mode_multiplication">かけざん</string>
     <string name="mode_division">わりざん</string>
     <string name="mode_all">すべて</string>
+    <string name="level_selection_title">レベルをえらんでね</string>
+    <string name="level_easy">かんたん</string>
+    <string name="level_normal">ふつう</string>
+    <string name="level_difficult">むずかしい</string>
 </resources>

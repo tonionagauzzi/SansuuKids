@@ -10,4 +10,8 @@
     <string name="mode_multiplication">Multiplication</string>
     <string name="mode_division">Division</string>
     <string name="mode_all">All</string>
+    <string name="level_selection_title">Select Level</string>
+    <string name="level_easy">Easy</string>
+    <string name="level_normal">Normal</string>
+    <string name="level_difficult">Difficult</string>
 </resources>

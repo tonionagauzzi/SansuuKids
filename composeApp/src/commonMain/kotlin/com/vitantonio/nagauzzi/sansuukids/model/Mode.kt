@@ -1,0 +1,12 @@
+package com.vitantonio.nagauzzi.sansuukids.model
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+enum class Mode {
+    ADDITION,
+    SUBTRACTION,
+    MULTIPLICATION,
+    DIVISION,
+    ALL
+}
