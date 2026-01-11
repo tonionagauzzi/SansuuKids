@@ -8,6 +8,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.ui.NavDisplay
+import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.navigation.key.ModeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
@@ -27,7 +28,12 @@ class NavigationIntegrationTest {
                 NavDisplay(
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
-                    entryProvider = { key -> navigationEntryProvider(key, navigationState) }
+                    entryProvider = { key ->
+                        navigationEntryProvider(
+                            key as SansuuKidsRoute,
+                            navigationState
+                        )
+                    }
                 )
             }
         }
@@ -42,7 +48,7 @@ class NavigationIntegrationTest {
 
     @Test
     fun モード選択画面で戻ると前のホーム画面に戻る() = runComposeUiTest {
-        val backStack = mutableStateListOf(HomeRoute, ModeSelectionRoute)
+        val backStack = mutableStateListOf<NavKey>(HomeRoute, ModeSelectionRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {
@@ -50,7 +56,12 @@ class NavigationIntegrationTest {
                 NavDisplay(
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
-                    entryProvider = { key -> navigationEntryProvider(key, navigationState) }
+                    entryProvider = { key ->
+                        navigationEntryProvider(
+                            key as SansuuKidsRoute,
+                            navigationState
+                        )
+                    }
                 )
             }
         }
@@ -75,7 +86,12 @@ class NavigationIntegrationTest {
                 NavDisplay(
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
-                    entryProvider = { key -> navigationEntryProvider(key, navigationState) }
+                    entryProvider = { key ->
+                        navigationEntryProvider(
+                            key as SansuuKidsRoute,
+                            navigationState
+                        )
+                    }
                 )
             }
         }
@@ -98,7 +114,12 @@ class NavigationIntegrationTest {
                 NavDisplay(
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
-                    entryProvider = { key -> navigationEntryProvider(key, navigationState) }
+                    entryProvider = { key ->
+                        navigationEntryProvider(
+                            key as SansuuKidsRoute,
+                            navigationState
+                        )
+                    }
                 )
             }
         }

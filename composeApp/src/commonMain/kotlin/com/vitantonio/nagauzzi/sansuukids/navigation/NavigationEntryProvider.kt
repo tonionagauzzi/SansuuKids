@@ -2,13 +2,14 @@ package com.vitantonio.nagauzzi.sansuukids.navigation
 
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
+import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.navigation.key.ModeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.HomeScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
 
 internal fun navigationEntryProvider(
-    key: NavKey,
+    key: SansuuKidsRoute,
     navigationState: NavigationState
 ): NavEntry<NavKey> {
     return when (key) {
@@ -29,7 +30,5 @@ internal fun navigationEntryProvider(
                 onAllClick = { /* TODO: Navigate to Level Selection */ }
             )
         }
-
-        else -> throw IllegalArgumentException("Unknown NavKey: $key")
     }
 }
