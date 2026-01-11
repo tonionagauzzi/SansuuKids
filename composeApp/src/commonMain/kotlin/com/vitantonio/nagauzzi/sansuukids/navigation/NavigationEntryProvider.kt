@@ -30,6 +30,6 @@ internal fun navigationEntryProvider(
             )
         }
 
-        else -> NavEntry(key) {}
+        else -> throw IllegalArgumentException("Unknown NavKey: $key")
     }
 }
