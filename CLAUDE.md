@@ -58,3 +58,12 @@ iosApp/       # iOS-specific entry point and Xcode project
 - **Screens**: Home → Mode Selection → Level Selection → Quiz → Results
 - **Quiz Logic**: 10 questions per session, answers never negative
 - **Medal System**: Gold (100%), Silver (80-99%), Bronze (60-79%), Star (<60%)
+
+## Testing Guidelines
+
+- **Test Structure**: Write tests in Given/When/Then format
+  - **Given**: Set up the initial state and test data
+  - **When**: Execute the action being tested
+  - **Then**: Assert the expected outcomes
+- Use clear section comments or variable names to separate the three phases
+- Each test should clearly show what is being tested and why

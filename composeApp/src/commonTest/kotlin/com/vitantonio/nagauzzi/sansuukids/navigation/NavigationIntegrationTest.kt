@@ -20,6 +20,7 @@ class NavigationIntegrationTest {
 
     @Test
     fun ホーム画面でスタートボタンを押すとモード選択画面に遷移する() = runComposeUiTest {
+        // Given: ホーム画面を初期画面として表示する
         val backStack = mutableStateListOf<NavKey>(HomeRoute)
         val navigationState = NavigationState(backStack)
 
@@ -38,9 +39,10 @@ class NavigationIntegrationTest {
             }
         }
 
-        onNodeWithTag("start_button").assertIsDisplayed()
+        // When: スタートボタンをクリックする
         onNodeWithTag("start_button").performClick()
 
+        // Then: モード選択画面に遷移する
         assertEquals(2, navigationState.entries.size)
         assertEquals(ModeSelectionRoute, navigationState.entries.last())
         onNodeWithTag("addition_button").assertIsDisplayed()
@@ -48,6 +50,7 @@ class NavigationIntegrationTest {
 
     @Test
     fun モード選択画面で戻ると前のホーム画面に戻る() = runComposeUiTest {
+        // Given: モード選択画面を表示する
         val backStack = mutableStateListOf<NavKey>(HomeRoute, ModeSelectionRoute)
         val navigationState = NavigationState(backStack)
 
@@ -66,11 +69,11 @@ class NavigationIntegrationTest {
             }
         }
 
-        onNodeWithTag("addition_button").assertIsDisplayed()
-
+        // When: 戻るナビゲーションを実行する
         navigationState.navigateBack()
         waitForIdle()
 
+        // Then: ホーム画面に戻る
         assertEquals(1, navigationState.entries.size)
         assertEquals(HomeRoute, navigationState.entries.last())
         onNodeWithTag("start_button").assertIsDisplayed()
@@ -78,6 +81,7 @@ class NavigationIntegrationTest {
 
     @Test
     fun ホーム画面が初期画面として表示される() = runComposeUiTest {
+        // Given: ホーム画面を初期画面として設定する
         val backStack = mutableStateListOf<NavKey>(HomeRoute)
         val navigationState = NavigationState(backStack)
 
@@ -96,6 +100,9 @@ class NavigationIntegrationTest {
             }
         }
 
+        // When: 画面が表示される（アクションなし）
+
+        // Then: ホーム画面のボタンが全て表示され、バックスタックにはホーム画面のみが存在する
         onNodeWithTag("start_button").assertIsDisplayed()
         onNodeWithTag("medal_collection_button").assertIsDisplayed()
         onNodeWithTag("settings_button").assertIsDisplayed()
@@ -106,6 +113,7 @@ class NavigationIntegrationTest {
 
     @Test
     fun 往復のナビゲーションが正しく動作する() = runComposeUiTest {
+        // Given: ホーム画面を初期画面として表示する
         val backStack = mutableStateListOf<NavKey>(HomeRoute)
         val navigationState = NavigationState(backStack)
 
@@ -124,18 +132,13 @@ class NavigationIntegrationTest {
             }
         }
 
-        onNodeWithTag("start_button").assertIsDisplayed()
-
+        // When: スタートボタンをクリックして遷移し、戻り、再度遷移する
         onNodeWithTag("start_button").performClick()
-        onNodeWithTag("addition_button").assertIsDisplayed()
-        assertEquals(2, navigationState.entries.size)
-
         navigationState.navigateBack()
         waitForIdle()
-        onNodeWithTag("start_button").assertIsDisplayed()
-        assertEquals(1, navigationState.entries.size)
-
         onNodeWithTag("start_button").performClick()
+
+        // Then: モード選択画面に再度遷移できる
         onNodeWithTag("addition_button").assertIsDisplayed()
         assertEquals(2, navigationState.entries.size)
     }

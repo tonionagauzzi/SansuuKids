@@ -13,6 +13,7 @@ class ModeSelectionScreenTest {
 
     @Test
     fun たしざんボタンを押すとonAdditionClickが呼ばれる() = runComposeUiTest {
+        // Given: モード選択画面を表示し、クリック状態を追跡する
         var clicked = false
         setContent {
             SansuuKidsTheme {
@@ -26,12 +27,16 @@ class ModeSelectionScreenTest {
             }
         }
 
+        // When: たしざんボタンをクリックする
         onNodeWithTag("addition_button").performClick()
+
+        // Then: onAdditionClickが呼ばれる
         assertTrue(clicked)
     }
 
     @Test
     fun ひきざんボタンを押すとonSubtractionClickが呼ばれる() = runComposeUiTest {
+        // Given: モード選択画面を表示し、クリック状態を追跡する
         var clicked = false
         setContent {
             SansuuKidsTheme {
@@ -45,12 +50,16 @@ class ModeSelectionScreenTest {
             }
         }
 
+        // When: ひきざんボタンをクリックする
         onNodeWithTag("subtraction_button").performClick()
+
+        // Then: onSubtractionClickが呼ばれる
         assertTrue(clicked)
     }
 
     @Test
     fun かけざんボタンを押すとonMultiplicationClickが呼ばれる() = runComposeUiTest {
+        // Given: モード選択画面を表示し、クリック状態を追跡する
         var clicked = false
         setContent {
             SansuuKidsTheme {
@@ -64,12 +73,16 @@ class ModeSelectionScreenTest {
             }
         }
 
+        // When: かけざんボタンをクリックする
         onNodeWithTag("multiplication_button").performClick()
+
+        // Then: onMultiplicationClickが呼ばれる
         assertTrue(clicked)
     }
 
     @Test
     fun わりざんボタンを押すとonDivisionClickが呼ばれる() = runComposeUiTest {
+        // Given: モード選択画面を表示し、クリック状態を追跡する
         var clicked = false
         setContent {
             SansuuKidsTheme {
@@ -83,12 +96,16 @@ class ModeSelectionScreenTest {
             }
         }
 
+        // When: わりざんボタンをクリックする
         onNodeWithTag("division_button").performClick()
+
+        // Then: onDivisionClickが呼ばれる
         assertTrue(clicked)
     }
 
     @Test
     fun すべてボタンを押すとonAllClickが呼ばれる() = runComposeUiTest {
+        // Given: モード選択画面を表示し、クリック状態を追跡する
         var clicked = false
         setContent {
             SansuuKidsTheme {
@@ -102,7 +119,10 @@ class ModeSelectionScreenTest {
             }
         }
 
+        // When: すべてボタンをクリックする
         onNodeWithTag("all_button").performClick()
+
+        // Then: onAllClickが呼ばれる
         assertTrue(clicked)
     }
 }
