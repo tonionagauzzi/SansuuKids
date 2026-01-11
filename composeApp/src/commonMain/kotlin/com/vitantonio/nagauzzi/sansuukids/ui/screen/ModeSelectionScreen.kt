@@ -62,8 +62,8 @@ fun ModeSelectionScreen(
         ) {
             LargeButton(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 text = stringResource(Res.string.mode_addition),
-                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onAdditionClick,
                 modifier = Modifier.height(56.dp).testTag("addition_button")
@@ -71,8 +71,8 @@ fun ModeSelectionScreen(
 
             LargeButton(
                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 text = stringResource(Res.string.mode_subtraction),
-                textColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onSubtractionClick,
                 modifier = Modifier.height(56.dp).testTag("subtraction_button")
@@ -80,8 +80,8 @@ fun ModeSelectionScreen(
 
             LargeButton(
                 containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
                 text = stringResource(Res.string.mode_multiplication),
-                textColor = MaterialTheme.colorScheme.onTertiaryContainer,
                 textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onMultiplicationClick,
                 modifier = Modifier.height(56.dp).testTag("multiplication_button")
@@ -89,8 +89,8 @@ fun ModeSelectionScreen(
 
             LargeButton(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 text = stringResource(Res.string.mode_division),
-                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onDivisionClick,
                 modifier = Modifier.height(56.dp).testTag("division_button")
@@ -98,8 +98,8 @@ fun ModeSelectionScreen(
 
             LargeButton(
                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 text = stringResource(Res.string.mode_all),
-                textColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 textStyle = MaterialTheme.typography.headlineSmall,
                 onClick = onAllClick,
                 modifier = Modifier.height(56.dp).testTag("all_button")

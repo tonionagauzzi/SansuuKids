@@ -58,8 +58,8 @@ fun HomeScreen(
         ) {
             LargeButton(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 text = stringResource(Res.string.start),
-                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 textStyle = MaterialTheme.typography.headlineMedium,
                 onClick = onStartClick,
                 modifier = Modifier.height(72.dp).testTag("start_button")
@@ -67,8 +67,8 @@ fun HomeScreen(
 
             LargeButton(
                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 text = stringResource(Res.string.medal_collection),
-                textColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 textStyle = MaterialTheme.typography.headlineMedium,
                 onClick = onMedalCollectionClick,
                 modifier = Modifier.height(72.dp).testTag("medal_collection_button")
@@ -76,8 +76,8 @@ fun HomeScreen(
 
             LargeButton(
                 containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
                 text = stringResource(Res.string.settings),
-                textColor = MaterialTheme.colorScheme.onTertiaryContainer,
                 textStyle = MaterialTheme.typography.headlineMedium,
                 onClick = onSettingsClick,
                 modifier = Modifier.height(72.dp).testTag("settings_button")
