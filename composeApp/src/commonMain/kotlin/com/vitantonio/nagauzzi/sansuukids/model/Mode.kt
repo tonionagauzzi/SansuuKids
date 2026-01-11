@@ -3,7 +3,7 @@ package com.vitantonio.nagauzzi.sansuukids.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-enum class Mode {
+internal enum class Mode {
     ADDITION,
     SUBTRACTION,
     MULTIPLICATION,
