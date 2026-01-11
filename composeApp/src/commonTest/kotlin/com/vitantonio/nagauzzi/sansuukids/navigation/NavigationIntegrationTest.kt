@@ -6,7 +6,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
-import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.ui.NavDisplay
 import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.navigation.key.HomeRoute
@@ -21,7 +20,7 @@ class NavigationIntegrationTest {
     @Test
     fun ホーム画面が初期画面として表示される() = runComposeUiTest {
         // Given: ホーム画面を初期画面として設定する
-        val backStack = mutableStateListOf<NavKey>(HomeRoute)
+        val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {
@@ -30,10 +29,7 @@ class NavigationIntegrationTest {
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
-                        navigationEntryProvider(
-                            key as SansuuKidsRoute,
-                            navigationState
-                        )
+                        navigationEntryProvider(key, navigationState)
                     }
                 )
             }
@@ -53,7 +49,7 @@ class NavigationIntegrationTest {
     @Test
     fun ホーム画面でスタートボタンを押すとモード選択画面に遷移する() = runComposeUiTest {
         // Given: ホーム画面を初期画面として表示する
-        val backStack = mutableStateListOf<NavKey>(HomeRoute)
+        val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {
@@ -62,10 +58,7 @@ class NavigationIntegrationTest {
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
-                        navigationEntryProvider(
-                            key as SansuuKidsRoute,
-                            navigationState
-                        )
+                        navigationEntryProvider(key, navigationState)
                     }
                 )
             }
@@ -83,7 +76,7 @@ class NavigationIntegrationTest {
     @Test
     fun ホーム画面で戻るとバックスタックが空になる() = runComposeUiTest {
         // Given: ホーム画面のみがバックスタックに存在する
-        val backStack = mutableStateListOf<NavKey>(HomeRoute)
+        val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {
@@ -92,10 +85,7 @@ class NavigationIntegrationTest {
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
-                        navigationEntryProvider(
-                            key as SansuuKidsRoute,
-                            navigationState
-                        )
+                        navigationEntryProvider(key, navigationState)
                     }
                 )
             }
@@ -111,7 +101,7 @@ class NavigationIntegrationTest {
     @Test
     fun モード選択画面で戻ると前のホーム画面に戻る() = runComposeUiTest {
         // Given: モード選択画面を表示する
-        val backStack = mutableStateListOf<NavKey>(HomeRoute, ModeSelectionRoute)
+        val backStack = mutableStateListOf(HomeRoute, ModeSelectionRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {
@@ -120,10 +110,7 @@ class NavigationIntegrationTest {
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
-                        navigationEntryProvider(
-                            key as SansuuKidsRoute,
-                            navigationState
-                        )
+                        navigationEntryProvider(key, navigationState)
                     }
                 )
             }
@@ -142,7 +129,7 @@ class NavigationIntegrationTest {
     @Test
     fun 往復のナビゲーションが正しく動作する() = runComposeUiTest {
         // Given: ホーム画面を初期画面として表示する
-        val backStack = mutableStateListOf<NavKey>(HomeRoute)
+        val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {
@@ -151,10 +138,7 @@ class NavigationIntegrationTest {
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
-                        navigationEntryProvider(
-                            key as SansuuKidsRoute,
-                            navigationState
-                        )
+                        navigationEntryProvider(key, navigationState)
                     }
                 )
             }

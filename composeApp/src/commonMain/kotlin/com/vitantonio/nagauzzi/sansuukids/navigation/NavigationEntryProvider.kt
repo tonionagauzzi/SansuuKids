@@ -1,7 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.navigation
 
 import androidx.navigation3.runtime.NavEntry
-import androidx.navigation3.runtime.NavKey
 import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.navigation.key.ModeSelectionRoute
@@ -11,7 +10,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
 internal fun navigationEntryProvider(
     key: SansuuKidsRoute,
     navigationState: NavigationState
-): NavEntry<NavKey> {
+): NavEntry<SansuuKidsRoute> {
     return when (key) {
         HomeRoute -> NavEntry(key) {
             HomeScreen(

@@ -5,26 +5,26 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.navigation3.runtime.NavKey
+import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
 
 @Stable
-class NavigationState(
-    private val backStack: SnapshotStateList<NavKey>
+internal class NavigationState(
+    private val backStack: SnapshotStateList<SansuuKidsRoute>
 ) {
-    val entries: List<NavKey> get() = backStack
+    val entries: List<SansuuKidsRoute> get() = backStack
 
-    fun navigateTo(route: NavKey) {
+    fun navigateTo(route: SansuuKidsRoute) {
         backStack.add(route)
     }
 
-    fun navigateBack(): NavKey? {
+    fun navigateBack(): SansuuKidsRoute? {
         return backStack.removeLastOrNull()
     }
 }
 
 @Composable
-fun rememberNavigationState(
-    initialRoute: NavKey
+internal fun rememberNavigationState(
+    initialRoute: SansuuKidsRoute
 ): NavigationState {
     return remember {
         NavigationState(mutableStateListOf(initialRoute))

@@ -1,24 +1,19 @@
 package com.vitantonio.nagauzzi.sansuukids.navigation
 
 import androidx.compose.runtime.mutableStateListOf
-import androidx.navigation3.runtime.NavKey
+import com.vitantonio.nagauzzi.sansuukids.navigation.key.HomeRoute as TestRouteA
+import com.vitantonio.nagauzzi.sansuukids.navigation.key.ModeSelectionRoute as TestRouteB
+import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
-import kotlinx.serialization.Serializable
 
 class NavigationStateTest {
-
-    @Serializable
-    private data object TestRouteA : NavKey
-
-    @Serializable
-    private data object TestRouteB : NavKey
 
     @Test
     fun 初期状態で1つのルートがある() {
         // Given: 1つのルートを持つバックスタックを作成する
-        val backStack = mutableStateListOf<NavKey>(TestRouteA)
+        val backStack = mutableStateListOf<SansuuKidsRoute>(TestRouteA)
         val navigationState = NavigationState(backStack)
 
         // When: NavigationStateを初期化する（アクションなし）
@@ -31,7 +26,7 @@ class NavigationStateTest {
     @Test
     fun navigateToで新しいルートが追加される() {
         // Given: 1つのルートを持つNavigationStateを初期化する
-        val backStack = mutableStateListOf<NavKey>(TestRouteA)
+        val backStack = mutableStateListOf<SansuuKidsRoute>(TestRouteA)
         val navigationState = NavigationState(backStack)
 
         // When: navigateToで新しいルートに遷移する
@@ -61,7 +56,7 @@ class NavigationStateTest {
     @Test
     fun navigateBackで空のバックスタックの場合はnullを返す() {
         // Given: 空のバックスタックを持つNavigationStateを初期化する
-        val backStack = mutableStateListOf<NavKey>()
+        val backStack = mutableStateListOf<SansuuKidsRoute>()
         val navigationState = NavigationState(backStack)
 
         // When: navigateBackで戻るナビゲーションを実行する
@@ -74,7 +69,7 @@ class NavigationStateTest {
     @Test
     fun 複数回のnavigateToで正しい順序でスタックが積まれる() {
         // Given: 1つのルートを持つNavigationStateを初期化する
-        val backStack = mutableStateListOf<NavKey>(TestRouteA)
+        val backStack = mutableStateListOf<SansuuKidsRoute>(TestRouteA)
         val navigationState = NavigationState(backStack)
 
         // When: navigateToを複数回実行する
