@@ -7,9 +7,11 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.navigation3.ui.NavDisplay
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
+import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.navigation.key.HomeRoute
+import com.vitantonio.nagauzzi.sansuukids.navigation.key.LevelSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.navigation.key.ModeSelectionRoute
+import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -153,5 +155,65 @@ class NavigationIntegrationTest {
         // Then: モード選択画面に再度遷移できる
         onNodeWithTag("addition_button").assertIsDisplayed()
         assertEquals(2, navigationState.entries.size)
+    }
+
+    @Test
+    fun モード選択画面でたしざんを押すとレベル選択画面に遷移する() = runComposeUiTest {
+        // Given: モード選択画面を表示する
+        val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute, ModeSelectionRoute)
+        val navigationState = NavigationState(backStack)
+
+        setContent {
+            SansuuKidsTheme {
+                NavDisplay(
+                    backStack = navigationState.entries,
+                    onBack = { navigationState.navigateBack() },
+                    entryProvider = { key ->
+                        navigationEntryProvider(key, navigationState)
+                    }
+                )
+            }
+        }
+
+        // When: たしざんボタンをクリックする
+        onNodeWithTag("addition_button").performClick()
+
+        // Then: レベル選択画面に遷移し、モードがADDITIONである
+        assertEquals(3, navigationState.entries.size)
+        val lastRoute = navigationState.entries.last() as LevelSelectionRoute
+        assertEquals(Mode.ADDITION, lastRoute.mode)
+        onNodeWithTag("easy_button").assertIsDisplayed()
+    }
+
+    @Test
+    fun レベル選択画面で戻るとモード選択画面に戻る() = runComposeUiTest {
+        // Given: レベル選択画面を表示する
+        val backStack = mutableStateListOf<SansuuKidsRoute>(
+            HomeRoute,
+            ModeSelectionRoute,
+            LevelSelectionRoute(Mode.ADDITION)
+        )
+        val navigationState = NavigationState(backStack)
+
+        setContent {
+            SansuuKidsTheme {
+                NavDisplay(
+                    backStack = navigationState.entries,
+                    onBack = { navigationState.navigateBack() },
+                    entryProvider = { key ->
+                        navigationEntryProvider(key, navigationState)
+                    }
+                )
+            }
+        }
+
+        // When: 戻るナビゲーションを実行する
+        navigationState.navigateBack()
+        waitForIdle()
+
+        // Then: モード選択画面に戻る
+        assertEquals(2, navigationState.entries.size)
+        assertEquals(ModeSelectionRoute, navigationState.entries.last())
+        onNodeWithTag("addition_button").assertIsDisplayed()
     }
 }
