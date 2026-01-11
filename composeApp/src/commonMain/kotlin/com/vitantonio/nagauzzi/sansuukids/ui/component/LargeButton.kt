@@ -1,7 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -10,12 +9,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun LargeButton(
     text: String,
+    textStyle: TextStyle,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     containerColor: Color = MaterialTheme.colorScheme.primary,
@@ -24,8 +25,7 @@ fun LargeButton(
     Button(
         onClick = onClick,
         modifier = modifier
-            .fillMaxWidth()
-            .height(72.dp),
+            .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
@@ -38,7 +38,7 @@ fun LargeButton(
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.headlineMedium,
+            style = textStyle,
             fontWeight = FontWeight.Bold
         )
     }
