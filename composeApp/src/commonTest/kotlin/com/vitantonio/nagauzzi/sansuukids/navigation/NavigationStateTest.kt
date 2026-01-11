@@ -38,7 +38,7 @@ class NavigationStateTest {
 
     @Test
     fun navigateBackで最後のルートが削除される() {
-        val backStack = mutableStateListOf<NavKey>(TestRouteA, TestRouteB)
+        val backStack = mutableStateListOf(TestRouteA, TestRouteB)
         val navigationState = NavigationState(backStack)
 
         val removed = navigationState.navigateBack()
@@ -72,7 +72,7 @@ class NavigationStateTest {
 
     @Test
     fun 複数回のnavigateBackで正しい順序で削除される() {
-        val backStack = mutableStateListOf<NavKey>(TestRouteA, TestRouteB)
+        val backStack = mutableStateListOf(TestRouteA, TestRouteB)
         val navigationState = NavigationState(backStack)
 
         assertEquals(TestRouteB, navigationState.navigateBack())

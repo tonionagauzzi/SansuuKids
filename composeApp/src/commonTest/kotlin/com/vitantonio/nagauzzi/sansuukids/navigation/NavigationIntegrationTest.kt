@@ -42,7 +42,7 @@ class NavigationIntegrationTest {
 
     @Test
     fun モード選択画面で戻ると前のホーム画面に戻る() = runComposeUiTest {
-        val backStack = mutableStateListOf<NavKey>(HomeRoute, ModeSelectionRoute)
+        val backStack = mutableStateListOf(HomeRoute, ModeSelectionRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {
