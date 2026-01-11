@@ -1,9 +1,9 @@
-package com.vitantonio.nagauzzi.sansuukids.navigation
+package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
 import androidx.compose.runtime.mutableStateListOf
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.HomeRoute as TestRouteA
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.ModeSelectionRoute as TestRouteB
-import com.vitantonio.nagauzzi.sansuukids.navigation.key.SansuuKidsRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute as TestRouteA
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute as TestRouteB
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull

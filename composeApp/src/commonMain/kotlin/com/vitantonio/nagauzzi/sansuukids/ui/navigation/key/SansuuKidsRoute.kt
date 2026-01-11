@@ -1,4 +1,4 @@
-package com.vitantonio.nagauzzi.sansuukids.navigation.key
+package com.vitantonio.nagauzzi.sansuukids.ui.navigation.key
 
 import androidx.navigation3.runtime.NavKey
 
