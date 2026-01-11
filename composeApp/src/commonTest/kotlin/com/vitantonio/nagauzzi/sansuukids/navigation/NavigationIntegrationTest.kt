@@ -19,6 +19,38 @@ import kotlin.test.assertEquals
 class NavigationIntegrationTest {
 
     @Test
+    fun ホーム画面が初期画面として表示される() = runComposeUiTest {
+        // Given: ホーム画面を初期画面として設定する
+        val backStack = mutableStateListOf<NavKey>(HomeRoute)
+        val navigationState = NavigationState(backStack)
+
+        setContent {
+            SansuuKidsTheme {
+                NavDisplay(
+                    backStack = navigationState.entries,
+                    onBack = { navigationState.navigateBack() },
+                    entryProvider = { key ->
+                        navigationEntryProvider(
+                            key as SansuuKidsRoute,
+                            navigationState
+                        )
+                    }
+                )
+            }
+        }
+
+        // When: 画面が表示される（アクションなし）
+
+        // Then: ホーム画面のボタンが全て表示され、バックスタックにはホーム画面のみが存在する
+        onNodeWithTag("start_button").assertIsDisplayed()
+        onNodeWithTag("medal_collection_button").assertIsDisplayed()
+        onNodeWithTag("settings_button").assertIsDisplayed()
+
+        assertEquals(1, navigationState.entries.size)
+        assertEquals(HomeRoute, navigationState.entries.first())
+    }
+
+    @Test
     fun ホーム画面でスタートボタンを押すとモード選択画面に遷移する() = runComposeUiTest {
         // Given: ホーム画面を初期画面として表示する
         val backStack = mutableStateListOf<NavKey>(HomeRoute)
@@ -46,6 +78,34 @@ class NavigationIntegrationTest {
         assertEquals(2, navigationState.entries.size)
         assertEquals(ModeSelectionRoute, navigationState.entries.last())
         onNodeWithTag("addition_button").assertIsDisplayed()
+    }
+
+    @Test
+    fun ホーム画面で戻るとバックスタックが空になる() = runComposeUiTest {
+        // Given: ホーム画面のみがバックスタックに存在する
+        val backStack = mutableStateListOf<NavKey>(HomeRoute)
+        val navigationState = NavigationState(backStack)
+
+        setContent {
+            SansuuKidsTheme {
+                NavDisplay(
+                    backStack = navigationState.entries,
+                    onBack = { navigationState.navigateBack() },
+                    entryProvider = { key ->
+                        navigationEntryProvider(
+                            key as SansuuKidsRoute,
+                            navigationState
+                        )
+                    }
+                )
+            }
+        }
+
+        // When: 戻るナビゲーションを実行する
+        navigationState.navigateBack()
+
+        // Then: バックスタックが空になる（実際の挙動はnavigation3の責務）
+        assertEquals(0, navigationState.entries.size)
     }
 
     @Test
@@ -77,38 +137,6 @@ class NavigationIntegrationTest {
         assertEquals(1, navigationState.entries.size)
         assertEquals(HomeRoute, navigationState.entries.last())
         onNodeWithTag("start_button").assertIsDisplayed()
-    }
-
-    @Test
-    fun ホーム画面が初期画面として表示される() = runComposeUiTest {
-        // Given: ホーム画面を初期画面として設定する
-        val backStack = mutableStateListOf<NavKey>(HomeRoute)
-        val navigationState = NavigationState(backStack)
-
-        setContent {
-            SansuuKidsTheme {
-                NavDisplay(
-                    backStack = navigationState.entries,
-                    onBack = { navigationState.navigateBack() },
-                    entryProvider = { key ->
-                        navigationEntryProvider(
-                            key as SansuuKidsRoute,
-                            navigationState
-                        )
-                    }
-                )
-            }
-        }
-
-        // When: 画面が表示される（アクションなし）
-
-        // Then: ホーム画面のボタンが全て表示され、バックスタックにはホーム画面のみが存在する
-        onNodeWithTag("start_button").assertIsDisplayed()
-        onNodeWithTag("medal_collection_button").assertIsDisplayed()
-        onNodeWithTag("settings_button").assertIsDisplayed()
-
-        assertEquals(1, navigationState.entries.size)
-        assertEquals(HomeRoute, navigationState.entries.first())
     }
 
     @Test
