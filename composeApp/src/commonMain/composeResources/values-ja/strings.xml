@@ -19,7 +19,7 @@
     <string name="quiz_submit">けってい</string>
     <string name="quiz_progress">%1$d/%2$dもんめ</string>
     <string name="result_title">けっか</string>
-    <string name="result_score">%1$d / %2$d</string>
+    <string name="result_score">%1$dてん！</string>
     <string name="result_medal_nothing">メダルなし</string>
     <string name="result_medal_gold">きんメダル！</string>
     <string name="result_medal_silver">ぎんメダル！</string>

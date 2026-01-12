@@ -82,8 +82,7 @@ internal fun navigationEntryProvider(
                 LaunchedEffect(Unit) {
                     navigationState.navigateTo(
                         ResultRoute(
-                            correctCount = quizState.correctCount,
-                            totalCount = quizState.totalQuestions.size,
+                            score = quizState.earnedScore,
                             medal = quizState.earnedMedal
                         )
                     )
@@ -101,8 +100,7 @@ internal fun navigationEntryProvider(
                     if (quizState.answeredCount > 0) {
                         navigationState.navigateTo(
                             ResultRoute(
-                                correctCount = quizState.correctCount,
-                                totalCount = quizState.answeredCount,
+                                score = quizState.earnedScore,
                                 medal = quizState.earnedMedal
                             )
                         )
@@ -115,8 +113,7 @@ internal fun navigationEntryProvider(
 
         is ResultRoute -> NavEntry(key) {
             ResultScreen(
-                correctCount = key.correctCount,
-                totalCount = key.totalCount,
+                score = key.score,
                 medal = key.medal,
                 onRetryClick = {
                     navigationState.popToHome()

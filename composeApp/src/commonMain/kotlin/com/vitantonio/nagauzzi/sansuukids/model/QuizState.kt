@@ -41,7 +41,7 @@ internal data class QuizState(
      */
     val progress: Float
         get() {
-            val totalQuestionsCount = quiz.questions.size
+            val totalQuestionsCount = totalQuestions.size
             return if (totalQuestionsCount == 0) {
                 1.0f
             } else {
@@ -72,7 +72,7 @@ internal data class QuizState(
      * 全問題に回答済みの場合にtrueを返す。
      */
     val isQuizComplete: Boolean
-        get() = userAnswers.size == quiz.questions.size
+        get() = userAnswers.size == totalQuestions.size
 
     /**
      * 回答済みの問題数。
@@ -85,6 +85,12 @@ internal data class QuizState(
      */
     val correctCount: Int
         get() = userAnswers.count { it.isCorrect }
+
+    /**
+     * 獲得したスコア。全問正解で100点。
+     */
+    val earnedScore: Int
+        get() = ((correctCount.toFloat() / totalQuestions.size.toFloat()) * 100).toInt()
 
     /**
      * 正答率に応じて獲得したメダル。

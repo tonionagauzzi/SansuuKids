@@ -205,6 +205,63 @@ class QuizStateTest {
     }
 
     @Test
+    fun earnedScoreは全問正解で100点を返す() {
+        // Given: 10問中10問正解のQuizState
+        val quiz = createTestQuiz()
+        val userAnswers = (0 until quizSize).map { index ->
+            UserAnswer(
+                questionIndex = index,
+                answer = index + 2,
+                isCorrect = true
+            )
+        }
+
+        // When: QuizStateを作成する
+        val state = QuizState(quiz = quiz, userAnswers = userAnswers)
+
+        // Then: 100点を獲得
+        assertEquals(100, state.earnedScore)
+    }
+
+    @Test
+    fun earnedScoreは正答率に応じた点数を返す() {
+        // Given: 10問中8問正解（80%）のQuizState
+        val quiz = createTestQuiz()
+        val userAnswers = (0 until quizSize).map { index ->
+            UserAnswer(
+                questionIndex = index,
+                answer = index + 2,
+                isCorrect = index < 8 // 最初の8問を正解
+            )
+        }
+
+        // When: QuizStateを作成する
+        val state = QuizState(quiz = quiz, userAnswers = userAnswers)
+
+        // Then: 80点を獲得
+        assertEquals(80, state.earnedScore)
+    }
+
+    @Test
+    fun earnedScoreは全問不正解で0点を返す() {
+        // Given: 10問中0問正解のQuizState
+        val quiz = createTestQuiz()
+        val userAnswers = (0 until quizSize).map { index ->
+            UserAnswer(
+                questionIndex = index,
+                answer = 0,
+                isCorrect = false
+            )
+        }
+
+        // When: QuizStateを作成する
+        val state = QuizState(quiz = quiz, userAnswers = userAnswers)
+
+        // Then: 0点を獲得
+        assertEquals(0, state.earnedScore)
+    }
+
+    @Test
     fun earnedMedalは正答率に応じたメダルを返す() {
         // Given: 10問中8問正解（80%）のQuizState
         val quiz = createTestQuiz()

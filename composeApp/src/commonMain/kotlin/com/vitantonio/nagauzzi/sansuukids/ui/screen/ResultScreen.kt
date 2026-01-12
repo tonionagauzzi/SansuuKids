@@ -33,8 +33,7 @@ import sansuukids.composeapp.generated.resources.result_title
 
 @Composable
 internal fun ResultScreen(
-    correctCount: Int,
-    totalCount: Int,
+    score: Int,
     medal: Medal,
     onRetryClick: () -> Unit,
     onHomeClick: () -> Unit,
@@ -60,8 +59,8 @@ internal fun ResultScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-            text = stringResource(Res.string.result_score, correctCount, totalCount),
-            style = MaterialTheme.typography.displayLarge,
+            text = stringResource(Res.string.result_score, score),
+            style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center,
@@ -113,8 +112,7 @@ internal fun ResultScreen(
 private fun ResultScreenPreview() {
     SansuuKidsTheme {
         ResultScreen(
-            correctCount = 8,
-            totalCount = 10,
+            score = 80,
             medal = Medal.Silver,
             onRetryClick = {},
             onHomeClick = {}

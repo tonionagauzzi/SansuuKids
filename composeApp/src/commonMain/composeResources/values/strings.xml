@@ -19,7 +19,7 @@
     <string name="quiz_submit">OK</string>
     <string name="quiz_progress">%1$d/%2$d</string>
     <string name="result_title">Result</string>
-    <string name="result_score">%1$d / %2$d</string>
+    <string name="result_score">Score %1$d!</string>
     <string name="result_medal_gold">Gold Medal!</string>
     <string name="result_medal_silver">Silver Medal!</string>
     <string name="result_medal_bronze">Bronze Medal!</string>

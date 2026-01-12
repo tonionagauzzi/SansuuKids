@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ResultRoute(
-    val correctCount: Int,
-    val totalCount: Int,
+    val score: Int,
     val medal: Medal
 ) : SansuuKidsRoute
