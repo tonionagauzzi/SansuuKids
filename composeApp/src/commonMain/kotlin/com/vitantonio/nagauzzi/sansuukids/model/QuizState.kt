@@ -96,5 +96,5 @@ internal data class QuizState(
      * 正答率に応じて獲得したメダル。
      */
     val earnedMedal: Medal
-        get() = awardMedal(isQuizComplete, correctCount, quiz.questions.size)
+        get() = awardMedal(isQuizComplete, correctCount, totalQuestions.size)
 }
