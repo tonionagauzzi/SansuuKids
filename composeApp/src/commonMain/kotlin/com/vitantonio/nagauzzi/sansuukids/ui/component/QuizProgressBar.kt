@@ -23,6 +23,11 @@ internal fun QuizProgressBar(
     totalQuestions: Int,
     modifier: Modifier = Modifier
 ) {
+    if (totalQuestions == 0) {
+        // 分母が0の場合は進捗率を計算できないので進捗バーを表示しない
+        return
+    }
+
     val progress = currentQuestion.toFloat() / totalQuestions.toFloat()
 
     Column(
