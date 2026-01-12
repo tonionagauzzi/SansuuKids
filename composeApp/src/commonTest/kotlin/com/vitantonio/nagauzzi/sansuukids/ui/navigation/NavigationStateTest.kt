@@ -93,4 +93,32 @@ class NavigationStateTest {
         assertEquals(TestRouteA, navigationState.navigateBack())
         assertNull(navigationState.navigateBack())
     }
+
+    @Test
+    fun popToHomeで最初のルートだけが残る() {
+        // Given: 3つのルートを持つNavigationStateを初期化する
+        val backStack = mutableStateListOf(TestRouteA, TestRouteB, TestRouteA)
+        val navigationState = NavigationState(backStack)
+
+        // When: popToHomeを実行する
+        navigationState.popToHome()
+
+        // Then: 最初のルートだけが残る
+        assertEquals(1, navigationState.entries.size)
+        assertEquals(TestRouteA, navigationState.entries[0])
+    }
+
+    @Test
+    fun popToHomeで1つのルートしかない場合は何も削除しない() {
+        // Given: 1つのルートを持つNavigationStateを初期化する
+        val backStack = mutableStateListOf<SansuuKidsRoute>(TestRouteA)
+        val navigationState = NavigationState(backStack)
+
+        // When: popToHomeを実行する
+        navigationState.popToHome()
+
+        // Then: ルートは変わらない
+        assertEquals(1, navigationState.entries.size)
+        assertEquals(TestRouteA, navigationState.entries[0])
+    }
 }

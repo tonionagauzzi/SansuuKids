@@ -65,10 +65,7 @@ internal fun navigationEntryProvider(
                     if (viewModel.quizState.answeredCount > 0) {
                         // TODO: Navigate to ResultScreen with partial result
                     } else {
-                        // Navigate back to HomeRoute
-                        while (navigationState.entries.size > 1) {
-                            navigationState.navigateBack()
-                        }
+                        navigationState.popToHome()
                     }
                 }
             )
