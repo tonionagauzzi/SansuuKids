@@ -214,7 +214,7 @@ class QuizViewModelTest {
     }
 
     @Test
-    fun earnedMedalは正答率に応じたメダルを返す() {
+    fun earnedScoreとearnedMedalは正答率に応じた得点とメダルを返す() {
         // Given: ViewModelを初期化する
         val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
         val quizSize = viewModel.quizState.value.totalQuestions.size
@@ -229,7 +229,8 @@ class QuizViewModelTest {
             viewModel.submitAnswer()
         }
 
-        // Then: ゴールドメダルが獲得できる
+        // Then: 100点とゴールドメダルが獲得できる
+        assertEquals(100, viewModel.earnedScore)
         assertEquals(Medal.Gold, viewModel.earnedMedal)
     }
 }

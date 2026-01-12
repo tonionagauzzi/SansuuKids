@@ -2,6 +2,7 @@ package com.vitantonio.nagauzzi.sansuukids.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.vitantonio.nagauzzi.sansuukids.logic.AwardMedal
+import com.vitantonio.nagauzzi.sansuukids.logic.CalculateScore
 import com.vitantonio.nagauzzi.sansuukids.logic.GenerateQuiz
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
@@ -17,6 +18,7 @@ internal class QuizViewModel(
     level: Level
 ) : ViewModel() {
     private val generateQuiz = GenerateQuiz()
+    private val calculateScore = CalculateScore()
     private val awardMedal = AwardMedal()
 
     private val mutableQuizState = MutableStateFlow(QuizState(generateQuiz(mode, level)))
@@ -27,6 +29,12 @@ internal class QuizViewModel(
         set(value) {
             mutableQuizState.value = value
         }
+
+    val earnedScore: Int
+        get() = calculateScore(
+            correctCount = currentQuizState.correctCount,
+            totalCount = currentQuizState.totalQuestions.size
+        )
 
     val earnedMedal: Medal
         get() = awardMedal(

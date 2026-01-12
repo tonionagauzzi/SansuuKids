@@ -82,7 +82,7 @@ internal fun navigationEntryProvider(
                 if (quizState.isQuizComplete) {
                     navigationState.navigateTo(
                         ResultRoute(
-                            score = quizState.earnedScore,
+                            score = viewModel.earnedScore,
                             medal = viewModel.earnedMedal
                         )
                     )
@@ -100,7 +100,7 @@ internal fun navigationEntryProvider(
                     if (quizState.answeredCount > 0) {
                         navigationState.navigateTo(
                             ResultRoute(
-                                score = quizState.earnedScore,
+                                score = viewModel.earnedScore,
                                 medal = viewModel.earnedMedal
                             )
                         )

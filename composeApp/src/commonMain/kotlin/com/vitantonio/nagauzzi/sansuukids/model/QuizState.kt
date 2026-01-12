@@ -81,10 +81,4 @@ internal data class QuizState(
      */
     val correctCount: Int
         get() = userAnswers.count { it.isCorrect }
-
-    /**
-     * 獲得したスコア。全問正解で100点。
-     */
-    val earnedScore: Int
-        get() = ((correctCount.toFloat() / totalQuestions.size.toFloat()) * 100).toInt()
 }
