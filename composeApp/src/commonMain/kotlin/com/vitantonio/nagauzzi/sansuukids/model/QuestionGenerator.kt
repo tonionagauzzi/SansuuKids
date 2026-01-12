@@ -65,9 +65,12 @@ internal object QuestionGenerator {
         Level.DIFFICULT -> 100 to 9999
     }
 
+    // 掛け算は結果が大きくなりやすいため、足し算・引き算とは異なる範囲を設定
+    // 割り算は掛け算と難易度を合わせるために掛け算の範囲と合わせる
+    // EASY: 九九の範囲(1〜9)、NORMAL: 19の段まで(1〜19)、DIFFICULT: 二桁同士の計算(1〜99)
     private fun getMultiplicationRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
         Level.EASY -> 1 to 9
-        Level.NORMAL -> 1 to 12
+        Level.NORMAL -> 1 to 19
         Level.DIFFICULT -> 1 to 99
     }
 }
