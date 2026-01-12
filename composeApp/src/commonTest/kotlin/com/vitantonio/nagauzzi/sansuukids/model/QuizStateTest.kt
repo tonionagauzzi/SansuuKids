@@ -2,6 +2,7 @@ package com.vitantonio.nagauzzi.sansuukids.model
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -43,6 +44,28 @@ class QuizStateTest {
 
         // Then: 入力が反映される
         assertEquals("5", state.currentInput)
+    }
+
+    @Test
+    fun appendDigitで負の数値を入力すると例外がスローされる() {
+        // Given: QuizStateを初期化する
+        val state = QuizState(createTestQuiz())
+
+        // When & Then: -1を入力しようとすると例外がスローされる
+        assertFailsWith<IllegalArgumentException> {
+            state.appendDigit(-1)
+        }
+    }
+
+    @Test
+    fun appendDigitで10以上の数値を一度に入力すると例外がスローされる() {
+        // Given: QuizStateを初期化する
+        val state = QuizState(createTestQuiz())
+
+        // When & Then: 10を入力しようとすると例外がスローされる
+        assertFailsWith<IllegalArgumentException> {
+            state.appendDigit(10)
+        }
     }
 
     @Test
