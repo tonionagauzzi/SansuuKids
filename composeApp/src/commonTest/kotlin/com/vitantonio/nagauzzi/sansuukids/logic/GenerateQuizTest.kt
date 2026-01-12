@@ -1,20 +1,23 @@
-package com.vitantonio.nagauzzi.sansuukids.model
+package com.vitantonio.nagauzzi.sansuukids.logic
 
-import kotlin.random.Random
+import com.vitantonio.nagauzzi.sansuukids.model.Level
+import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.Operator
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class QuestionGeneratorTest {
+class GenerateQuizTest {
 
     @Test
     fun 指定したモードとレベルのクイズを生成する() {
         // Given: 任意のモードとレベルを指定する
         val mode = Mode.ADDITION
         val level = Level.EASY
+        val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
-        val quiz = QuestionGenerator.generateQuiz(mode, level)
+        val quiz = generateQuiz(mode, level)
 
         // Then: 指定したモードとレベルのクイズが生成される
         assertEquals(mode, quiz.mode)
@@ -26,9 +29,10 @@ class QuestionGeneratorTest {
         // Given: ADDITIONモードを指定する
         val mode = Mode.ADDITION
         val level = Level.EASY
+        val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
-        val quiz = QuestionGenerator.generateQuiz(mode, level)
+        val quiz = generateQuiz(mode, level)
 
         // Then: 全問が足し算である
         assertTrue(quiz.questions.all { it.operator == Operator.ADDITION })
@@ -39,10 +43,10 @@ class QuestionGeneratorTest {
         // Given: SUBTRACTIONモードを指定する
         val mode = Mode.SUBTRACTION
         val level = Level.NORMAL
-        val random = Random(42)
+        val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
-        val quiz = QuestionGenerator.generateQuiz(mode, level, random)
+        val quiz = generateQuiz(mode, level)
 
         // Then: 全問の答えが0以上である
         assertTrue(quiz.questions.all { it.correctAnswer >= 0 })
@@ -53,10 +57,10 @@ class QuestionGeneratorTest {
         // Given: DIVISIONモードを指定する
         val mode = Mode.DIVISION
         val level = Level.NORMAL
-        val random = Random(42)
+        val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
-        val quiz = QuestionGenerator.generateQuiz(mode, level, random)
+        val quiz = generateQuiz(mode, level)
 
         // Then: 全問が割り切れる（余りなし）
         assertTrue(quiz.questions.all {
@@ -70,10 +74,10 @@ class QuestionGeneratorTest {
         // Given: EASYレベルとADDITIONモードを指定する
         val mode = Mode.ADDITION
         val level = Level.EASY
-        val random = Random(42)
+        val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
-        val quiz = QuestionGenerator.generateQuiz(mode, level, random)
+        val quiz = generateQuiz(mode, level)
 
         // Then: 全問の左右オペランドが1〜9である
         assertTrue(quiz.questions.all { it.leftOperand in 1..9 && it.rightOperand in 1..9 })
@@ -84,10 +88,10 @@ class QuestionGeneratorTest {
         // Given: NORMALレベルとADDITIONモードを指定する
         val mode = Mode.ADDITION
         val level = Level.NORMAL
-        val random = Random(42)
+        val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
-        val quiz = QuestionGenerator.generateQuiz(mode, level, random)
+        val quiz = generateQuiz(mode, level)
 
         // Then: 全問の左右オペランドが1〜99である
         assertTrue(quiz.questions.all { it.leftOperand in 1..99 && it.rightOperand in 1..99 })
@@ -98,10 +102,10 @@ class QuestionGeneratorTest {
         // Given: DIFFICULTレベルとADDITIONモードを指定する
         val mode = Mode.ADDITION
         val level = Level.DIFFICULT
-        val random = Random(42)
+        val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
-        val quiz = QuestionGenerator.generateQuiz(mode, level, random)
+        val quiz = generateQuiz(mode, level)
 
         // Then: 全問の左右オペランドが100〜9999である
         assertTrue(quiz.questions.all { it.leftOperand in 100..9999 && it.rightOperand in 100..9999 })
@@ -112,11 +116,11 @@ class QuestionGeneratorTest {
         // Given: ALLモードを指定する
         val mode = Mode.ALL
         val level = Level.EASY
-        val random = Random(42)
+        val generateQuiz = GenerateQuiz()
 
         // When: 100問のクイズを生成して演算子を収集する（10問では不十分な場合があるため）
         val allOperators = (1..10).flatMap {
-            QuestionGenerator.generateQuiz(mode, level, random).questions.map { q -> q.operator }
+            generateQuiz(mode, level).questions.map { q -> q.operator }
         }.toSet()
 
         // Then: 4種類の演算子が含まれる
@@ -128,10 +132,10 @@ class QuestionGeneratorTest {
         // Given: ADDITIONモードを指定する
         val mode = Mode.ADDITION
         val level = Level.EASY
-        val random = Random(42)
+        val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
-        val quiz = QuestionGenerator.generateQuiz(mode, level, random)
+        val quiz = generateQuiz(mode, level)
 
         // Then: 全問の正解が左右のオペランドの和である
         assertTrue(quiz.questions.all { it.leftOperand + it.rightOperand == it.correctAnswer })
@@ -142,10 +146,10 @@ class QuestionGeneratorTest {
         // Given: SUBTRACTIONモードを指定する
         val mode = Mode.SUBTRACTION
         val level = Level.EASY
-        val random = Random(42)
+        val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
-        val quiz = QuestionGenerator.generateQuiz(mode, level, random)
+        val quiz = generateQuiz(mode, level)
 
         // Then: 全問の正解が左から右を引いた値である
         assertTrue(quiz.questions.all { it.leftOperand - it.rightOperand == it.correctAnswer })
@@ -156,10 +160,10 @@ class QuestionGeneratorTest {
         // Given: MULTIPLICATIONモードを指定する
         val mode = Mode.MULTIPLICATION
         val level = Level.EASY
-        val random = Random(42)
+        val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
-        val quiz = QuestionGenerator.generateQuiz(mode, level, random)
+        val quiz = generateQuiz(mode, level)
 
         // Then: 全問の正解が左右のオペランドの積である
         assertTrue(quiz.questions.all { it.leftOperand * it.rightOperand == it.correctAnswer })
@@ -170,10 +174,10 @@ class QuestionGeneratorTest {
         // Given: DIVISIONモードを指定する
         val mode = Mode.DIVISION
         val level = Level.EASY
-        val random = Random(42)
+        val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
-        val quiz = QuestionGenerator.generateQuiz(mode, level, random)
+        val quiz = generateQuiz(mode, level)
 
         // Then: 全問の正解が左を右で割った値である
         assertTrue(quiz.questions.all { it.leftOperand / it.rightOperand == it.correctAnswer })
