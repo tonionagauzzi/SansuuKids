@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -10,12 +11,14 @@ import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ResultRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.viewmodel.QuizViewModel
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.HomeScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.LevelSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.QuizScreen
+import com.vitantonio.nagauzzi.sansuukids.ui.screen.ResultScreen
 
 internal fun navigationEntryProvider(
     key: SansuuKidsRoute,
@@ -75,6 +78,18 @@ internal fun navigationEntryProvider(
             }
             val quizState by viewModel.quizState.collectAsState()
 
+            if (quizState.isQuizComplete) {
+                LaunchedEffect(Unit) {
+                    navigationState.navigateTo(
+                        ResultRoute(
+                            correctCount = quizState.correctCount,
+                            totalCount = quizState.totalQuestions.size,
+                            medal = quizState.earnedMedal
+                        )
+                    )
+                }
+            }
+
             QuizScreen(
                 quizState = quizState,
                 onDigitClick = { digit -> viewModel.appendDigit(digit) },
@@ -84,10 +99,31 @@ internal fun navigationEntryProvider(
                 },
                 onCancelClick = {
                     if (quizState.answeredCount > 0) {
-                        // TODO: Navigate to ResultScreen with partial result
+                        navigationState.navigateTo(
+                            ResultRoute(
+                                correctCount = quizState.correctCount,
+                                totalCount = quizState.answeredCount,
+                                medal = quizState.earnedMedal
+                            )
+                        )
                     } else {
                         navigationState.popToHome()
                     }
+                }
+            )
+        }
+
+        is ResultRoute -> NavEntry(key) {
+            ResultScreen(
+                correctCount = key.correctCount,
+                totalCount = key.totalCount,
+                medal = key.medal,
+                onRetryClick = {
+                    navigationState.popToHome()
+                    navigationState.navigateTo(ModeSelectionRoute)
+                },
+                onHomeClick = {
+                    navigationState.popToHome()
                 }
             )
         }

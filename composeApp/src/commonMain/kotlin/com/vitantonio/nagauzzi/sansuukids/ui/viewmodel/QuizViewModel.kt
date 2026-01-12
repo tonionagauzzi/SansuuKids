@@ -15,9 +15,8 @@ internal class QuizViewModel(
     level: Level
 ) : ViewModel() {
     private val generateQuiz = GenerateQuiz()
-    private val quiz = generateQuiz(mode, level)
 
-    private val mutableQuizState = MutableStateFlow(QuizState(quiz))
+    private val mutableQuizState = MutableStateFlow(QuizState(generateQuiz(mode, level)))
     val quizState: StateFlow<QuizState> = mutableQuizState
 
     private var currentQuizState: QuizState

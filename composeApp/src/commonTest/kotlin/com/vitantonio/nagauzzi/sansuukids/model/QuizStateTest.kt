@@ -186,4 +186,40 @@ class QuizStateTest {
         // Then: Question.Noneが返される
         assertIs<Question.None>(state.currentQuestion)
     }
+
+    @Test
+    fun correctCountは正解数を返す() {
+        // Given: テスト用クイズ
+        val quiz = createTestQuiz()
+        val userAnswers = listOf(
+            UserAnswer(questionIndex = 0, answer = 2, isCorrect = true),
+            UserAnswer(questionIndex = 1, answer = 3, isCorrect = false),
+            UserAnswer(questionIndex = 2, answer = 4, isCorrect = true)
+        )
+
+        // When: 回答を含むQuizStateを作成する
+        val state = QuizState(quiz = quiz, userAnswers = userAnswers)
+
+        // Then: 正解数は2
+        assertEquals(2, state.correctCount)
+    }
+
+    @Test
+    fun earnedMedalは正答率に応じたメダルを返す() {
+        // Given: 10問中8問正解（80%）のQuizState
+        val quiz = createTestQuiz()
+        val userAnswers = (0 until quizSize).map { index ->
+            UserAnswer(
+                questionIndex = index,
+                answer = index + 2,
+                isCorrect = index < 8 // 最初の8問を正解
+            )
+        }
+
+        // When: QuizStateを作成する
+        val state = QuizState(quiz = quiz, userAnswers = userAnswers)
+
+        // Then: 銀メダルを獲得
+        assertEquals(Medal.Silver, state.earnedMedal)
+    }
 }
