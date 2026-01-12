@@ -69,6 +69,9 @@ internal class QuizState(
     fun toResult(): QuizResult = QuizResult(quiz, _userAnswers.toList())
 
     companion object {
+        // 解答として入力を許可する最大桁数。
+        // 現状は最大値が足し算の 9999 + 9999 = 19998 を超えることがないため、最大 5 桁を設定している。
+        // 問題の難易度を変更して、これより大きな値を扱う場合はこの値も合わせて見直す必要がある。
         private const val MAX_INPUT_LENGTH = 5
     }
 }
