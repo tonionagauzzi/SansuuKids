@@ -1,0 +1,220 @@
+package com.vitantonio.nagauzzi.sansuukids.model
+
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
+
+class QuizStateTest {
+    private val quizSize = 10
+
+    private fun createTestQuiz(): Quiz {
+        val questions = (1..quizSize).map { index ->
+            Addition(
+                leftOperand = index,
+                rightOperand = 1
+            )
+        }
+        return Quiz(questions, Mode.ADDITION, Level.EASY)
+    }
+
+    @Test
+    fun 初期状態では最初の問題が表示される() {
+        // Given: テスト用クイズを作成する
+        val quiz = createTestQuiz()
+
+        // When: QuizStateを初期化する
+        val state = QuizState(quiz)
+
+        // Then: currentQuestionIndexが0で最初の問題が表示される
+        assertEquals(0, state.currentQuestionIndex)
+        assertEquals(quiz.questions[0], state.currentQuestion)
+    }
+
+    @Test
+    fun currentInputの初期値は空文字列() {
+        // Given: テスト用クイズを作成する
+        val quiz = createTestQuiz()
+
+        // When: QuizStateを初期化する
+        val state = QuizState(quiz)
+
+        // Then: currentInputが空文字列
+        assertEquals("", state.currentInput)
+    }
+
+    @Test
+    fun userAnswersの初期値は空リスト() {
+        // Given: テスト用クイズを作成する
+        val quiz = createTestQuiz()
+
+        // When: QuizStateを初期化する
+        val state = QuizState(quiz)
+
+        // Then: userAnswersが空リスト
+        assertEquals(emptyList(), state.userAnswers)
+    }
+
+    @Test
+    fun 全問回答するとisQuizCompleteがtrueになる() {
+        // Given: 全問回答済みのQuizState
+        val quiz = createTestQuiz()
+        val userAnswers = (0 until quizSize).map { index ->
+            UserAnswer(
+                questionIndex = index,
+                answer = index + 2,
+                isCorrect = true
+            )
+        }
+
+        // When: 全問回答済みの状態を作成する
+        val state = QuizState(
+            quiz = quiz,
+            currentQuestionIndex = quizSize - 1,
+            userAnswers = userAnswers
+        )
+
+        // Then: クイズが完了している
+        assertTrue(state.isQuizComplete)
+        assertEquals(quizSize, state.answeredCount)
+    }
+
+    @Test
+    fun 途中までの回答ではisQuizCompleteがfalseのまま() {
+        // Given: 途中まで回答済みのQuizState
+        val quiz = createTestQuiz()
+        val userAnswers = listOf(
+            UserAnswer(questionIndex = 0, answer = 2, isCorrect = true),
+            UserAnswer(questionIndex = 1, answer = 3, isCorrect = true)
+        )
+
+        // When: 途中まで回答済みの状態を作成する
+        val state = QuizState(
+            quiz = quiz,
+            currentQuestionIndex = 2,
+            userAnswers = userAnswers
+        )
+
+        // Then: クイズは完了していない
+        assertFalse(state.isQuizComplete)
+        assertEquals(2, state.answeredCount)
+    }
+
+    @Test
+    fun toResultで正しいQuizResultが生成される() {
+        // Given: いくつか回答したQuizState
+        val quiz = createTestQuiz()
+        val userAnswers = listOf(
+            UserAnswer(questionIndex = 0, answer = 2, isCorrect = true),
+            UserAnswer(questionIndex = 1, answer = 9, isCorrect = false)
+        )
+        val state = QuizState(
+            quiz = quiz,
+            currentQuestionIndex = 2,
+            userAnswers = userAnswers
+        )
+
+        // When: 結果を生成する
+        val result = state.toResult()
+
+        // Then: 正しいQuizResultが生成される
+        assertEquals(2, result.userAnswers.size)
+        assertEquals(1, result.correctCount)
+    }
+
+    @Test
+    fun progressは現在の問題番号に応じた値を返す() {
+        // Given: テスト用クイズ
+        val quiz = createTestQuiz()
+
+        // When: 最初の問題
+        val state1 = QuizState(quiz, currentQuestionIndex = 0)
+
+        // Then: 進捗は0.1（1/10）
+        assertEquals(0.1f, state1.progress)
+
+        // When: 2問目
+        val state2 = QuizState(quiz, currentQuestionIndex = 1)
+
+        // Then: 進捗は0.2（2/10）
+        assertEquals(0.2f, state2.progress)
+    }
+
+    @Test
+    fun answeredCountは回答した問題数を返す() {
+        // Given: テスト用クイズ
+        val quiz = createTestQuiz()
+
+        // When: 初期状態
+        val state1 = QuizState(quiz)
+
+        // Then: 回答数は0
+        assertEquals(0, state1.answeredCount)
+
+        // When: 3問回答後
+        val userAnswers = listOf(
+            UserAnswer(questionIndex = 0, answer = 2, isCorrect = true),
+            UserAnswer(questionIndex = 1, answer = 3, isCorrect = true),
+            UserAnswer(questionIndex = 2, answer = 4, isCorrect = true)
+        )
+        val state2 = QuizState(
+            quiz = quiz,
+            currentQuestionIndex = 3,
+            userAnswers = userAnswers
+        )
+
+        // Then: 回答数は3
+        assertEquals(3, state2.answeredCount)
+    }
+
+    @Test
+    fun totalQuestionsはクイズの全問題を返す() {
+        // Given: テスト用クイズ
+        val quiz = createTestQuiz()
+
+        // When: QuizStateを初期化する
+        val state = QuizState(quiz)
+
+        // Then: totalQuestionsがクイズの全問題と一致する
+        assertEquals(quiz.questions, state.totalQuestions)
+        assertEquals(quizSize, state.totalQuestions.size)
+    }
+
+    @Test
+    fun currentQuestionは現在の問題番号に応じた問題を返す() {
+        // Given: テスト用クイズ
+        val quiz = createTestQuiz()
+
+        // When: 3問目の状態
+        val state = QuizState(quiz, currentQuestionIndex = 2)
+
+        // Then: 3問目の問題を返す
+        assertEquals(quiz.questions[2], state.currentQuestion)
+    }
+
+    @Test
+    fun currentQuestionで範囲外のインデックスを指定するとNoneを返す() {
+        // Given: テスト用クイズ
+        val quiz = createTestQuiz()
+
+        // When: クイズの問題数を超えるインデックスで状態を作成する
+        val state = QuizState(quiz, currentQuestionIndex = quizSize)
+
+        // Then: Question.Noneが返される
+        assertIs<Question.None>(state.currentQuestion)
+    }
+
+    @Test
+    fun currentQuestionで負のインデックスを指定するとNoneを返す() {
+        // Given: テスト用クイズ
+        val quiz = createTestQuiz()
+
+        // When: 負のインデックスで状態を作成する
+        val state = QuizState(quiz, currentQuestionIndex = -1)
+
+        // Then: Question.Noneが返される
+        assertIs<Question.None>(state.currentQuestion)
+    }
+}

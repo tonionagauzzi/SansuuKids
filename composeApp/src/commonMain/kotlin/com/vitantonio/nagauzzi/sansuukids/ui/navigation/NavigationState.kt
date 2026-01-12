@@ -20,6 +20,12 @@ internal class NavigationState(
     fun navigateBack(): SansuuKidsRoute? {
         return backStack.removeLastOrNull()
     }
+
+    fun popToHome() {
+        while (backStack.size > 1) {
+            backStack.removeLastOrNull()
+        }
+    }
 }
 
 @Composable

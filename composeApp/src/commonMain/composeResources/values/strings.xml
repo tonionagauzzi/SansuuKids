@@ -14,4 +14,8 @@
     <string name="level_easy">Easy</string>
     <string name="level_normal">Normal</string>
     <string name="level_difficult">Difficult</string>
+    <string name="quiz_cancel">Cancel</string>
+    <string name="quiz_delete">Del</string>
+    <string name="quiz_submit">OK</string>
+    <string name="quiz_progress">%1$d/%2$d</string>
 </resources>
