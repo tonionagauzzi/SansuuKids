@@ -9,7 +9,6 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
-import com.vitantonio.nagauzzi.sansuukids.model.Operator
 import com.vitantonio.nagauzzi.sansuukids.model.Question
 import com.vitantonio.nagauzzi.sansuukids.model.Quiz
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
@@ -24,11 +23,9 @@ class QuizScreenTest {
 
     private fun createTestQuiz(): Quiz {
         val questions = (1..quizSize).map { index ->
-            Question(
+            Question.Addition(
                 leftOperand = index,
-                rightOperand = 1,
-                operator = Operator.ADDITION,
-                correctAnswer = index + 1
+                rightOperand = 1
             )
         }
         return Quiz(questions, Mode.ADDITION, Level.EASY)

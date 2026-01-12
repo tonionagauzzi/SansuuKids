@@ -3,6 +3,7 @@ package com.vitantonio.nagauzzi.sansuukids.model
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 class QuizStateTest {
@@ -10,11 +11,9 @@ class QuizStateTest {
 
     private fun createTestQuiz(): Quiz {
         val questions = (1..quizSize).map { index ->
-            Question(
+            Question.Addition(
                 leftOperand = index,
-                rightOperand = 1,
-                operator = Operator.ADDITION,
-                correctAnswer = index + 1
+                rightOperand = 1
             )
         }
         return Quiz(questions, Mode.ADDITION, Level.EASY)
@@ -192,5 +191,29 @@ class QuizStateTest {
 
         // Then: 3問目の問題を返す
         assertEquals(quiz.questions[2], state.currentQuestion)
+    }
+
+    @Test
+    fun currentQuestionで範囲外のインデックスを指定するとNoneを返す() {
+        // Given: テスト用クイズ
+        val quiz = createTestQuiz()
+
+        // When: クイズの問題数を超えるインデックスで状態を作成する
+        val state = QuizState(quiz, currentQuestionIndex = quizSize)
+
+        // Then: Question.Noneが返される
+        assertIs<Question.None>(state.currentQuestion)
+    }
+
+    @Test
+    fun currentQuestionで負のインデックスを指定するとNoneを返す() {
+        // Given: テスト用クイズ
+        val quiz = createTestQuiz()
+
+        // When: 負のインデックスで状態を作成する
+        val state = QuizState(quiz, currentQuestionIndex = -1)
+
+        // Then: Question.Noneが返される
+        assertIs<Question.None>(state.currentQuestion)
     }
 }

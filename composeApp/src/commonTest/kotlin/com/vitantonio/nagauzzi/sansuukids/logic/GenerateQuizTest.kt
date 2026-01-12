@@ -2,7 +2,7 @@ package com.vitantonio.nagauzzi.sansuukids.logic
 
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
-import com.vitantonio.nagauzzi.sansuukids.model.Operator
+import com.vitantonio.nagauzzi.sansuukids.model.Question
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -35,7 +35,7 @@ class GenerateQuizTest {
         val quiz = generateQuiz(mode, level)
 
         // Then: 全問が足し算である
-        assertTrue(quiz.questions.all { it.operator == Operator.ADDITION })
+        assertTrue(quiz.questions.all { it is Question.Addition })
     }
 
     @Test
@@ -63,9 +63,10 @@ class GenerateQuizTest {
         val quiz = generateQuiz(mode, level)
 
         // Then: 全問が割り切れる（余りなし）
-        assertTrue(quiz.questions.all {
-            it.leftOperand % it.rightOperand == 0 &&
-                    it.leftOperand / it.rightOperand == it.correctAnswer
+        assertTrue(quiz.questions.all { question ->
+            question is Question.Division &&
+                    question.dividend % question.divisor == 0 &&
+                    question.dividend / question.divisor == question.correctAnswer
         })
     }
 
@@ -80,7 +81,11 @@ class GenerateQuizTest {
         val quiz = generateQuiz(mode, level)
 
         // Then: 全問の左右オペランドが1〜9である
-        assertTrue(quiz.questions.all { it.leftOperand in 1..9 && it.rightOperand in 1..9 })
+        assertTrue(quiz.questions.all { question ->
+            question is Question.Addition &&
+                    question.leftOperand in 1..9 &&
+                    question.rightOperand in 1..9
+        })
     }
 
     @Test
@@ -94,7 +99,11 @@ class GenerateQuizTest {
         val quiz = generateQuiz(mode, level)
 
         // Then: 全問の左右オペランドが1〜99である
-        assertTrue(quiz.questions.all { it.leftOperand in 1..99 && it.rightOperand in 1..99 })
+        assertTrue(quiz.questions.all { question ->
+            question is Question.Addition &&
+                    question.leftOperand in 1..99 &&
+                    question.rightOperand in 1..99
+        })
     }
 
     @Test
@@ -108,7 +117,11 @@ class GenerateQuizTest {
         val quiz = generateQuiz(mode, level)
 
         // Then: 全問の左右オペランドが100〜9999である
-        assertTrue(quiz.questions.all { it.leftOperand in 100..9999 && it.rightOperand in 100..9999 })
+        assertTrue(quiz.questions.all { question ->
+            question is Question.Addition &&
+                    question.leftOperand in 100..9999 &&
+                    question.rightOperand in 100..9999
+        })
     }
 
     @Test
@@ -119,12 +132,18 @@ class GenerateQuizTest {
         val generateQuiz = GenerateQuiz()
 
         // When: 100問のクイズを生成して演算子を収集する（10問では不十分な場合があるため）
-        val allOperators = (1..10).flatMap {
-            generateQuiz(mode, level).questions.map { q -> q.operator }
+        val allQuestionTypes = (1..10).flatMap {
+            generateQuiz(mode, level).questions.map { q -> q::class }
         }.toSet()
 
         // Then: 4種類の演算子が含まれる
-        assertEquals(Operator.entries.toSet(), allOperators)
+        val expectedTypes = setOf(
+            Question.Addition::class,
+            Question.Subtraction::class,
+            Question.Multiplication::class,
+            Question.Division::class
+        )
+        assertEquals(expectedTypes, allQuestionTypes)
     }
 
     @Test
@@ -138,7 +157,10 @@ class GenerateQuizTest {
         val quiz = generateQuiz(mode, level)
 
         // Then: 全問の正解が左右のオペランドの和である
-        assertTrue(quiz.questions.all { it.leftOperand + it.rightOperand == it.correctAnswer })
+        assertTrue(quiz.questions.all { question ->
+            question is Question.Addition &&
+                    question.leftOperand + question.rightOperand == question.correctAnswer
+        })
     }
 
     @Test
@@ -152,7 +174,10 @@ class GenerateQuizTest {
         val quiz = generateQuiz(mode, level)
 
         // Then: 全問の正解が左から右を引いた値である
-        assertTrue(quiz.questions.all { it.leftOperand - it.rightOperand == it.correctAnswer })
+        assertTrue(quiz.questions.all { question ->
+            question is Question.Subtraction &&
+                    question.leftOperand - question.rightOperand == question.correctAnswer
+        })
     }
 
     @Test
@@ -166,7 +191,10 @@ class GenerateQuizTest {
         val quiz = generateQuiz(mode, level)
 
         // Then: 全問の正解が左右のオペランドの積である
-        assertTrue(quiz.questions.all { it.leftOperand * it.rightOperand == it.correctAnswer })
+        assertTrue(quiz.questions.all { question ->
+            question is Question.Multiplication &&
+                    question.leftOperand * question.rightOperand == question.correctAnswer
+        })
     }
 
     @Test
@@ -180,6 +208,9 @@ class GenerateQuizTest {
         val quiz = generateQuiz(mode, level)
 
         // Then: 全問の正解が左を右で割った値である
-        assertTrue(quiz.questions.all { it.leftOperand / it.rightOperand == it.correctAnswer })
+        assertTrue(quiz.questions.all { question ->
+            question is Question.Division &&
+                    question.dividend / question.divisor == question.correctAnswer
+        })
     }
 }

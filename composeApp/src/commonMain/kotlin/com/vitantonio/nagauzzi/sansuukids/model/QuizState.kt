@@ -7,7 +7,7 @@ internal data class QuizState(
     val userAnswers: List<UserAnswer> = emptyList()
 ) {
     val currentQuestion: Question
-        get() = quiz.questions[currentQuestionIndex]
+        get() = quiz.questions.getOrElse(currentQuestionIndex) { Question.None }
 
     val totalQuestions: List<Question>
         get() = quiz.questions

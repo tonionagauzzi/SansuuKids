@@ -10,10 +10,10 @@ class QuizTest {
         // Given: 四則演算それぞれを持つQuizを設定
         val quiz = Quiz(
             questions = listOf(
-                Question(5, 3, Operator.ADDITION, 8),
-                Question(12, 7, Operator.SUBTRACTION, 5),
-                Question(9, 12, Operator.MULTIPLICATION, 108),
-                Question(100, 4, Operator.DIVISION, 25)
+                Question.Addition(5, 3),         // correctAnswer = 8
+                Question.Subtraction(12, 7),     // correctAnswer = 5
+                Question.Multiplication(9, 12),  // correctAnswer = 108
+                Question.Division(100, 4)        // correctAnswer = 25
             ),
             mode = Mode.ALL,
             level = Level.NORMAL
