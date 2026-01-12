@@ -13,7 +13,15 @@ internal data class QuizState(
         get() = quiz.questions
 
     val progress: Float
-        get() = (currentQuestionIndex + 1) / quiz.questions.size.toFloat()
+        get() {
+            val totalQuestionsCount = quiz.questions.size
+            return if (totalQuestionsCount == 0) {
+                // 問題が存在しない場合は完了扱いとし、進捗を1とする
+                1.0f
+            } else {
+                (currentQuestionIndex + 1) / totalQuestionsCount.toFloat()
+            }
+        }
 
     // 正解より大きな桁数の回答を入力できないことはプレイヤー（幼児〜小学生）へのヒントとして許容する
     val isAppendDigitEnabled: Boolean
