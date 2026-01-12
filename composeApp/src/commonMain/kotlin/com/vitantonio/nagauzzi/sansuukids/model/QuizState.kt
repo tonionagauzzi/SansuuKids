@@ -1,7 +1,5 @@
 package com.vitantonio.nagauzzi.sansuukids.model
 
-import com.vitantonio.nagauzzi.sansuukids.logic.AwardMedal
-
 /**
  * クイズの進行状態を表すクラス。
  *
@@ -14,8 +12,6 @@ internal data class QuizState(
     val currentInput: String = "",
     val userAnswers: List<UserAnswer> = emptyList()
 ) {
-    val awardMedal: AwardMedal = AwardMedal()
-
     /**
      * 次に回答する問題のインデックス（0始まり）。
      * [userAnswers]のサイズから自動計算される。
@@ -91,10 +87,4 @@ internal data class QuizState(
      */
     val earnedScore: Int
         get() = ((correctCount.toFloat() / totalQuestions.size.toFloat()) * 100).toInt()
-
-    /**
-     * 正答率に応じて獲得したメダル。
-     */
-    val earnedMedal: Medal
-        get() = awardMedal(isQuizComplete, correctCount, totalQuestions.size)
 }

@@ -1,6 +1,7 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.viewmodel
 
 import com.vitantonio.nagauzzi.sansuukids.model.Level
+import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math
 import kotlin.test.Test
@@ -210,5 +211,25 @@ class QuizViewModelTest {
 
         // Then: 入力が空なので無効
         assertTrue(viewModel.quizState.value.currentInput.isEmpty())
+    }
+
+    @Test
+    fun earnedMedalは正答率に応じたメダルを返す() {
+        // Given: ViewModelを初期化する
+        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val quizSize = viewModel.quizState.value.totalQuestions.size
+
+        // When: 全問正解する
+        repeat(quizSize) {
+            val currentMathQuestion = viewModel.quizState.value.currentQuestion as Math
+            val correctAnswer = currentMathQuestion.correctAnswer
+            correctAnswer.toString().forEach { digit ->
+                viewModel.appendDigit(digit.digitToInt())
+            }
+            viewModel.submitAnswer()
+        }
+
+        // Then: ゴールドメダルが獲得できる
+        assertEquals(Medal.Gold, viewModel.earnedMedal)
     }
 }

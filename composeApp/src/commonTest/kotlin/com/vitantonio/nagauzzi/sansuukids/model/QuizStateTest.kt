@@ -260,23 +260,4 @@ class QuizStateTest {
         // Then: 0点を獲得
         assertEquals(0, state.earnedScore)
     }
-
-    @Test
-    fun earnedMedalは正答率に応じたメダルを返す() {
-        // Given: 10問中8問正解（80%）のQuizState
-        val quiz = createTestQuiz()
-        val userAnswers = (0 until quizSize).map { index ->
-            UserAnswer(
-                questionIndex = index,
-                answer = index + 2,
-                isCorrect = index < 8 // 最初の8問を正解
-            )
-        }
-
-        // When: QuizStateを作成する
-        val state = QuizState(quiz = quiz, userAnswers = userAnswers)
-
-        // Then: 銀メダルを獲得
-        assertEquals(Medal.Silver, state.earnedMedal)
-    }
 }

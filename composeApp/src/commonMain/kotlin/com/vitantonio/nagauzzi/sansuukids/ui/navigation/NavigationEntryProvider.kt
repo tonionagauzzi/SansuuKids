@@ -83,7 +83,7 @@ internal fun navigationEntryProvider(
                     navigationState.navigateTo(
                         ResultRoute(
                             score = quizState.earnedScore,
-                            medal = quizState.earnedMedal
+                            medal = viewModel.earnedMedal
                         )
                     )
                 }
@@ -101,7 +101,7 @@ internal fun navigationEntryProvider(
                         navigationState.navigateTo(
                             ResultRoute(
                                 score = quizState.earnedScore,
-                                medal = quizState.earnedMedal
+                                medal = viewModel.earnedMedal
                             )
                         )
                     } else {
