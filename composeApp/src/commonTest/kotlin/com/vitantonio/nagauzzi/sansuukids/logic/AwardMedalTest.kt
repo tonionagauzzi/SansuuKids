@@ -88,8 +88,8 @@ class AwardMedalTest {
     @Test
     fun 全ての問題に回答していない場合は何も授与しない() {
         // Given: 9問中5問正解
-        val correctCount = 9
-        val totalCount = 5
+        val correctCount = 5
+        val totalCount = 9
 
         // When: メダルを授与する
         val medal = awardMedal(false, correctCount, totalCount)
