@@ -78,8 +78,8 @@ internal fun navigationEntryProvider(
             }
             val quizState by viewModel.quizState.collectAsState()
 
-            if (quizState.isQuizComplete) {
-                LaunchedEffect(Unit) {
+            LaunchedEffect(quizState.isQuizComplete) {
+                if (quizState.isQuizComplete) {
                     navigationState.navigateTo(
                         ResultRoute(
                             score = quizState.earnedScore,
