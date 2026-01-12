@@ -152,8 +152,11 @@ class QuizScreenTest {
 
     @Test
     fun 入力がある場合は決定ボタンが有効化される() = runComposeUiTest {
-        // Given: クイズ画面を表示し、数字を入力する
-        val quizState = QuizState(createTestQuiz())
+        // Given: 数字が入力済みのクイズ画面を表示する
+        val quizState = QuizState(
+            quiz = createTestQuiz(),
+            currentInput = "5"
+        )
         setContent {
             SansuuKidsTheme {
                 QuizScreen(
@@ -166,8 +169,7 @@ class QuizScreenTest {
             }
         }
 
-        // When: 数字を入力する
-        quizState.appendDigit(5)
+        // When: 画面が表示される（入力済みの状態）
 
         // Then: 決定ボタンが有効化されている
         onNodeWithTag("keypad_submit").assertIsEnabled()

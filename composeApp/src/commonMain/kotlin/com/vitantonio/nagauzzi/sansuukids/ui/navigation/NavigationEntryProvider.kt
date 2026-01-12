@@ -1,5 +1,7 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.model.Level
@@ -42,7 +44,14 @@ internal fun navigationEntryProvider(
             LevelSelectionScreen(
                 onEasyClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.EASY)) },
                 onNormalClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.NORMAL)) },
-                onDifficultClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.DIFFICULT)) }
+                onDifficultClick = {
+                    navigationState.navigateTo(
+                        QuizRoute(
+                            key.mode,
+                            Level.DIFFICULT
+                        )
+                    )
+                }
             )
         }
 
@@ -50,19 +59,20 @@ internal fun navigationEntryProvider(
             val viewModel = viewModel(key = "${key.mode}_${key.level}") {
                 QuizViewModel(key.mode, key.level)
             }
+            val quizState by viewModel.quizState.collectAsState()
 
             QuizScreen(
-                quizState = viewModel.quizState,
-                onDigitClick = { digit -> viewModel.quizState.appendDigit(digit) },
-                onDeleteClick = { viewModel.quizState.deleteLastDigit() },
+                quizState = quizState,
+                onDigitClick = { digit -> viewModel.appendDigit(digit) },
+                onDeleteClick = { viewModel.deleteLastDigit() },
                 onSubmitClick = {
-                    viewModel.quizState.submitAnswer()
-                    if (viewModel.quizState.isQuizComplete) {
+                    viewModel.submitAnswer()
+                    if (quizState.isQuizComplete) {
                         // TODO: Navigate to ResultScreen with viewModel.quizState.toResult()
                     }
                 },
                 onCancelClick = {
-                    if (viewModel.quizState.answeredCount > 0) {
+                    if (quizState.answeredCount > 0) {
                         // TODO: Navigate to ResultScreen with partial result
                     } else {
                         navigationState.popToHome()
