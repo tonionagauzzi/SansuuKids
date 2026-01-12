@@ -43,7 +43,9 @@ internal class QuizViewModel(
     }
 
     fun submitAnswer() {
-        val answer = currentQuizState.currentInput.toIntOrNull()
+        // 有効な回答が入力されていない場合は送信しない
+        val answer = currentQuizState.currentInput.toIntOrNull() ?: return
+
         val isCorrect = answer == currentQuizState.currentQuestion.correctAnswer
         val nextQuestionIndex =
             if (currentQuizState.currentQuestionIndex < quiz.questions.size - 1) {
