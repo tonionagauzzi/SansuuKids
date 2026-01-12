@@ -27,7 +27,7 @@ internal class QuizViewModel(
 
     fun appendDigit(digit: Int) {
         require(digit in 0..9) { "Digit must be between 0 and 9" }
-        if (currentQuizState.currentInput.length < quiz.maxInputLength) {
+        if (currentQuizState.isAppendDigitEnabled) {
             currentQuizState = currentQuizState.copy(
                 currentInput = currentQuizState.currentInput + digit.toString()
             )
@@ -45,11 +45,12 @@ internal class QuizViewModel(
     fun submitAnswer() {
         val answer = currentQuizState.currentInput.toIntOrNull()
         val isCorrect = answer == currentQuizState.currentQuestion.correctAnswer
-        val nextQuestionIndex = if (currentQuizState.currentQuestionIndex < quiz.questions.size - 1) {
-            currentQuizState.currentQuestionIndex + 1
-        } else {
-            currentQuizState.currentQuestionIndex
-        }
+        val nextQuestionIndex =
+            if (currentQuizState.currentQuestionIndex < quiz.questions.size - 1) {
+                currentQuizState.currentQuestionIndex + 1
+            } else {
+                currentQuizState.currentQuestionIndex
+            }
 
         currentQuizState = currentQuizState.copy(
             currentQuestionIndex = nextQuestionIndex,

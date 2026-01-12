@@ -71,8 +71,8 @@ class QuizViewModelTest {
 
     @Test
     fun appendDigitで複数桁の数字を入力できる() {
-        // Given: NORMALレベルのViewModelを作成する（最大入力桁数が大きい）
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.NORMAL)
+        // Given: DIFFICULTレベルのViewModelを作成する（最大入力桁数が大きい）
+        val viewModel = QuizViewModel(Mode.ADDITION, Level.DIFFICULT)
 
         // When: 複数の数字を入力する
         viewModel.appendDigit(1)

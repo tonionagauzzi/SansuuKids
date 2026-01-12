@@ -133,7 +133,7 @@ internal fun QuizScreen(
             onDigitClick = onDigitClick,
             onDeleteClick = onDeleteClick,
             onSubmitClick = onSubmitClick,
-            isSubmitEnabled = quizState.currentInput.isNotEmpty(),
+            isSubmitEnabled = quizState.isSubmitEnabled,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)

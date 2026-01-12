@@ -15,6 +15,15 @@ internal data class QuizState(
     val progress: Float
         get() = (currentQuestionIndex + 1) / quiz.questions.size.toFloat()
 
+    val isAppendDigitEnabled: Boolean
+        get() {
+            val maxInputLength = currentQuestion.correctAnswer.toString().length
+            return currentInput.length < maxInputLength
+        }
+
+    val isSubmitEnabled: Boolean
+        get() = currentInput.isNotEmpty()
+
     val isQuizComplete: Boolean
         get() = userAnswers.size == quiz.questions.size
 
