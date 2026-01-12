@@ -1,6 +1,8 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
@@ -124,5 +126,50 @@ class QuizScreenTest {
 
         // Then: 最初の問題が表示される
         onNodeWithTag("question_text").assertTextEquals("1 + 1 = ?")
+    }
+
+    @Test
+    fun 入力がない場合は決定ボタンが無効化される() = runComposeUiTest {
+        // Given: 入力なしのクイズ画面を表示する
+        val quizState = QuizState(createTestQuiz())
+        setContent {
+            SansuuKidsTheme {
+                QuizScreen(
+                    quizState = quizState,
+                    onDigitClick = {},
+                    onDeleteClick = {},
+                    onSubmitClick = {},
+                    onCancelClick = {}
+                )
+            }
+        }
+
+        // When: 数字を入力しない
+
+        // Then: 決定ボタンが無効化されている
+        onNodeWithTag("keypad_submit").assertIsNotEnabled()
+    }
+
+    @Test
+    fun 入力がある場合は決定ボタンが有効化される() = runComposeUiTest {
+        // Given: クイズ画面を表示し、数字を入力する
+        val quizState = QuizState(createTestQuiz())
+        setContent {
+            SansuuKidsTheme {
+                QuizScreen(
+                    quizState = quizState,
+                    onDigitClick = {},
+                    onDeleteClick = {},
+                    onSubmitClick = {},
+                    onCancelClick = {}
+                )
+            }
+        }
+
+        // When: 数字を入力する
+        quizState.appendDigit(5)
+
+        // Then: 決定ボタンが有効化されている
+        onNodeWithTag("keypad_submit").assertIsEnabled()
     }
 }
