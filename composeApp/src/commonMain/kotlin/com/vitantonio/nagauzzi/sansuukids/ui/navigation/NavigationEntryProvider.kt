@@ -1,16 +1,15 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
-import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
-import com.vitantonio.nagauzzi.sansuukids.model.QuestionGenerator
-import com.vitantonio.nagauzzi.sansuukids.model.QuizState
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.viewmodel.QuizViewModel
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.HomeScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.LevelSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
@@ -48,22 +47,22 @@ internal fun navigationEntryProvider(
         }
 
         is QuizRoute -> NavEntry(key) {
-            val quizState = remember {
-                QuizState(QuestionGenerator.generateQuiz(key.mode, key.level))
+            val viewModel = viewModel(key = "${key.mode}_${key.level}") {
+                QuizViewModel(key.mode, key.level)
             }
 
             QuizScreen(
-                quizState = quizState,
-                onDigitClick = { digit -> quizState.appendDigit(digit) },
-                onDeleteClick = { quizState.deleteLastDigit() },
+                quizState = viewModel.quizState,
+                onDigitClick = { digit -> viewModel.quizState.appendDigit(digit) },
+                onDeleteClick = { viewModel.quizState.deleteLastDigit() },
                 onSubmitClick = {
-                    quizState.submitAnswer()
-                    if (quizState.isQuizComplete) {
-                        // TODO: Navigate to ResultScreen with quizState.toResult()
+                    viewModel.quizState.submitAnswer()
+                    if (viewModel.quizState.isQuizComplete) {
+                        // TODO: Navigate to ResultScreen with viewModel.quizState.toResult()
                     }
                 },
                 onCancelClick = {
-                    if (quizState.answeredCount > 0) {
+                    if (viewModel.quizState.answeredCount > 0) {
                         // TODO: Navigate to ResultScreen with partial result
                     } else {
                         // Navigate back to HomeRoute
