@@ -131,7 +131,7 @@ class GenerateQuizTest {
         val level = Level.EASY
         val generateQuiz = GenerateQuiz()
 
-        // When: 100問のクイズを生成して演算子を収集する（10問では不十分な場合があるため）
+        // When: 10回クイズを生成して（合計100問）、演算子を収集する（1回分10問では不十分な場合があるため）
         val allQuestionTypes = (1..10).flatMap {
             generateQuiz(mode, level).questions.map { q -> q::class }
         }.toSet()
