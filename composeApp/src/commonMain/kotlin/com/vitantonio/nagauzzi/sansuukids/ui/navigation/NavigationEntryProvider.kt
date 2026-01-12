@@ -42,8 +42,22 @@ internal fun navigationEntryProvider(
 
         is LevelSelectionRoute -> NavEntry(key) {
             LevelSelectionScreen(
-                onEasyClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.EASY)) },
-                onNormalClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.NORMAL)) },
+                onEasyClick = {
+                    navigationState.navigateTo(
+                        QuizRoute(
+                            key.mode,
+                            Level.EASY
+                        )
+                    )
+                },
+                onNormalClick = {
+                    navigationState.navigateTo(
+                        QuizRoute(
+                            key.mode,
+                            Level.NORMAL
+                        )
+                    )
+                },
                 onDifficultClick = {
                     navigationState.navigateTo(
                         QuizRoute(
