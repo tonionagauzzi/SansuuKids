@@ -118,7 +118,7 @@ internal fun QuizScreen(
                     modifier = Modifier.testTag("input_display")
                 ) {
                     Text(
-                        text = quizState.currentInput.ifEmpty { " " },
+                        text = quizState.currentInput,
                         style = MaterialTheme.typography.displayMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
