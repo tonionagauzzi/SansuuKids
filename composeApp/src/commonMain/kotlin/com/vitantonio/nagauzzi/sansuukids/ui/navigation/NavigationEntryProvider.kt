@@ -67,9 +67,6 @@ internal fun navigationEntryProvider(
                 onDeleteClick = { viewModel.deleteLastDigit() },
                 onSubmitClick = {
                     viewModel.submitAnswer()
-                    if (quizState.isQuizComplete) {
-                        // TODO: Navigate to ResultScreen with viewModel.quizState.toResult()
-                    }
                 },
                 onCancelClick = {
                     if (quizState.answeredCount > 0) {
