@@ -51,16 +51,7 @@ internal class QuizViewModel(
         // 回答が正しいかどうかを判定
         val isCorrect = answer == currentMathQuestion.correctAnswer
 
-        // 次の問題を取得。最後の問題の場合は一時的に現在の問題を維持する（結果画面作成時に変更予定）
-        val nextQuestionIndex =
-            if (currentQuizState.currentQuestionIndex < quiz.questions.size - 1) {
-                currentQuizState.currentQuestionIndex + 1
-            } else {
-                currentQuizState.currentQuestionIndex
-            }
-
         currentQuizState = currentQuizState.copy(
-            currentQuestionIndex = nextQuestionIndex,
             currentInput = "",
             userAnswers = currentQuizState.userAnswers + UserAnswer(
                 questionIndex = currentQuizState.currentQuestionIndex,

@@ -79,6 +79,7 @@ internal fun QuizScreen(
             QuizProgressBar(
                 currentQuestion = quizState.currentQuestionIndex + 1,
                 totalQuestions = quizState.totalQuestions.size,
+                progress = quizState.progress,
                 modifier = Modifier.width(150.dp)
             )
         }
