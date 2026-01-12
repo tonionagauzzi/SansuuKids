@@ -16,7 +16,4 @@ internal data class QuizResult(
 ) {
     val correctCount: Int
         get() = userAnswers.count { it.isCorrect }
-
-    val answeredCount: Int
-        get() = userAnswers.count { it.answer != null }
 }
