@@ -174,8 +174,7 @@ private fun KeypadIconButton(
         Icon(
             painter = iconPainter,
             contentDescription = contentDescription,
-            modifier = Modifier.size(32.dp),
-            tint = contentColor
+            modifier = Modifier.size(32.dp)
         )
     }
 }
