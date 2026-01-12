@@ -74,6 +74,4 @@ internal data class QuizState(
      */
     val answeredCount: Int
         get() = userAnswers.size
-
-    fun toResult(): QuizResult = QuizResult(quiz, userAnswers)
 }

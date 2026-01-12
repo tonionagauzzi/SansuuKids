@@ -191,31 +191,6 @@ class QuizViewModelTest {
     }
 
     @Test
-    fun toResultで正しいQuizResultが生成される() {
-        // Given: いくつか回答したViewModel
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
-        val currentMathQuestion = viewModel.quizState.value.currentQuestion as Math
-        val correctAnswer = currentMathQuestion.correctAnswer
-
-        // 1問目: 正解
-        correctAnswer.toString().forEach { digit ->
-            viewModel.appendDigit(digit.digitToInt())
-        }
-        viewModel.submitAnswer()
-
-        // 2問目: 不正解
-        viewModel.appendDigit(0)
-        viewModel.submitAnswer()
-
-        // When: 結果を生成する
-        val result = viewModel.quizState.value.toResult()
-
-        // Then: 正しいQuizResultが生成される
-        assertEquals(2, result.userAnswers.size)
-        assertEquals(1, result.correctCount)
-    }
-
-    @Test
     fun 決定ボタンの有効状態は入力に応じて変化する() {
         // Given: ViewModelを初期化する
         val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)

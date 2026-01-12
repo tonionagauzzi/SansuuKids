@@ -101,27 +101,6 @@ class QuizStateTest {
     }
 
     @Test
-    fun toResultで正しいQuizResultが生成される() {
-        // Given: いくつか回答したQuizState
-        val quiz = createTestQuiz()
-        val userAnswers = listOf(
-            UserAnswer(questionIndex = 0, answer = 2, isCorrect = true),
-            UserAnswer(questionIndex = 1, answer = 9, isCorrect = false)
-        )
-        val state = QuizState(
-            quiz = quiz,
-            userAnswers = userAnswers
-        )
-
-        // When: 結果を生成する
-        val result = state.toResult()
-
-        // Then: 正しいQuizResultが生成される
-        assertEquals(2, result.userAnswers.size)
-        assertEquals(1, result.correctCount)
-    }
-
-    @Test
     fun progressは現在の回答済み問題数に応じた値を返す() {
         // Given: テスト用クイズ
         val quiz = createTestQuiz()
