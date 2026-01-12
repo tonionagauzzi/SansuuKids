@@ -160,7 +160,7 @@ class QuizStateTest {
     }
 
     @Test
-    fun currentQuestionは現在の回答済み問題数に応じた問題を返す() {
+    fun currentQuestionは回答済み問題数から次の問題を返す() {
         // Given: テスト用クイズ
         val quiz = createTestQuiz()
 
