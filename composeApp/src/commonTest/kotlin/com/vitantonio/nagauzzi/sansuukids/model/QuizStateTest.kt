@@ -72,7 +72,6 @@ class QuizStateTest {
         // When: 全問回答済みの状態を作成する
         val state = QuizState(
             quiz = quiz,
-            currentQuestionIndex = quizSize - 1,
             userAnswers = userAnswers
         )
 
@@ -93,7 +92,6 @@ class QuizStateTest {
         // When: 途中まで回答済みの状態を作成する
         val state = QuizState(
             quiz = quiz,
-            currentQuestionIndex = 2,
             userAnswers = userAnswers
         )
 
@@ -112,7 +110,6 @@ class QuizStateTest {
         )
         val state = QuizState(
             quiz = quiz,
-            currentQuestionIndex = 2,
             userAnswers = userAnswers
         )
 
@@ -125,18 +122,20 @@ class QuizStateTest {
     }
 
     @Test
-    fun progressは現在の問題番号に応じた値を返す() {
+    fun progressは現在の回答済み問題数に応じた値を返す() {
         // Given: テスト用クイズ
         val quiz = createTestQuiz()
 
-        // When: 最初の問題
-        val state1 = QuizState(quiz, currentQuestionIndex = 0)
+        // When: 0問回答済み
+        val state1 = QuizState(quiz, userAnswers = emptyList())
 
         // Then: 進捗は0.1（1/10）
         assertEquals(0.1f, state1.progress)
 
-        // When: 2問目
-        val state2 = QuizState(quiz, currentQuestionIndex = 1)
+        // When: 1問回答済み
+        val state2 = QuizState(quiz, userAnswers = listOf(
+            UserAnswer(questionIndex = 0, answer = 2, isCorrect = true)
+        ))
 
         // Then: 進捗は0.2（2/10）
         assertEquals(0.2f, state2.progress)
@@ -161,7 +160,6 @@ class QuizStateTest {
         )
         val state2 = QuizState(
             quiz = quiz,
-            currentQuestionIndex = 3,
             userAnswers = userAnswers
         )
 
@@ -183,36 +181,28 @@ class QuizStateTest {
     }
 
     @Test
-    fun currentQuestionは現在の問題番号に応じた問題を返す() {
+    fun currentQuestionは現在の回答済み問題数に応じた問題を返す() {
         // Given: テスト用クイズ
         val quiz = createTestQuiz()
 
-        // When: 3問目の状態
-        val state = QuizState(quiz, currentQuestionIndex = 2)
+        // When: 3問回答済み
+        val state = QuizState(quiz, userAnswers = listOf(
+            UserAnswer(questionIndex = 0, answer = 2, isCorrect = true),
+            UserAnswer(questionIndex = 1, answer = 3, isCorrect = false),
+            UserAnswer(questionIndex = 2, answer = 4, isCorrect = true),
+        ))
 
-        // Then: 3問目の問題を返す
-        assertEquals(quiz.questions[2], state.currentQuestion)
+        // Then: 4問目の問題を返す
+        assertEquals(quiz.questions[3], state.currentQuestion)
     }
 
     @Test
-    fun currentQuestionで範囲外のインデックスを指定するとNoneを返す() {
-        // Given: テスト用クイズ
-        val quiz = createTestQuiz()
+    fun 問題が存在しない場合currentQuestionはNoneを返す() {
+        // Given: 問題が存在しないクイズ
+        val quiz = Quiz(emptyList(), Mode.ADDITION, Level.EASY)
 
-        // When: クイズの問題数を超えるインデックスで状態を作成する
-        val state = QuizState(quiz, currentQuestionIndex = quizSize)
-
-        // Then: Question.Noneが返される
-        assertIs<Question.None>(state.currentQuestion)
-    }
-
-    @Test
-    fun currentQuestionで負のインデックスを指定するとNoneを返す() {
-        // Given: テスト用クイズ
-        val quiz = createTestQuiz()
-
-        // When: 負のインデックスで状態を作成する
-        val state = QuizState(quiz, currentQuestionIndex = -1)
+        // When: QuizStateを初期化する
+        val state = QuizState(quiz)
 
         // Then: Question.Noneが返される
         assertIs<Question.None>(state.currentQuestion)

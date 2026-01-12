@@ -4,16 +4,19 @@ package com.vitantonio.nagauzzi.sansuukids.model
  * クイズの進行状態を表すクラス。
  *
  * @property quiz 出題するクイズ
- * @property currentQuestionIndex 現在の問題番号（0始まり）
  * @property currentInput ユーザーが入力中の回答文字列
  * @property userAnswers ユーザーが回答済みの回答リスト
  */
 internal data class QuizState(
     val quiz: Quiz,
-    val currentQuestionIndex: Int = 0,
     val currentInput: String = "",
     val userAnswers: List<UserAnswer> = emptyList()
 ) {
+    /**
+     * 現在の問題番号（0始まり）。
+     */
+    val currentQuestionIndex: Int get() = userAnswers.size
+
     /**
      * 現在表示中の問題。
      * インデックスが範囲外の場合は[Question.None]を返す。
