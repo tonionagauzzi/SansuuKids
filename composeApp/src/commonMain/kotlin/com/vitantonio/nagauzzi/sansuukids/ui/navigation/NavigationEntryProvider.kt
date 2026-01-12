@@ -56,7 +56,7 @@ internal fun navigationEntryProvider(
         }
 
         is QuizRoute -> NavEntry(key) {
-            val viewModel = viewModel(key = "${key.mode}_${key.level}") {
+            val viewModel = viewModel(key = "${key.mode.name}_${key.level.name}") {
                 QuizViewModel(key.mode, key.level)
             }
             val quizState by viewModel.quizState.collectAsState()
