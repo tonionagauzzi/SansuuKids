@@ -8,11 +8,8 @@ internal data class Quiz(
     val mode: Mode,
     val level: Level
 ) {
-    init {
-        require(questions.size == QUIZ_SIZE) { "Quiz must have exactly $QUIZ_SIZE questions" }
-    }
-
-    companion object {
-        const val QUIZ_SIZE = 10
-    }
+    val maxInputLength: Int
+        get() = questions.maxOf { question ->
+            question.correctAnswer
+        }.toString().length
 }

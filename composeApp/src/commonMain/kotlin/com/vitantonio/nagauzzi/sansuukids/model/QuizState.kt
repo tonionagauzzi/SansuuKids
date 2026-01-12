@@ -23,18 +23,21 @@ internal class QuizState(
     val currentQuestion: Question
         get() = quiz.questions[currentQuestionIndex]
 
+    val totalQuestions: List<Question>
+        get() = quiz.questions
+
     val progress: Float
-        get() = (currentQuestionIndex + 1) / Quiz.QUIZ_SIZE.toFloat()
+        get() = (currentQuestionIndex + 1) / quiz.questions.size.toFloat()
 
     val isQuizComplete: Boolean
-        get() = _userAnswers.size == Quiz.QUIZ_SIZE
+        get() = _userAnswers.size == quiz.questions.size
 
     val answeredCount: Int
         get() = _userAnswers.size
 
     fun appendDigit(digit: Int) {
         require(digit in 0..9) { "Digit must be between 0 and 9" }
-        if (currentInput.length < MAX_INPUT_LENGTH) {
+        if (currentInput.length < quiz.maxInputLength) {
             currentInput += digit.toString()
         }
     }
@@ -59,7 +62,7 @@ internal class QuizState(
 
         currentInput = ""
 
-        if (currentQuestionIndex < Quiz.QUIZ_SIZE - 1) {
+        if (currentQuestionIndex < quiz.questions.size - 1) {
             currentQuestionIndex++
         }
 
@@ -67,11 +70,4 @@ internal class QuizState(
     }
 
     fun toResult(): QuizResult = QuizResult(quiz, _userAnswers.toList())
-
-    companion object {
-        // 解答として入力を許可する最大桁数。
-        // 現状は最大値が足し算の 9999 + 9999 = 19998 を超えることがないため、最大 5 桁を設定している。
-        // 問題の難易度を変更して、これより大きな値を扱う場合はこの値も合わせて見直す必要がある。
-        private const val MAX_INPUT_LENGTH = 5
-    }
 }

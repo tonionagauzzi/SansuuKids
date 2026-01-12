@@ -3,9 +3,10 @@ package com.vitantonio.nagauzzi.sansuukids.model
 import kotlin.random.Random
 
 internal object QuestionGenerator {
+    private const val QUIZ_SIZE = 10
 
     fun generateQuiz(mode: Mode, level: Level, random: Random = Random): Quiz {
-        val questions = (1..Quiz.QUIZ_SIZE).map {
+        val questions = (1..QUIZ_SIZE).map {
             generateQuestion(mode, level, random)
         }
         return Quiz(questions, mode, level)

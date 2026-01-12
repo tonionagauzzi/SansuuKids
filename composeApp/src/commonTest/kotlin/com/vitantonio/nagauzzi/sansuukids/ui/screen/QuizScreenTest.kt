@@ -18,9 +18,10 @@ import kotlin.test.assertTrue
 
 @OptIn(ExperimentalTestApi::class)
 class QuizScreenTest {
+    private val quizSize = 3
 
     private fun createTestQuiz(): Quiz {
-        val questions = (1..Quiz.QUIZ_SIZE).map { index ->
+        val questions = (1..quizSize).map { index ->
             Question(
                 leftOperand = index,
                 rightOperand = 1,

@@ -6,9 +6,10 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class QuizStateTest {
+    private val quizSize = 10
 
     private fun createTestQuiz(): Quiz {
-        val questions = (1..Quiz.QUIZ_SIZE).map { index ->
+        val questions = (1..quizSize).map { index ->
             Question(
                 leftOperand = index,
                 rightOperand = 1,
@@ -46,8 +47,17 @@ class QuizStateTest {
 
     @Test
     fun appendDigitで複数桁の数字を入力できる() {
-        // Given: QuizStateを初期化する
-        val state = QuizState(createTestQuiz())
+        // Given: NORMALレベルのクイズを作成する（最大入力桁数: 3桁）
+        val questions = (1..quizSize).map { index ->
+            Question(
+                leftOperand = 100 + index,
+                rightOperand = 10,
+                operator = Operator.ADDITION,
+                correctAnswer = 110 + index
+            )
+        }
+        val quiz = Quiz(questions, Mode.ADDITION, Level.NORMAL)
+        val state = QuizState(quiz)
 
         // When: 複数の数字を入力する
         state.appendDigit(1)
@@ -60,8 +70,17 @@ class QuizStateTest {
 
     @Test
     fun deleteLastDigitで最後の数字を削除できる() {
-        // Given: 数字を入力したQuizState
-        val state = QuizState(createTestQuiz())
+        // Given: NORMALレベルのクイズを作成して数字を入力（最大入力桁数: 3桁）
+        val questions = (1..quizSize).map { index ->
+            Question(
+                leftOperand = 100 + index,
+                rightOperand = 10,
+                operator = Operator.ADDITION,
+                correctAnswer = 110 + index
+            )
+        }
+        val quiz = Quiz(questions, Mode.ADDITION, Level.NORMAL)
+        val state = QuizState(quiz)
         state.appendDigit(1)
         state.appendDigit(2)
 
@@ -85,9 +104,18 @@ class QuizStateTest {
     }
 
     @Test
-    fun `5桁以上は入力できない`() {
-        // Given: QuizStateを初期化する
-        val state = QuizState(createTestQuiz())
+    fun `最大入力桁数を超えて入力できない`() {
+        // Given: DIFFICULTレベルのクイズを作成する（最大入力桁数: 5桁）
+        val questions = (1..quizSize).map { index ->
+            Question(
+                leftOperand = 1000 + index,
+                rightOperand = 9999,
+                operator = Operator.ADDITION,
+                correctAnswer = 10999 + index
+            )
+        }
+        val quiz = Quiz(questions, Mode.ADDITION, Level.DIFFICULT)
+        val state = QuizState(quiz)
 
         // When: 6桁の数字を入力しようとする
         repeat(6) { state.appendDigit(1) }
@@ -153,19 +181,19 @@ class QuizStateTest {
     }
 
     @Test
-    fun `10問回答するとisQuizCompleteがtrueになる`() {
+    fun `全問回答するとisQuizCompleteがtrueになる`() {
         // Given: QuizStateを初期化する
         val state = QuizState(createTestQuiz())
 
-        // When: 10問全て回答する
-        repeat(Quiz.QUIZ_SIZE) { index ->
+        // When: 全問全て回答する
+        repeat(quizSize) { index ->
             state.appendDigit((index + 2) % 10)
             state.submitAnswer()
         }
 
         // Then: クイズが完了する
         assertTrue(state.isQuizComplete)
-        assertEquals(Quiz.QUIZ_SIZE, state.answeredCount)
+        assertEquals(quizSize, state.answeredCount)
     }
 
     @Test
@@ -191,14 +219,14 @@ class QuizStateTest {
         val state = QuizState(createTestQuiz())
 
         // When: 最初の問題
-        // Then: 進捗は0.1（1/10）
+        // Then: 進捗は0.1（1/3）
         assertEquals(0.1f, state.progress)
 
         // When: 1問回答後
         state.appendDigit(2)
         state.submitAnswer()
 
-        // Then: 進捗は0.2（2/10）
+        // Then: 進捗は0.2（2/3）
         assertEquals(0.2f, state.progress)
     }
 

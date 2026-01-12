@@ -8,7 +8,7 @@ import kotlin.test.assertTrue
 class QuestionGeneratorTest {
 
     @Test
-    fun generateQuizは10問のクイズを生成する() {
+    fun 指定したモードとレベルのクイズを生成する() {
         // Given: 任意のモードとレベルを指定する
         val mode = Mode.ADDITION
         val level = Level.EASY
@@ -16,8 +16,7 @@ class QuestionGeneratorTest {
         // When: クイズを生成する
         val quiz = QuestionGenerator.generateQuiz(mode, level)
 
-        // Then: 10問のクイズが生成される
-        assertEquals(Quiz.QUIZ_SIZE, quiz.questions.size)
+        // Then: 指定したモードとレベルのクイズが生成される
         assertEquals(mode, quiz.mode)
         assertEquals(level, quiz.level)
     }

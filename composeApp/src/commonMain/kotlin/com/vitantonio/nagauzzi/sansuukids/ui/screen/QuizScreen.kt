@@ -27,14 +27,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.vitantonio.nagauzzi.sansuukids.model.Quiz
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
 import com.vitantonio.nagauzzi.sansuukids.ui.component.NumberKeypad
 import com.vitantonio.nagauzzi.sansuukids.ui.component.QuizProgressBar
-import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.exit
 import sansuukids.composeapp.generated.resources.quiz_cancel
@@ -81,7 +78,7 @@ internal fun QuizScreen(
 
             QuizProgressBar(
                 currentQuestion = quizState.currentQuestionIndex + 1,
-                totalQuestions = Quiz.QUIZ_SIZE,
+                totalQuestions = quizState.totalQuestions.size,
                 modifier = Modifier.width(150.dp)
             )
         }
