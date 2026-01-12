@@ -108,16 +108,16 @@ class QuizStateTest {
         // When: 0問回答済み
         val state1 = QuizState(quiz, userAnswers = emptyList())
 
-        // Then: 進捗は0.1（1/10）
-        assertEquals(0.1f, state1.progress)
+        // Then: 進捗は0.0（0/10）
+        assertEquals(0.0f, state1.progress)
 
         // When: 1問回答済み
         val state2 = QuizState(quiz, userAnswers = listOf(
             UserAnswer(questionIndex = 0, answer = 2, isCorrect = true)
         ))
 
-        // Then: 進捗は0.2（2/10）
-        assertEquals(0.2f, state2.progress)
+        // Then: 進捗は0.1（1/10）
+        assertEquals(0.1f, state2.progress)
     }
 
     @Test

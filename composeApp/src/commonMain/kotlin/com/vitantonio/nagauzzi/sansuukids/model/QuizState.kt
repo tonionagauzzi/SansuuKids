@@ -13,7 +13,8 @@ internal data class QuizState(
     val userAnswers: List<UserAnswer> = emptyList()
 ) {
     /**
-     * 現在の問題番号（0始まり）。
+     * 次に回答する問題のインデックス（0始まり）。
+     * [userAnswers]のサイズから自動計算される。
      */
     val currentQuestionIndex: Int get() = userAnswers.size
 
@@ -40,7 +41,7 @@ internal data class QuizState(
             return if (totalQuestionsCount == 0) {
                 1.0f
             } else {
-                (currentQuestionIndex + 1) / totalQuestionsCount.toFloat()
+                currentQuestionIndex / totalQuestionsCount.toFloat()
             }
         }
 
