@@ -18,7 +18,8 @@ internal data class QuizState(
     // 正解より大きな桁数の回答を入力できないことはプレイヤー（幼児〜小学生）へのヒントとして許容する
     val isAppendDigitEnabled: Boolean
         get() {
-            val maxInputLength = currentQuestion.correctAnswer.toString().length
+            val currentMathQuestion = currentQuestion as? Question.Math ?: return false
+            val maxInputLength = currentMathQuestion.correctAnswer.toString().length
             return currentInput.length < maxInputLength
         }
 

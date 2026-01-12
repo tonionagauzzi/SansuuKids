@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.vitantonio.nagauzzi.sansuukids.logic.GenerateQuiz
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
 import com.vitantonio.nagauzzi.sansuukids.model.UserAnswer
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,8 +46,12 @@ internal class QuizViewModel(
     fun submitAnswer() {
         // 有効な回答が入力されていない場合は送信しない
         val answer = currentQuizState.currentInput.toIntOrNull() ?: return
+        val currentMathQuestion = currentQuizState.currentQuestion as? Math ?: return
 
-        val isCorrect = answer == currentQuizState.currentQuestion.correctAnswer
+        // 回答が正しいかどうかを判定
+        val isCorrect = answer == currentMathQuestion.correctAnswer
+
+        // 次の問題を取得。最後の問題の場合は一時的に現在の問題を維持する（結果画面作成時に変更予定）
         val nextQuestionIndex =
             if (currentQuizState.currentQuestionIndex < quiz.questions.size - 1) {
                 currentQuizState.currentQuestionIndex + 1

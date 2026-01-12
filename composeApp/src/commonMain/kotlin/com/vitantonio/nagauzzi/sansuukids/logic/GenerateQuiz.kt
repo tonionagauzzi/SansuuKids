@@ -3,6 +3,10 @@ package com.vitantonio.nagauzzi.sansuukids.logic
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.Question
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Subtraction
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Multiplication
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Division
 import com.vitantonio.nagauzzi.sansuukids.model.Quiz
 import kotlin.random.Random
 
@@ -36,35 +40,35 @@ private fun generateQuestion(mode: Mode, level: Level, random: Random): Question
     }
 }
 
-private fun generateAddition(level: Level, random: Random): Question.Addition {
+private fun generateAddition(level: Level, random: Random): Addition {
     val (min, max) = getRangeForLevel(level)
     val left = random.nextInt(min, max + 1)
     val right = random.nextInt(min, max + 1)
-    return Question.Addition(left, right)
+    return Addition(left, right)
 }
 
-private fun generateSubtraction(level: Level, random: Random): Question.Subtraction {
+private fun generateSubtraction(level: Level, random: Random): Subtraction {
     val (min, max) = getRangeForLevel(level)
     val a = random.nextInt(min, max + 1)
     val b = random.nextInt(min, max + 1)
     val left = maxOf(a, b)
     val right = minOf(a, b)
-    return Question.Subtraction(left, right)
+    return Subtraction(left, right)
 }
 
-private fun generateMultiplication(level: Level, random: Random): Question.Multiplication {
+private fun generateMultiplication(level: Level, random: Random): Multiplication {
     val (min, max) = getMultiplicationRangeForLevel(level)
     val left = random.nextInt(min, max + 1)
     val right = random.nextInt(min, max + 1)
-    return Question.Multiplication(left, right)
+    return Multiplication(left, right)
 }
 
-private fun generateDivision(level: Level, random: Random): Question.Division {
+private fun generateDivision(level: Level, random: Random): Division {
     val (min, max) = getMultiplicationRangeForLevel(level)
     val divisor = random.nextInt(min.coerceAtLeast(1), max + 1)
     val quotient = random.nextInt(min.coerceAtLeast(1), max + 1)
     val dividend = divisor * quotient
-    return Question.Division(dividend, divisor)
+    return Division(dividend, divisor)
 }
 
 private fun getRangeForLevel(level: Level): Pair<Int, Int> = when (level) {

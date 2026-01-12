@@ -2,6 +2,7 @@ package com.vitantonio.nagauzzi.sansuukids.ui.viewmodel
 
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -113,7 +114,8 @@ class QuizViewModelTest {
     fun submitAnswerで正解判定が行われる_正解の場合() {
         // Given: ViewModelを初期化する
         val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
-        val correctAnswer = viewModel.quizState.value.currentQuestion.correctAnswer
+        val currentMathQuestion = viewModel.quizState.value.currentQuestion as Math
+        val correctAnswer = currentMathQuestion.correctAnswer
 
         // When: 正解を入力して提出する
         correctAnswer.toString().forEach { digit ->
@@ -130,7 +132,8 @@ class QuizViewModelTest {
     fun submitAnswerで正解判定が行われる_不正解の場合() {
         // Given: ViewModelを初期化する
         val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
-        val correctAnswer = viewModel.quizState.value.currentQuestion.correctAnswer
+        val currentMathQuestion = viewModel.quizState.value.currentQuestion as Math
+        val correctAnswer = currentMathQuestion.correctAnswer
         val wrongAnswer = correctAnswer + 1 // 確実に不正解になる値
 
         // When: 不正解を入力して提出する
@@ -191,7 +194,8 @@ class QuizViewModelTest {
     fun toResultで正しいQuizResultが生成される() {
         // Given: いくつか回答したViewModel
         val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
-        val correctAnswer = viewModel.quizState.value.currentQuestion.correctAnswer
+        val currentMathQuestion = viewModel.quizState.value.currentQuestion as Math
+        val correctAnswer = currentMathQuestion.correctAnswer
 
         // 1問目: 正解
         correctAnswer.toString().forEach { digit ->

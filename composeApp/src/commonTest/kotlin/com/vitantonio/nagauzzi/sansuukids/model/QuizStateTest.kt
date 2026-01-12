@@ -5,13 +5,14 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
 
 class QuizStateTest {
     private val quizSize = 10
 
     private fun createTestQuiz(): Quiz {
         val questions = (1..quizSize).map { index ->
-            Question.Addition(
+            Addition(
                 leftOperand = index,
                 rightOperand = 1
             )

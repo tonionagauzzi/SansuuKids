@@ -2,7 +2,10 @@ package com.vitantonio.nagauzzi.sansuukids.logic
 
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
-import com.vitantonio.nagauzzi.sansuukids.model.Question
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Subtraction
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Multiplication
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Division
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -35,7 +38,7 @@ class GenerateQuizTest {
         val quiz = generateQuiz(mode, level)
 
         // Then: 全問が足し算である
-        assertTrue(quiz.questions.all { it is Question.Addition })
+        assertTrue(quiz.questions.all { it is Addition })
     }
 
     @Test
@@ -49,7 +52,7 @@ class GenerateQuizTest {
         val quiz = generateQuiz(mode, level)
 
         // Then: 全問の答えが0以上である
-        assertTrue(quiz.questions.all { it.correctAnswer >= 0 })
+        assertTrue(quiz.questions.map { it as Subtraction }.all { it.correctAnswer >= 0 })
     }
 
     @Test
@@ -64,8 +67,7 @@ class GenerateQuizTest {
 
         // Then: 全問が割り切れる（余りなし）
         assertTrue(quiz.questions.all { question ->
-            question is Question.Division &&
-                    question.dividend % question.divisor == 0 &&
+            question is Division && question.dividend % question.divisor == 0 &&
                     question.dividend / question.divisor == question.correctAnswer
         })
     }
@@ -82,7 +84,7 @@ class GenerateQuizTest {
 
         // Then: 全問の左右オペランドが1〜9である
         assertTrue(quiz.questions.all { question ->
-            question is Question.Addition &&
+            question is Addition &&
                     question.leftOperand in 1..9 &&
                     question.rightOperand in 1..9
         })
@@ -100,7 +102,7 @@ class GenerateQuizTest {
 
         // Then: 全問の左右オペランドが1〜99である
         assertTrue(quiz.questions.all { question ->
-            question is Question.Addition &&
+            question is Addition &&
                     question.leftOperand in 1..99 &&
                     question.rightOperand in 1..99
         })
@@ -118,7 +120,7 @@ class GenerateQuizTest {
 
         // Then: 全問の左右オペランドが100〜9999である
         assertTrue(quiz.questions.all { question ->
-            question is Question.Addition &&
+            question is Addition &&
                     question.leftOperand in 100..9999 &&
                     question.rightOperand in 100..9999
         })
@@ -138,10 +140,10 @@ class GenerateQuizTest {
 
         // Then: 4種類の演算子が含まれる
         val expectedTypes = setOf(
-            Question.Addition::class,
-            Question.Subtraction::class,
-            Question.Multiplication::class,
-            Question.Division::class
+            Addition::class,
+            Subtraction::class,
+            Multiplication::class,
+            Division::class
         )
         assertEquals(expectedTypes, allQuestionTypes)
     }
@@ -158,7 +160,7 @@ class GenerateQuizTest {
 
         // Then: 全問の正解が左右のオペランドの和である
         assertTrue(quiz.questions.all { question ->
-            question is Question.Addition &&
+            question is Addition &&
                     question.leftOperand + question.rightOperand == question.correctAnswer
         })
     }
@@ -175,7 +177,7 @@ class GenerateQuizTest {
 
         // Then: 全問の正解が左から右を引いた値である
         assertTrue(quiz.questions.all { question ->
-            question is Question.Subtraction &&
+            question is Subtraction &&
                     question.leftOperand - question.rightOperand == question.correctAnswer
         })
     }
@@ -192,7 +194,7 @@ class GenerateQuizTest {
 
         // Then: 全問の正解が左右のオペランドの積である
         assertTrue(quiz.questions.all { question ->
-            question is Question.Multiplication &&
+            question is Multiplication &&
                     question.leftOperand * question.rightOperand == question.correctAnswer
         })
     }
@@ -209,8 +211,7 @@ class GenerateQuizTest {
 
         // Then: 全問の正解が左を右で割った値である
         assertTrue(quiz.questions.all { question ->
-            question is Question.Division &&
-                    question.dividend / question.divisor == question.correctAnswer
+            question is Division && question.dividend / question.divisor == question.correctAnswer
         })
     }
 }
