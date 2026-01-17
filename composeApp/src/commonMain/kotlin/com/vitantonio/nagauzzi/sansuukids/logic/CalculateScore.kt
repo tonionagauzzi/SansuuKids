@@ -1,7 +1,5 @@
 package com.vitantonio.nagauzzi.sansuukids.logic
 
-import com.vitantonio.nagauzzi.sansuukids.model.Medal
-
 /**
  * 獲得したスコアを計算するロジック。
  */
