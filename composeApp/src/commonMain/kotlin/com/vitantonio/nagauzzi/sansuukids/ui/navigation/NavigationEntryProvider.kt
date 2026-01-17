@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -115,18 +116,21 @@ internal fun navigationEntryProvider(
         is ResultRoute -> NavEntry(key) {
             val viewModelStoreOwner = LocalViewModelStoreOwner.current
 
+            DisposableEffect(Unit) {
+                onDispose {
+                    // 結果画面が破棄される時にViewModelStoreをクリア
+                    viewModelStoreOwner?.viewModelStore?.clear()
+                }
+            }
+
             ResultScreen(
                 score = key.score,
                 medal = key.medal,
                 onRetryClick = {
-                    // クイズを破棄するためにViewModelStoreをクリアする
-                    viewModelStoreOwner?.viewModelStore?.clear()
                     navigationState.popToHome()
                     navigationState.navigateTo(ModeSelectionRoute)
                 },
                 onHomeClick = {
-                    // クイズを破棄するためにViewModelStoreをクリアする
-                    viewModelStoreOwner?.viewModelStore?.clear()
                     navigationState.popToHome()
                 }
             )
