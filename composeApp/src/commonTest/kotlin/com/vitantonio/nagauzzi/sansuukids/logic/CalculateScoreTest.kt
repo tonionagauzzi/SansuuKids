@@ -33,7 +33,7 @@ class CalculateScoreTest {
     }
 
     @Test
-    fun 正解数と総問題数から正しいスコアが計算される_全問不正解() {
+    fun 正解数と総問題数から正しいスコアが計算される_問題数が0の場合は0点を返す() {
         // Given: 0問中0問正解（ゼロ除算のケース）
         val correctCount = 0
         val totalCount = 0
