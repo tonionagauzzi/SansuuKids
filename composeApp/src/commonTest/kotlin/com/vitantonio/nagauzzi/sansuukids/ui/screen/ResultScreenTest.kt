@@ -1,6 +1,7 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
@@ -11,6 +12,25 @@ import kotlin.test.assertTrue
 
 @OptIn(ExperimentalTestApi::class)
 class ResultScreenTest {
+
+    @Test
+    fun スコアとメダルが正しく表示される() = runComposeUiTest {
+        // Given: スコア80で結果画面を表示
+        setContent {
+            SansuuKidsTheme {
+                ResultScreen(
+                    score = 80,
+                    medal = Medal.Silver,
+                    onRetryClick = {},
+                    onHomeClick = {}
+                )
+            }
+        }
+
+        // Then: スコアとメダルが画面に表示される
+        onNodeWithTag("result_score").assertTextContains("80", substring = true)
+        onNodeWithTag("result_medal").assertExists()
+    }
 
     @Test
     fun リトライボタンを押すとonRetryClickが呼ばれる() = runComposeUiTest {
