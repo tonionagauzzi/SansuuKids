@@ -23,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -44,11 +43,6 @@ import sansuukids.composeapp.generated.resources.answer_check_next
 import sansuukids.composeapp.generated.resources.answer_check_previous
 import sansuukids.composeapp.generated.resources.answer_check_your_answer
 
-private val CorrectBackgroundColor = Color(0xFFE8F5E9)
-private val IncorrectBackgroundColor = Color(0xFFFFEBEE)
-private val CorrectTextColor = Color(0xFF2E7D32)
-private val IncorrectTextColor = Color(0xFFC62828)
-
 @Composable
 internal fun AnswerCheckScreen(
     questions: List<Question>,
@@ -64,8 +58,17 @@ internal fun AnswerCheckScreen(
     val isFirstQuestion = currentIndex == 0
     val isLastQuestion = currentIndex == questions.size - 1
 
-    val backgroundColor = if (isCorrect) CorrectBackgroundColor else IncorrectBackgroundColor
-    val accentColor = if (isCorrect) CorrectTextColor else IncorrectTextColor
+    val backgroundColor = if (isCorrect) {
+        MaterialTheme.colorScheme.background
+    } else {
+        MaterialTheme.colorScheme.errorContainer
+    }
+
+    val accentColor = if (isCorrect) {
+        MaterialTheme.colorScheme.onBackground
+    } else {
+        MaterialTheme.colorScheme.onErrorContainer
+    }
 
     Column(
         modifier = modifier
