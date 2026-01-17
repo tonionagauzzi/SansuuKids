@@ -19,8 +19,7 @@ class HomeScreenTest {
             SansuuKidsTheme {
                 HomeScreen(
                     onStartClick = { clicked = true },
-                    onMedalCollectionClick = {},
-                    onSettingsClick = {}
+                    onMedalCollectionClick = {}
                 )
             }
         }
@@ -40,8 +39,7 @@ class HomeScreenTest {
             SansuuKidsTheme {
                 HomeScreen(
                     onStartClick = {},
-                    onMedalCollectionClick = { clicked = true },
-                    onSettingsClick = {}
+                    onMedalCollectionClick = { clicked = true }
                 )
             }
         }
@@ -50,27 +48,6 @@ class HomeScreenTest {
         onNodeWithTag("medal_collection_button").performClick()
 
         // Then: onMedalCollectionClickが呼ばれる
-        assertTrue(clicked)
-    }
-
-    @Test
-    fun せっていボタンを押すとonSettingsClickが呼ばれる() = runComposeUiTest {
-        // Given: ホーム画面を表示し、クリック状態を追跡する
-        var clicked = false
-        setContent {
-            SansuuKidsTheme {
-                HomeScreen(
-                    onStartClick = {},
-                    onMedalCollectionClick = {},
-                    onSettingsClick = { clicked = true }
-                )
-            }
-        }
-
-        // When: せっていボタンをクリックする
-        onNodeWithTag("settings_button").performClick()
-
-        // Then: onSettingsClickが呼ばれる
         assertTrue(clicked)
     }
 }
