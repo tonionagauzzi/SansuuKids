@@ -122,7 +122,7 @@ internal fun AnswerCheckScreen(
                     currentQuestion.correctAnswer.toString()
                 )
 
-                else -> currentQuestion.displayText
+                is Question.None -> currentQuestion.displayText
             }
             Text(
                 text = questionWithAnswer,
