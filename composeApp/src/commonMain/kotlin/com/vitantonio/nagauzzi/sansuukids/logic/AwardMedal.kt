@@ -16,11 +16,10 @@ internal class AwardMedal {
      */
     operator fun invoke(isQuizComplete: Boolean, correctCount: Int, totalCount: Int): Medal {
         if (!isQuizComplete || totalCount == 0) return Medal.Nothing
-        val percentage = (correctCount.toFloat() / totalCount) * 100
         return when {
-            percentage >= 100 -> Medal.Gold
-            percentage >= 80 -> Medal.Silver
-            percentage >= 60 -> Medal.Bronze
+            correctCount * 100 >= totalCount * 100 -> Medal.Gold
+            correctCount * 100 >= totalCount * 80 -> Medal.Silver
+            correctCount * 100 >= totalCount * 60 -> Medal.Bronze
             else -> Medal.Star
         }
     }
