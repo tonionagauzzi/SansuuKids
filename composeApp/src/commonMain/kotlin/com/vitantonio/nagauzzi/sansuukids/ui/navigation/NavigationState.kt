@@ -3,7 +3,7 @@ package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 
@@ -32,7 +32,7 @@ internal class NavigationState(
 internal fun rememberNavigationState(
     initialRoute: SansuuKidsRoute
 ): NavigationState {
-    return remember {
+    return rememberSaveable {
         NavigationState(mutableStateListOf(initialRoute))
     }
 }
