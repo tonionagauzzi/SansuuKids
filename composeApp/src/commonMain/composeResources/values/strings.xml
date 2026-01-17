@@ -31,4 +31,12 @@
     <string name="result_medal_emoji_star">⭐️</string>
     <string name="result_retry">Retry</string>
     <string name="result_home">Home</string>
+    <string name="result_check_answers">Check Answers</string>
+    <string name="answer_check_correct">Correct!</string>
+    <string name="answer_check_incorrect">Incorrect</string>
+    <string name="answer_check_your_answer">Your answer: %1$d</string>
+    <string name="answer_check_previous">Back</string>
+    <string name="answer_check_back">Back</string>
+    <string name="answer_check_next">Next</string>
+    <string name="answer_check_finish">Finish</string>
 </resources>

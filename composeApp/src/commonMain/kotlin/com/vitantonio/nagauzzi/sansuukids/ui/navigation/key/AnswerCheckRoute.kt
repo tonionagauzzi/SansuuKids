@@ -6,9 +6,9 @@ import com.vitantonio.nagauzzi.sansuukids.model.UserAnswer
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class ResultRoute(
-    val score: Int,
-    val medal: Medal,
+internal data class AnswerCheckRoute(
     val questions: List<Question>,
-    val userAnswers: List<UserAnswer>
+    val userAnswers: List<UserAnswer>,
+    val score: Int,
+    val medal: Medal
 ) : SansuuKidsRoute

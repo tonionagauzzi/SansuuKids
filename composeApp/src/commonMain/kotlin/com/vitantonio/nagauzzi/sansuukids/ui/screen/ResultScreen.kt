@@ -28,6 +28,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
+import sansuukids.composeapp.generated.resources.result_check_answers
 import sansuukids.composeapp.generated.resources.result_home
 import sansuukids.composeapp.generated.resources.result_retry
 import sansuukids.composeapp.generated.resources.result_score
@@ -37,6 +38,7 @@ import sansuukids.composeapp.generated.resources.result_title
 internal fun ResultScreen(
     score: Int,
     medal: Medal,
+    onCheckAnswersClick: () -> Unit,
     onRetryClick: () -> Unit,
     onHomeClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -52,7 +54,7 @@ internal fun ResultScreen(
     ) {
         Text(
             text = stringResource(Res.string.result_title),
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.testTag("result_title")
@@ -75,7 +77,7 @@ internal fun ResultScreen(
 
         Text(
             text = stringResource(medal.emojiRes),
-            fontSize = 96.sp,
+            style = MaterialTheme.typography.displayLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .testTag("result_medal")
@@ -88,6 +90,15 @@ internal fun ResultScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            LargeButton(
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                text = stringResource(Res.string.result_check_answers),
+                textStyle = MaterialTheme.typography.headlineSmall,
+                onClick = onCheckAnswersClick,
+                modifier = Modifier.height(56.dp).testTag("check_answers_button")
+            )
+
             LargeButton(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -116,6 +127,7 @@ private fun ResultScreenPreview() {
         ResultScreen(
             score = 80,
             medal = Medal.Silver,
+            onCheckAnswersClick = {},
             onRetryClick = {},
             onHomeClick = {}
         )

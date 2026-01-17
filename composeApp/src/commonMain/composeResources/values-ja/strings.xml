@@ -31,4 +31,12 @@
     <string name="result_medal_emoji_star">⭐️</string>
     <string name="result_retry">もういちど</string>
     <string name="result_home">ホーム</string>
+    <string name="result_check_answers">こたえあわせ</string>
+    <string name="answer_check_correct">せいかい！</string>
+    <string name="answer_check_incorrect">ざんねん</string>
+    <string name="answer_check_your_answer">きみのこたえ: %1$d</string>
+    <string name="answer_check_previous">まえ</string>
+    <string name="answer_check_back">もどる</string>
+    <string name="answer_check_next">つぎ</string>
+    <string name="answer_check_finish">おわる</string>
 </resources>
