@@ -19,36 +19,37 @@ import sansuukids.composeapp.generated.resources.result_medal_star
  */
 @Serializable
 internal sealed interface Medal {
-    val emojiRes: StringResource
-    val descriptionRes: StringResource
 
     @Serializable
-    data object Nothing : Medal {
-        override val emojiRes: StringResource get() = Res.string.result_medal_emoji_nothing
-        override val descriptionRes: StringResource get() = Res.string.result_medal_nothing
-    }
+    data object Nothing : Medal
 
     @Serializable
-    data object Gold : Medal {
-        override val emojiRes: StringResource get() = Res.string.result_medal_emoji_gold
-        override val descriptionRes: StringResource get() = Res.string.result_medal_gold
-    }
+    data object Gold : Medal
 
     @Serializable
-    data object Silver : Medal {
-        override val emojiRes: StringResource get() = Res.string.result_medal_emoji_silver
-        override val descriptionRes: StringResource get() = Res.string.result_medal_silver
-    }
+    data object Silver : Medal
 
     @Serializable
-    data object Bronze : Medal {
-        override val emojiRes: StringResource get() = Res.string.result_medal_emoji_bronze
-        override val descriptionRes: StringResource get() = Res.string.result_medal_bronze
-    }
+    data object Bronze : Medal
 
     @Serializable
-    data object Star : Medal {
-        override val emojiRes: StringResource get() = Res.string.result_medal_emoji_star
-        override val descriptionRes: StringResource get() = Res.string.result_medal_star
-    }
+    data object Star : Medal
 }
+
+internal val Medal.emojiRes: StringResource
+    get() = when (this) {
+        Medal.Nothing -> Res.string.result_medal_emoji_nothing
+        Medal.Gold -> Res.string.result_medal_emoji_gold
+        Medal.Silver -> Res.string.result_medal_emoji_silver
+        Medal.Bronze -> Res.string.result_medal_emoji_bronze
+        Medal.Star -> Res.string.result_medal_emoji_star
+    }
+
+internal val Medal.descriptionRes: StringResource
+    get() = when (this) {
+        Medal.Nothing -> Res.string.result_medal_nothing
+        Medal.Gold -> Res.string.result_medal_gold
+        Medal.Silver -> Res.string.result_medal_silver
+        Medal.Bronze -> Res.string.result_medal_bronze
+        Medal.Star -> Res.string.result_medal_star
+    }
