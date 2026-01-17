@@ -135,9 +135,7 @@ internal fun navigationEntryProvider(
                     navigationState.navigateTo(
                         AnswerCheckRoute(
                             questions = key.questions,
-                            userAnswers = key.userAnswers,
-                            score = key.score,
-                            medal = key.medal
+                            userAnswers = key.userAnswers
                         )
                     )
                 },
