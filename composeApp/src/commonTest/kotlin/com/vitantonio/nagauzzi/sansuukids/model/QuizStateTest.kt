@@ -186,4 +186,21 @@ class QuizStateTest {
         // Then: Question.Noneが返される
         assertIs<Question.None>(state.currentQuestion)
     }
+
+    @Test
+    fun correctCountは正解数を返す() {
+        // Given: テスト用クイズ
+        val quiz = createTestQuiz()
+        val userAnswers = listOf(
+            UserAnswer(questionIndex = 0, answer = 2, isCorrect = true),
+            UserAnswer(questionIndex = 1, answer = 3, isCorrect = false),
+            UserAnswer(questionIndex = 2, answer = 4, isCorrect = true)
+        )
+
+        // When: 回答を含むQuizStateを作成する
+        val state = QuizState(quiz = quiz, userAnswers = userAnswers)
+
+        // Then: 正解数は2
+        assertEquals(2, state.correctCount)
+    }
 }

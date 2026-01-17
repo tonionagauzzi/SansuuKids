@@ -1,8 +1,11 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.vitantonio.nagauzzi.sansuukids.logic.AwardMedal
+import com.vitantonio.nagauzzi.sansuukids.logic.CalculateScore
 import com.vitantonio.nagauzzi.sansuukids.logic.GenerateQuiz
 import com.vitantonio.nagauzzi.sansuukids.model.Level
+import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
@@ -15,9 +18,10 @@ internal class QuizViewModel(
     level: Level
 ) : ViewModel() {
     private val generateQuiz = GenerateQuiz()
-    private val quiz = generateQuiz(mode, level)
+    private val calculateScore = CalculateScore()
+    private val awardMedal = AwardMedal()
 
-    private val mutableQuizState = MutableStateFlow(QuizState(quiz))
+    private val mutableQuizState = MutableStateFlow(QuizState(generateQuiz(mode, level)))
     val quizState: StateFlow<QuizState> = mutableQuizState
 
     private var currentQuizState: QuizState
@@ -25,6 +29,19 @@ internal class QuizViewModel(
         set(value) {
             mutableQuizState.value = value
         }
+
+    val earnedScore: Int
+        get() = calculateScore(
+            correctCount = currentQuizState.correctCount,
+            totalCount = currentQuizState.totalQuestions.size
+        )
+
+    val earnedMedal: Medal
+        get() = awardMedal(
+            isQuizComplete = currentQuizState.isQuizComplete,
+            correctCount = currentQuizState.correctCount,
+            totalCount = currentQuizState.totalQuestions.size
+        )
 
     fun appendDigit(digit: Int) {
         require(digit in 0..9) { "Digit must be between 0 and 9" }

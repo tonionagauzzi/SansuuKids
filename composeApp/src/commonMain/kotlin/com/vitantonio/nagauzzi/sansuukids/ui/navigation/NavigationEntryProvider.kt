@@ -1,7 +1,10 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.model.Level
@@ -10,12 +13,14 @@ import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ResultRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.viewmodel.QuizViewModel
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.HomeScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.LevelSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.QuizScreen
+import com.vitantonio.nagauzzi.sansuukids.ui.screen.ResultScreen
 
 internal fun navigationEntryProvider(
     key: SansuuKidsRoute,
@@ -75,6 +80,17 @@ internal fun navigationEntryProvider(
             }
             val quizState by viewModel.quizState.collectAsState()
 
+            LaunchedEffect(quizState.isQuizComplete) {
+                if (quizState.isQuizComplete) {
+                    navigationState.navigateTo(
+                        ResultRoute(
+                            score = viewModel.earnedScore,
+                            medal = viewModel.earnedMedal
+                        )
+                    )
+                }
+            }
+
             QuizScreen(
                 quizState = quizState,
                 onDigitClick = { digit -> viewModel.appendDigit(digit) },
@@ -84,10 +100,38 @@ internal fun navigationEntryProvider(
                 },
                 onCancelClick = {
                     if (quizState.answeredCount > 0) {
-                        // TODO: Navigate to ResultScreen with partial result
+                        navigationState.navigateTo(
+                            ResultRoute(
+                                score = viewModel.earnedScore,
+                                medal = viewModel.earnedMedal
+                            )
+                        )
                     } else {
                         navigationState.popToHome()
                     }
+                }
+            )
+        }
+
+        is ResultRoute -> NavEntry(key) {
+            val viewModelStoreOwner = LocalViewModelStoreOwner.current
+
+            DisposableEffect(Unit) {
+                onDispose {
+                    // 結果画面が破棄される時にViewModelStoreをクリア
+                    viewModelStoreOwner?.viewModelStore?.clear()
+                }
+            }
+
+            ResultScreen(
+                score = key.score,
+                medal = key.medal,
+                onRetryClick = {
+                    navigationState.popToHome()
+                    navigationState.navigateTo(ModeSelectionRoute)
+                },
+                onHomeClick = {
+                    navigationState.popToHome()
                 }
             )
         }
