@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.AnswerCheckRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
@@ -16,6 +17,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ResultRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.viewmodel.QuizViewModel
+import com.vitantonio.nagauzzi.sansuukids.ui.screen.AnswerCheckScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.HomeScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.LevelSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
@@ -84,7 +86,9 @@ internal fun navigationEntryProvider(
                     navigationState.navigateTo(
                         ResultRoute(
                             score = viewModel.earnedScore,
-                            medal = viewModel.earnedMedal
+                            medal = viewModel.earnedMedal,
+                            questions = quizState.totalQuestions,
+                            userAnswers = quizState.userAnswers
                         )
                     )
                 }
@@ -102,7 +106,9 @@ internal fun navigationEntryProvider(
                         navigationState.navigateTo(
                             ResultRoute(
                                 score = viewModel.earnedScore,
-                                medal = viewModel.earnedMedal
+                                medal = viewModel.earnedMedal,
+                                questions = quizState.totalQuestions,
+                                userAnswers = quizState.userAnswers
                             )
                         )
                     } else {
@@ -125,12 +131,30 @@ internal fun navigationEntryProvider(
             ResultScreen(
                 score = key.score,
                 medal = key.medal,
+                onCheckAnswersClick = {
+                    navigationState.navigateTo(
+                        AnswerCheckRoute(
+                            questions = key.questions,
+                            userAnswers = key.userAnswers
+                        )
+                    )
+                },
                 onRetryClick = {
                     navigationState.popToHome()
                     navigationState.navigateTo(ModeSelectionRoute)
                 },
                 onHomeClick = {
                     navigationState.popToHome()
+                }
+            )
+        }
+
+        is AnswerCheckRoute -> NavEntry(key) {
+            AnswerCheckScreen(
+                questions = key.questions,
+                userAnswers = key.userAnswers,
+                onFinishClick = {
+                    navigationState.navigateBack()
                 }
             )
         }

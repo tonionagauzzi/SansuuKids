@@ -21,6 +21,7 @@ class ResultScreenTest {
                 ResultScreen(
                     score = 80,
                     medal = Medal.Silver,
+                    onCheckAnswersClick = {},
                     onRetryClick = {},
                     onHomeClick = {}
                 )
@@ -41,6 +42,7 @@ class ResultScreenTest {
                 ResultScreen(
                     score = 80,
                     medal = Medal.Silver,
+                    onCheckAnswersClick = {},
                     onRetryClick = { clicked = true },
                     onHomeClick = {}
                 )
@@ -63,6 +65,7 @@ class ResultScreenTest {
                 ResultScreen(
                     score = 80,
                     medal = Medal.Silver,
+                    onCheckAnswersClick = {},
                     onRetryClick = {},
                     onHomeClick = { clicked = true }
                 )
@@ -73,6 +76,29 @@ class ResultScreenTest {
         onNodeWithTag("home_button").performClick()
 
         // Then: onHomeClickが呼ばれる
+        assertTrue(clicked)
+    }
+
+    @Test
+    fun 答え合わせボタンを押すとonCheckAnswersClickが呼ばれる() = runComposeUiTest {
+        // Given: 結果画面を表示し、クリック状態を追跡する
+        var clicked = false
+        setContent {
+            SansuuKidsTheme {
+                ResultScreen(
+                    score = 80,
+                    medal = Medal.Silver,
+                    onCheckAnswersClick = { clicked = true },
+                    onRetryClick = {},
+                    onHomeClick = {}
+                )
+            }
+        }
+
+        // When: 答え合わせボタンをクリックする
+        onNodeWithTag("check_answers_button").performClick()
+
+        // Then: onCheckAnswersClickが呼ばれる
         assertTrue(clicked)
     }
 }
