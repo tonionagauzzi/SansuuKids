@@ -97,4 +97,17 @@ class AwardMedalTest {
         // Then: なし
         assertEquals(Medal.Nothing, medal)
     }
+
+    @Test
+    fun 問題数が0の場合は何も授与しない() {
+        // Given: 0問中0問正解
+        val correctCount = 0
+        val totalCount = 0
+
+        // When: メダルを授与する
+        val medal = awardMedal(true, correctCount, totalCount)
+
+        // Then: なし
+        assertEquals(Medal.Nothing, medal)
+    }
 }
