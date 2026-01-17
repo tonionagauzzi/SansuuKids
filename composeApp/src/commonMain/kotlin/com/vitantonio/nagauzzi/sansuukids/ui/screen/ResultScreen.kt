@@ -21,6 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
+import com.vitantonio.nagauzzi.sansuukids.model.descriptionRes
+import com.vitantonio.nagauzzi.sansuukids.model.emojiRes
 import com.vitantonio.nagauzzi.sansuukids.ui.component.LargeButton
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
