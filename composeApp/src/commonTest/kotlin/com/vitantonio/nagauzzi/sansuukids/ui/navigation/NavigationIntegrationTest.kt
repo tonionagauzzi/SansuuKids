@@ -42,7 +42,6 @@ class NavigationIntegrationTest {
         // Then: ホーム画面のボタンが全て表示され、バックスタックにはホーム画面のみが存在する
         onNodeWithTag("start_button").assertIsDisplayed()
         onNodeWithTag("medal_collection_button").assertIsDisplayed()
-        onNodeWithTag("settings_button").assertIsDisplayed()
 
         assertEquals(1, navigationState.entries.size)
         assertEquals(HomeRoute, navigationState.entries.first())

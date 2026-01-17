@@ -23,14 +23,12 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.app_title
 import sansuukids.composeapp.generated.resources.medal_collection
-import sansuukids.composeapp.generated.resources.settings
 import sansuukids.composeapp.generated.resources.start
 
 @Composable
 fun HomeScreen(
     onStartClick: () -> Unit,
     onMedalCollectionClick: () -> Unit,
-    onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -73,15 +71,6 @@ fun HomeScreen(
                 onClick = onMedalCollectionClick,
                 modifier = Modifier.height(72.dp).testTag("medal_collection_button")
             )
-
-            LargeButton(
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                text = stringResource(Res.string.settings),
-                textStyle = MaterialTheme.typography.headlineMedium,
-                onClick = onSettingsClick,
-                modifier = Modifier.height(72.dp).testTag("settings_button")
-            )
         }
     }
 }
@@ -92,8 +81,7 @@ private fun HomeScreenPreview() {
     SansuuKidsTheme {
         HomeScreen(
             onStartClick = {},
-            onMedalCollectionClick = {},
-            onSettingsClick = {}
+            onMedalCollectionClick = {}
         )
     }
 }

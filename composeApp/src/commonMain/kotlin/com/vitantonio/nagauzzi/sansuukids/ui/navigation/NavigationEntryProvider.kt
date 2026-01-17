@@ -30,8 +30,7 @@ internal fun navigationEntryProvider(
         HomeRoute -> NavEntry(key) {
             HomeScreen(
                 onStartClick = { navigationState.navigateTo(ModeSelectionRoute) },
-                onMedalCollectionClick = { /* TODO: Navigate to Medal Collection */ },
-                onSettingsClick = { /* TODO: Navigate to Settings */ }
+                onMedalCollectionClick = { /* TODO: Navigate to Medal Collection */ }
             )
         }
 
