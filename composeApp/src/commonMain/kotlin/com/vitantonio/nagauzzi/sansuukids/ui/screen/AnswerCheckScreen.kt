@@ -67,7 +67,7 @@ internal fun AnswerCheckScreen(
     val accentColor = if (isCorrect) {
         MaterialTheme.colorScheme.onBackground
     } else {
-        MaterialTheme.colorScheme.onErrorContainer
+        MaterialTheme.colorScheme.error
     }
 
     Column(
