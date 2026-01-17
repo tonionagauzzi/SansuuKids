@@ -43,7 +43,6 @@ internal class QuizViewModel(
             totalCount = currentQuizState.totalQuestions.size
         )
 
-
     fun appendDigit(digit: Int) {
         require(digit in 0..9) { "Digit must be between 0 and 9" }
         if (currentQuizState.isAppendDigitEnabled) {
