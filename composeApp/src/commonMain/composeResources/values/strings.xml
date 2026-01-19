@@ -39,4 +39,7 @@
     <string name="answer_check_back">Back</string>
     <string name="answer_check_next">Next</string>
     <string name="answer_check_finish">Finish</string>
+    <string name="medal_collection_title">Medal Collection</string>
+    <string name="medal_collection_back">Back</string>
+    <string name="medal_collection_not_earned">-</string>
 </resources>

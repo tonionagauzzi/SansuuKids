@@ -10,6 +10,7 @@ import androidx.navigation3.ui.NavDisplay
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.MedalCollectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
@@ -214,5 +215,60 @@ class NavigationIntegrationTest {
         assertEquals(2, navigationState.entries.size)
         assertEquals(ModeSelectionRoute, navigationState.entries.last())
         onNodeWithTag("addition_button").assertIsDisplayed()
+    }
+
+    @Test
+    fun ホーム画面でメダルずかんボタンを押すとメダル図鑑画面に遷移する() = runComposeUiTest {
+        // Given: ホーム画面を初期画面として表示する
+        val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute)
+        val navigationState = NavigationState(backStack)
+
+        setContent {
+            SansuuKidsTheme {
+                NavDisplay(
+                    backStack = navigationState.entries,
+                    onBack = { navigationState.navigateBack() },
+                    entryProvider = { key ->
+                        navigationEntryProvider(key, navigationState)
+                    }
+                )
+            }
+        }
+
+        // When: メダルずかんボタンをクリックする
+        onNodeWithTag("medal_collection_button").performClick()
+
+        // Then: メダル図鑑画面に遷移する
+        assertEquals(2, navigationState.entries.size)
+        assertEquals(MedalCollectionRoute, navigationState.entries.last())
+        onNodeWithTag("medal_collection_title").assertIsDisplayed()
+    }
+
+    @Test
+    fun メダル図鑑画面で戻るボタンを押すとホーム画面に戻る() = runComposeUiTest {
+        // Given: メダル図鑑画面を表示する
+        val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute, MedalCollectionRoute)
+        val navigationState = NavigationState(backStack)
+
+        setContent {
+            SansuuKidsTheme {
+                NavDisplay(
+                    backStack = navigationState.entries,
+                    onBack = { navigationState.navigateBack() },
+                    entryProvider = { key ->
+                        navigationEntryProvider(key, navigationState)
+                    }
+                )
+            }
+        }
+
+        // When: 戻るボタンをクリックする
+        onNodeWithTag("medal_collection_back_button").performClick()
+        waitForIdle()
+
+        // Then: ホーム画面に戻る
+        assertEquals(1, navigationState.entries.size)
+        assertEquals(HomeRoute, navigationState.entries.last())
+        onNodeWithTag("start_button").assertIsDisplayed()
     }
 }
