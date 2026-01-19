@@ -27,7 +27,7 @@ internal class MedalRepository(
 
     /**
      * 指定されたモードとレベルのメダルを取得する。
-     * @return 保存されているメダル、または null（未獲得の場合）
+     * @return 保存されているメダル、または Medal.Nothing（未獲得の場合）
      */
     fun getMedal(mode: Mode, level: Level): Medal {
         val key = createKey(mode, level)
