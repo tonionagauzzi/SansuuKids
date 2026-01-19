@@ -20,26 +20,26 @@ import sansuukids.composeapp.generated.resources.result_medal_star
 @Serializable
 internal enum class Medal {
     Nothing,
-    Gold,
-    Silver,
+    Star,
     Bronze,
-    Star
+    Silver,
+    Gold
 }
 
 internal val Medal.emojiRes: StringResource
     get() = when (this) {
         Medal.Nothing -> Res.string.result_medal_emoji_nothing
-        Medal.Gold -> Res.string.result_medal_emoji_gold
-        Medal.Silver -> Res.string.result_medal_emoji_silver
-        Medal.Bronze -> Res.string.result_medal_emoji_bronze
         Medal.Star -> Res.string.result_medal_emoji_star
+        Medal.Bronze -> Res.string.result_medal_emoji_bronze
+        Medal.Silver -> Res.string.result_medal_emoji_silver
+        Medal.Gold -> Res.string.result_medal_emoji_gold
     }
 
 internal val Medal.descriptionRes: StringResource
     get() = when (this) {
         Medal.Nothing -> Res.string.result_medal_nothing
-        Medal.Gold -> Res.string.result_medal_gold
-        Medal.Silver -> Res.string.result_medal_silver
-        Medal.Bronze -> Res.string.result_medal_bronze
         Medal.Star -> Res.string.result_medal_star
+        Medal.Bronze -> Res.string.result_medal_bronze
+        Medal.Silver -> Res.string.result_medal_silver
+        Medal.Gold -> Res.string.result_medal_gold
     }

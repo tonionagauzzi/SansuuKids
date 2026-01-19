@@ -19,7 +19,7 @@ internal class MedalRepository(
     fun saveMedal(mode: Mode, level: Level, medal: Medal) {
         val key = createKey(mode, level)
         val currentMedal = getMedal(mode, level)
-        if (medal < currentMedal) {
+        if (currentMedal < medal) {
             val value = medal.name
             settings.putString(key, value)
         }
