@@ -24,7 +24,7 @@
     <string name="result_medal_silver">Silver Medal!</string>
     <string name="result_medal_bronze">Bronze Medal!</string>
     <string name="result_medal_star">Star!</string>
-    <string name="result_medal_emoji_nothing">❌</string>
+    <string name="result_medal_emoji_nothing">-</string>
     <string name="result_medal_emoji_gold">🥇</string>
     <string name="result_medal_emoji_silver">🥈</string>
     <string name="result_medal_emoji_bronze">🥉</string>

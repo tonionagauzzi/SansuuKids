@@ -23,7 +23,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
-import com.vitantonio.nagauzzi.sansuukids.model.MedalDisplay
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.emojiRes
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
@@ -34,12 +33,11 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.medal_collection_back
-import sansuukids.composeapp.generated.resources.medal_collection_not_earned
 import sansuukids.composeapp.generated.resources.medal_collection_title
 
 @Composable
 internal fun MedalCollectionScreen(
-    medalDisplays: List<MedalDisplay>,
+    getMedal: (Mode, Level) -> Medal,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit
 ) {
@@ -64,7 +62,7 @@ internal fun MedalCollectionScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         MedalGrid(
-            medalDisplays = medalDisplays,
+            getMedal = getMedal,
             modifier = Modifier.testTag("medal_grid")
         )
 
@@ -83,7 +81,7 @@ internal fun MedalCollectionScreen(
 
 @Composable
 private fun MedalGrid(
-    medalDisplays: List<MedalDisplay>,
+    getMedal: (Mode, Level) -> Medal,
     modifier: Modifier = Modifier
 ) {
     val modes =
@@ -134,14 +132,9 @@ private fun MedalGrid(
                 )
                 // Medal cells
                 levels.forEach { level ->
-                    val medal = medalDisplays.find { it.mode == mode && it.level == level }?.medal
-                    val text = if (medal == null) {
-                        stringResource(Res.string.medal_collection_not_earned)
-                    } else {
-                        stringResource(medal.emojiRes)
-                    }
+                    val medal = getMedal(mode, level)
                     GridCell(
-                        text = text,
+                        text = stringResource(medal.emojiRes),
                         isHeader = false,
                         modifier = Modifier
                             .weight(1f)
@@ -158,7 +151,7 @@ private fun MedalGrid(
 private fun MedalCollectionScreenPreview() {
     SansuuKidsTheme {
         MedalCollectionScreen(
-            medalDisplays = emptyList(),
+            getMedal = { _, _ -> Medal.Nothing },
             onBackClick = {}
         )
     }
@@ -169,28 +162,7 @@ private fun MedalCollectionScreenPreview() {
 private fun MedalCollectionScreenWithMedalsPreview() {
     SansuuKidsTheme {
         MedalCollectionScreen(
-            medalDisplays = listOf(
-                MedalDisplay(
-                    mode = Mode.ADDITION,
-                    level = Level.EASY,
-                    medal = Medal.Gold
-                ),
-                MedalDisplay(
-                    mode = Mode.ADDITION,
-                    level = Level.NORMAL,
-                    medal = Medal.Silver
-                ),
-                MedalDisplay(
-                    mode = Mode.SUBTRACTION,
-                    level = Level.EASY,
-                    medal = Medal.Bronze
-                ),
-                MedalDisplay(
-                    mode = Mode.ALL,
-                    level = Level.DIFFICULT,
-                    medal = Medal.Star
-                )
-            ),
+            getMedal = { _, _ -> Medal.Gold },
             onBackClick = {}
         )
     }
