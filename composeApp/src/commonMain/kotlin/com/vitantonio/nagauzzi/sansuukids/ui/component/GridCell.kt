@@ -22,13 +22,13 @@ fun GridCell(
 ) {
     Box(
         modifier = modifier
+            .size(56.dp)
             .border(0.5.dp, MaterialTheme.colorScheme.outline)
             .background(
                 if (isHeader) MaterialTheme.colorScheme.surfaceVariant
                 else MaterialTheme.colorScheme.surface
             )
-            .padding(8.dp)
-            .size(40.dp),
+            .padding(8.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
