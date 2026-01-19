@@ -18,22 +18,12 @@ import sansuukids.composeapp.generated.resources.result_medal_star
  * クイズ結果に応じて獲得できるメダルの種類。
  */
 @Serializable
-internal sealed interface Medal {
-
-    @Serializable
-    data object Nothing : Medal
-
-    @Serializable
-    data object Gold : Medal
-
-    @Serializable
-    data object Silver : Medal
-
-    @Serializable
-    data object Bronze : Medal
-
-    @Serializable
-    data object Star : Medal
+internal enum class Medal {
+    Nothing,
+    Gold,
+    Silver,
+    Bronze,
+    Star
 }
 
 internal val Medal.emojiRes: StringResource

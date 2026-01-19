@@ -24,7 +24,7 @@
     <string name="result_medal_silver">ぎんメダル！</string>
     <string name="result_medal_bronze">どうメダル！</string>
     <string name="result_medal_star">ほしメダル！</string>
-    <string name="result_medal_emoji_nothing">❌</string>
+    <string name="result_medal_emoji_nothing">-</string>
     <string name="result_medal_emoji_gold">🥇</string>
     <string name="result_medal_emoji_silver">🥈</string>
     <string name="result_medal_emoji_bronze">🥉</string>

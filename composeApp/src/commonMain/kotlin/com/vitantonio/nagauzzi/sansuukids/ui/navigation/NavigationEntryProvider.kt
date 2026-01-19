@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
+import com.vitantonio.nagauzzi.sansuukids.data.MedalRepository
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.AnswerCheckRoute
@@ -28,7 +29,8 @@ import com.vitantonio.nagauzzi.sansuukids.ui.screen.ResultScreen
 
 internal fun navigationEntryProvider(
     key: SansuuKidsRoute,
-    navigationState: NavigationState
+    navigationState: NavigationState,
+    medalRepository: MedalRepository = MedalRepository()
 ): NavEntry<SansuuKidsRoute> {
     return when (key) {
         HomeRoute -> NavEntry(key) {
@@ -40,7 +42,7 @@ internal fun navigationEntryProvider(
 
         MedalCollectionRoute -> NavEntry(key) {
             MedalCollectionScreen(
-                medalDisplays = emptyList(), // TODO: 獲得したメダル情報の永続化後に適切なメダルリストを渡す
+                getMedal = medalRepository::getMedal,
                 onBackClick = { navigationState.navigateBack() }
             )
         }
@@ -92,8 +94,15 @@ internal fun navigationEntryProvider(
 
             LaunchedEffect(quizState.isQuizComplete) {
                 if (quizState.isQuizComplete) {
+                    medalRepository.saveMedal(
+                        mode = key.mode,
+                        level = key.level,
+                        medal = viewModel.earnedMedal
+                    )
                     navigationState.navigateTo(
                         ResultRoute(
+                            mode = key.mode,
+                            level = key.level,
                             score = viewModel.earnedScore,
                             medal = viewModel.earnedMedal,
                             questions = quizState.totalQuestions,
@@ -114,6 +123,8 @@ internal fun navigationEntryProvider(
                     if (quizState.answeredCount > 0) {
                         navigationState.navigateTo(
                             ResultRoute(
+                                mode = key.mode,
+                                level = key.level,
                                 score = viewModel.earnedScore,
                                 medal = viewModel.earnedMedal,
                                 questions = quizState.totalQuestions,

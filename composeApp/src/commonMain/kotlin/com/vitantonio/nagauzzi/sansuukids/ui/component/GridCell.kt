@@ -25,16 +25,27 @@ fun GridCell(
             .size(56.dp)
             .border(0.5.dp, MaterialTheme.colorScheme.outline)
             .background(
-                if (isHeader) MaterialTheme.colorScheme.surfaceVariant
-                else MaterialTheme.colorScheme.surface
+                if (isHeader) {
+                    MaterialTheme.colorScheme.surfaceVariant
+                } else {
+                    MaterialTheme.colorScheme.surface
+                }
             )
             .padding(8.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
-            style = if (isHeader) MaterialTheme.typography.bodySmall else MaterialTheme.typography.bodyMedium,
-            fontWeight = if (isHeader) FontWeight.Bold else FontWeight.Normal,
+            style = if (isHeader) {
+                MaterialTheme.typography.bodySmall
+            } else {
+                MaterialTheme.typography.headlineLarge
+            },
+            fontWeight = if (isHeader) {
+                FontWeight.Bold
+            } else {
+                FontWeight.Normal
+            },
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center
         )
