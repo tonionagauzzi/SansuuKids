@@ -12,6 +12,7 @@ import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.AnswerCheckRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.MedalCollectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ResultRoute
@@ -20,6 +21,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.viewmodel.QuizViewModel
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.AnswerCheckScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.HomeScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.LevelSelectionScreen
+import com.vitantonio.nagauzzi.sansuukids.ui.screen.MedalCollectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.QuizScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ResultScreen
@@ -32,7 +34,14 @@ internal fun navigationEntryProvider(
         HomeRoute -> NavEntry(key) {
             HomeScreen(
                 onStartClick = { navigationState.navigateTo(ModeSelectionRoute) },
-                onMedalCollectionClick = { /* TODO: Navigate to Medal Collection */ }
+                onMedalCollectionClick = { navigationState.navigateTo(MedalCollectionRoute) }
+            )
+        }
+
+        MedalCollectionRoute -> NavEntry(key) {
+            MedalCollectionScreen(
+                medalDisplays = emptyList(), // TODO: 獲得したメダル情報の永続化後に適切なメダルリストを渡す
+                onBackClick = { navigationState.navigateBack() }
             )
         }
 

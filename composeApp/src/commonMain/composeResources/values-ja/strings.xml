@@ -39,4 +39,7 @@
     <string name="answer_check_back">もどる</string>
     <string name="answer_check_next">つぎ</string>
     <string name="answer_check_finish">おわる</string>
+    <string name="medal_collection_title">メダルずかん</string>
+    <string name="medal_collection_back">もどる</string>
+    <string name="medal_collection_not_earned">ー</string>
 </resources>
