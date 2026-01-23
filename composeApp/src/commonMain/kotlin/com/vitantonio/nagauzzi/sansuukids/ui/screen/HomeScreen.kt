@@ -4,11 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -46,7 +47,8 @@ fun HomeScreen(
             painter = painterResource(Res.drawable.app_icon),
             contentDescription = stringResource(Res.string.app_title),
             modifier = Modifier
-                .size(320.dp)
+                .fillMaxWidth()
+                .aspectRatio(1f)
                 .testTag("home_title"),
             contentScale = ContentScale.Fit
         )
