@@ -43,7 +43,7 @@ class QuizScreenTest {
                     onDigitClick = { digit -> clickedDigit = digit },
                     onDeleteClick = {},
                     onSubmitClick = {},
-                    onCancelClick = {}
+                    onBackClick = {}
                 )
             }
         }
@@ -67,7 +67,7 @@ class QuizScreenTest {
                     onDigitClick = {},
                     onDeleteClick = { clicked = true },
                     onSubmitClick = {},
-                    onCancelClick = {}
+                    onBackClick = {}
                 )
             }
         }
@@ -80,7 +80,7 @@ class QuizScreenTest {
     }
 
     @Test
-    fun 中止ボタンをタップするとonCancelClickが呼ばれる() = runComposeUiTest {
+    fun 中止ボタンをタップするとonBackClickが呼ばれる() = runComposeUiTest {
         // Given: クイズ画面を表示し、クリック状態を追跡する
         var clicked = false
         val quizState = QuizState(createTestQuiz())
@@ -91,7 +91,7 @@ class QuizScreenTest {
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
-                    onCancelClick = { clicked = true }
+                    onBackClick = { clicked = true }
                 )
             }
         }
@@ -99,7 +99,7 @@ class QuizScreenTest {
         // When: 中止ボタンをクリックする
         onNodeWithTag("cancel_button").performClick()
 
-        // Then: onCancelClickが呼ばれる
+        // Then: onBackClickが呼ばれる
         assertTrue(clicked)
     }
 
@@ -114,7 +114,7 @@ class QuizScreenTest {
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
-                    onCancelClick = {}
+                    onBackClick = {}
                 )
             }
         }
@@ -136,7 +136,7 @@ class QuizScreenTest {
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
-                    onCancelClick = {}
+                    onBackClick = {}
                 )
             }
         }
@@ -161,7 +161,7 @@ class QuizScreenTest {
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
-                    onCancelClick = {}
+                    onBackClick = {}
                 )
             }
         }

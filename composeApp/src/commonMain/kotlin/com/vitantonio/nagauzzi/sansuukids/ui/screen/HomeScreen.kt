@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -48,6 +49,7 @@ fun HomeScreen(
             contentDescription = stringResource(Res.string.app_title),
             modifier = Modifier
                 .fillMaxWidth()
+                .sizeIn(maxWidth = 400.dp, maxHeight = 400.dp)
                 .aspectRatio(1f)
                 .testTag("home_title"),
             contentScale = ContentScale.Fit
