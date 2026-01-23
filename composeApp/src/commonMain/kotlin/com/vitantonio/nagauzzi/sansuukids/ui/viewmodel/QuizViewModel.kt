@@ -77,4 +77,13 @@ internal class QuizViewModel(
             )
         )
     }
+
+    fun cancelLastAnswer() {
+        val userAnswers = currentQuizState.userAnswers
+        if (userAnswers.isNotEmpty()) {
+            currentQuizState = currentQuizState.copy(
+                userAnswers = userAnswers.dropLast(1)
+            )
+        }
+    }
 }
