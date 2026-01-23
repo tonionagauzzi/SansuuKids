@@ -119,18 +119,9 @@ internal fun navigationEntryProvider(
                 onSubmitClick = {
                     viewModel.submitAnswer()
                 },
-                onCancelClick = {
+                onBackClick = {
                     if (quizState.answeredCount > 0) {
-                        navigationState.navigateTo(
-                            ResultRoute(
-                                mode = key.mode,
-                                level = key.level,
-                                score = viewModel.earnedScore,
-                                medal = viewModel.earnedMedal,
-                                questions = quizState.totalQuestions,
-                                userAnswers = quizState.userAnswers
-                            )
-                        )
+                        viewModel.cancelLastAnswer()
                     } else {
                         navigationState.popToHome()
                     }

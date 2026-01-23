@@ -13,6 +13,7 @@
     <string name="level_easy">かんたん</string>
     <string name="level_normal">ふつう</string>
     <string name="level_difficult">むずかしい</string>
+    <string name="quiz_back">もどる</string>
     <string name="quiz_cancel">ちゅうし</string>
     <string name="quiz_delete">けす</string>
     <string name="quiz_submit">けってい</string>

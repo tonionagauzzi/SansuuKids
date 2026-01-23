@@ -14,9 +14,9 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -33,8 +33,8 @@ import com.vitantonio.nagauzzi.sansuukids.ui.component.QuizProgressBar
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import sansuukids.composeapp.generated.resources.Res
-import sansuukids.composeapp.generated.resources.exit
-import sansuukids.composeapp.generated.resources.quiz_cancel
+import sansuukids.composeapp.generated.resources.arrow_back
+import sansuukids.composeapp.generated.resources.quiz_back
 
 @Composable
 internal fun QuizScreen(
@@ -42,7 +42,7 @@ internal fun QuizScreen(
     onDigitClick: (Int) -> Unit,
     onDeleteClick: () -> Unit,
     onSubmitClick: () -> Unit,
-    onCancelClick: () -> Unit,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -59,19 +59,20 @@ internal fun QuizScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(
-                onClick = onCancelClick,
-                colors = IconButtonDefaults.iconButtonColors(
+            Button(
+                onClick = onBackClick,
+                colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.errorContainer,
                     contentColor = MaterialTheme.colorScheme.onErrorContainer
                 ),
                 modifier = Modifier
-                    .size(48.dp)
-                    .testTag("cancel_button")
+                    .height(64.dp)
+                    .testTag("cancel_button"),
+                shape = RoundedCornerShape(12.dp),
             ) {
                 Icon(
-                    painter = painterResource(Res.drawable.exit),
-                    contentDescription = stringResource(Res.string.quiz_cancel),
+                    painter = painterResource(Res.drawable.arrow_back),
+                    contentDescription = stringResource(Res.string.quiz_back),
                     modifier = Modifier.size(32.dp)
                 )
             }
