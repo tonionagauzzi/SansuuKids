@@ -233,4 +233,42 @@ class QuizViewModelTest {
         assertEquals(100, viewModel.earnedScore)
         assertEquals(Medal.Gold, viewModel.earnedMedal)
     }
+
+    @Test
+    fun cancelLastAnswerで回答を取り消し再度回答できる() {
+        // Given: 3つ回答済みのViewModel
+        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        repeat(3) {
+            viewModel.appendDigit(1)
+            viewModel.submitAnswer()
+        }
+
+        // When: cancelLastAnswerを3回呼ぶ
+        repeat(3) {
+            viewModel.cancelLastAnswer()
+        }
+
+        // Then: 全ての回答が削除される
+        assertEquals(0, viewModel.quizState.value.userAnswers.size)
+
+        // When: 再度回答する
+        viewModel.appendDigit(3)
+        viewModel.submitAnswer()
+
+        // Then: 新しい回答が記録される
+        assertEquals(1, viewModel.quizState.value.userAnswers.size)
+        assertEquals(3, viewModel.quizState.value.userAnswers[0].answer)
+    }
+
+    @Test
+    fun cancelLastAnswerで回答が空の場合は何も起こらない() {
+        // Given: 回答が空のViewModel
+        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+
+        // When: cancelLastAnswerを呼ぶ
+        viewModel.cancelLastAnswer()
+
+        // Then: 回答は空のまま
+        assertEquals(0, viewModel.quizState.value.userAnswers.size)
+    }
 }
