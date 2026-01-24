@@ -55,7 +55,7 @@ internal class QuizViewModel(
 
     fun deleteLastDigit() {
         currentQuizState = currentQuizState.copy(
-            currentInput = currentQuizState.currentInput.toString().dropLast(1).toIntOrNull() ?: -1
+            currentInput = currentQuizState.currentInput.toString().dropLast(1).toIntOrNull()
         )
     }
 

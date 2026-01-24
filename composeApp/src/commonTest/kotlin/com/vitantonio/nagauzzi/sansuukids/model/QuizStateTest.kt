@@ -41,8 +41,8 @@ class QuizStateTest {
         // When: QuizStateを初期化する
         val state = QuizState(quiz)
 
-        // Then: currentInputが空文字列
-        assertEquals("", state.currentInput)
+        // Then: currentInputがnullである
+        assertEquals(null, state.currentInput)
     }
 
     @Test
@@ -112,9 +112,11 @@ class QuizStateTest {
         assertEquals(0.0f, state1.progress)
 
         // When: 1問回答済み
-        val state2 = QuizState(quiz, userAnswers = listOf(
-            UserAnswer(questionIndex = 0, answer = 2, isCorrect = true)
-        ))
+        val state2 = QuizState(
+            quiz, userAnswers = listOf(
+                UserAnswer(questionIndex = 0, answer = 2, isCorrect = true)
+            )
+        )
 
         // Then: 進捗は0.1（1/10）
         assertEquals(0.1f, state2.progress)
@@ -165,11 +167,13 @@ class QuizStateTest {
         val quiz = createTestQuiz()
 
         // When: 3問回答済み
-        val state = QuizState(quiz, userAnswers = listOf(
-            UserAnswer(questionIndex = 0, answer = 2, isCorrect = true),
-            UserAnswer(questionIndex = 1, answer = 3, isCorrect = false),
-            UserAnswer(questionIndex = 2, answer = 4, isCorrect = true),
-        ))
+        val state = QuizState(
+            quiz, userAnswers = listOf(
+                UserAnswer(questionIndex = 0, answer = 2, isCorrect = true),
+                UserAnswer(questionIndex = 1, answer = 3, isCorrect = false),
+                UserAnswer(questionIndex = 2, answer = 4, isCorrect = true),
+            )
+        )
 
         // Then: 4問目の問題を返す
         assertEquals(quiz.questions[3], state.currentQuestion)
