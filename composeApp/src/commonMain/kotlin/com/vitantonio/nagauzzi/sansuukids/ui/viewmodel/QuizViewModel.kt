@@ -46,9 +46,9 @@ internal class QuizViewModel(
     fun appendDigit(digit: Int) {
         require(digit in 0..9) { "Digit must be between 0 and 9" }
         if (currentQuizState.isAppendDigitEnabled) {
-            val currentInput = currentQuizState.currentInput ?: 0
+            val currentInputString = currentQuizState.currentInput?.toString() ?: ""
             currentQuizState = currentQuizState.copy(
-                currentInput = (currentInput.toString() + digit.toString()).toIntOrNull()
+                currentInput = (currentInputString + digit.toString()).toIntOrNull()
             )
         }
     }
