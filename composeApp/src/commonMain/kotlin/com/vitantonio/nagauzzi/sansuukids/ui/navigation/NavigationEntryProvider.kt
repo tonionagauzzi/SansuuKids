@@ -118,25 +118,23 @@ internal fun navigationEntryProvider(
                 }
             }
 
-            LaunchedEffect(quizState.userAnswers.size) {
-                if (quizState.userAnswers.isNotEmpty()) {
-                    if (quizState.isQuizComplete) {
-                        medalRepository.saveMedal(
+            LaunchedEffect(quizState.isQuizComplete) {
+                if (quizState.isQuizComplete) {
+                    medalRepository.saveMedal(
+                        mode = key.mode,
+                        level = key.level,
+                        medal = viewModel.earnedMedal
+                    )
+                    navigationState.navigateTo(
+                        ResultRoute(
                             mode = key.mode,
                             level = key.level,
-                            medal = viewModel.earnedMedal
+                            score = viewModel.earnedScore,
+                            medal = viewModel.earnedMedal,
+                            questions = quizState.totalQuestions,
+                            userAnswers = quizState.userAnswers
                         )
-                        navigationState.navigateTo(
-                            ResultRoute(
-                                mode = key.mode,
-                                level = key.level,
-                                score = viewModel.earnedScore,
-                                medal = viewModel.earnedMedal,
-                                questions = quizState.totalQuestions,
-                                userAnswers = quizState.userAnswers
-                            )
-                        )
-                    }
+                    )
                 }
             }
 
