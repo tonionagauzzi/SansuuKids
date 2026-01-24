@@ -4,12 +4,12 @@ package com.vitantonio.nagauzzi.sansuukids.model
  * クイズの進行状態を表すクラス。
  *
  * @property quiz 出題するクイズ
- * @property currentInput ユーザーが入力中の回答文字列
+ * @property currentInput ユーザーが入力中の回答。未入力の場合はnull
  * @property userAnswers ユーザーが回答済みの回答リスト
  */
 internal data class QuizState(
     val quiz: Quiz,
-    val currentInput: String = "",
+    val currentInput: Int? = null,
     val userAnswers: List<UserAnswer> = emptyList()
 ) {
     /**
@@ -52,8 +52,9 @@ internal data class QuizState(
     val isAppendDigitEnabled: Boolean
         get() {
             val currentMathQuestion = currentQuestion as? Question.Math ?: return false
+            val inputLength = currentInput?.toString()?.length ?: 0
             val maxInputLength = currentMathQuestion.correctAnswer.toString().length
-            return currentInput.length < maxInputLength
+            return inputLength < maxInputLength
         }
 
     /**
@@ -61,7 +62,7 @@ internal data class QuizState(
      * 入力が空でない場合にtrueを返す。
      */
     val isSubmitEnabled: Boolean
-        get() = currentInput.isNotEmpty()
+        get() = currentInput != null
 
     /**
      * クイズが完了したかどうか。

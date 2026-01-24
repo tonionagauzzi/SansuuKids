@@ -46,30 +46,29 @@ internal class QuizViewModel(
     fun appendDigit(digit: Int) {
         require(digit in 0..9) { "Digit must be between 0 and 9" }
         if (currentQuizState.isAppendDigitEnabled) {
+            val currentInput = currentQuizState.currentInput ?: 0
             currentQuizState = currentQuizState.copy(
-                currentInput = currentQuizState.currentInput + digit.toString()
+                currentInput = (currentInput.toString() + digit.toString()).toIntOrNull()
             )
         }
     }
 
     fun deleteLastDigit() {
-        if (currentQuizState.currentInput.isNotEmpty()) {
-            currentQuizState = currentQuizState.copy(
-                currentInput = currentQuizState.currentInput.dropLast(1)
-            )
-        }
+        currentQuizState = currentQuizState.copy(
+            currentInput = currentQuizState.currentInput.toString().dropLast(1).toIntOrNull() ?: -1
+        )
     }
 
     fun submitAnswer() {
         // 有効な回答が入力されていない場合は送信しない
-        val answer = currentQuizState.currentInput.toIntOrNull() ?: return
+        val answer = currentQuizState.currentInput ?: return
         val currentMathQuestion = currentQuizState.currentQuestion as? Math ?: return
 
         // 回答が正しいかどうかを判定
         val isCorrect = answer == currentMathQuestion.correctAnswer
 
         currentQuizState = currentQuizState.copy(
-            currentInput = "",
+            currentInput = null,
             userAnswers = currentQuizState.userAnswers + UserAnswer(
                 questionIndex = currentQuizState.currentQuestionIndex,
                 answer = answer,
