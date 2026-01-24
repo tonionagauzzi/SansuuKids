@@ -72,8 +72,9 @@ class GenerateQuizTest {
         })
     }
 
+    // 足し算のレベル別テスト
     @Test
-    fun EASYレベルでは1桁の数が生成される() {
+    fun 足し算のEASYレベルでは1から5の数が生成される() {
         // Given: EASYレベルとADDITIONモードを指定する
         val mode = Mode.ADDITION
         val level = Level.EASY
@@ -82,16 +83,16 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の左右オペランドが1〜9である
+        // Then: 全問の左右オペランドが1〜5である（答えが2桁にならないように）
         assertTrue(quiz.questions.all { question ->
             question is Addition &&
-                    question.leftOperand in 1..9 &&
-                    question.rightOperand in 1..9
+                    question.leftOperand in 1..5 &&
+                    question.rightOperand in 1..5
         })
     }
 
     @Test
-    fun NORMALレベルでは1から99の数が生成される() {
+    fun 足し算のNORMALレベルでは1から50の数が生成される() {
         // Given: NORMALレベルとADDITIONモードを指定する
         val mode = Mode.ADDITION
         val level = Level.NORMAL
@@ -100,16 +101,16 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の左右オペランドが1〜99である
+        // Then: 全問の左右オペランドが1〜50である（答えが3桁にならないように）
         assertTrue(quiz.questions.all { question ->
             question is Addition &&
-                    question.leftOperand in 1..99 &&
-                    question.rightOperand in 1..99
+                    question.leftOperand in 1..50 &&
+                    question.rightOperand in 1..50
         })
     }
 
     @Test
-    fun DIFFICULTレベルでは3桁以上の数が含まれる() {
+    fun 足し算のDIFFICULTレベルでは100から9999の数が生成される() {
         // Given: DIFFICULTレベルとADDITIONモードを指定する
         val mode = Mode.ADDITION
         val level = Level.DIFFICULT
@@ -123,6 +124,171 @@ class GenerateQuizTest {
             question is Addition &&
                     question.leftOperand in 100..9999 &&
                     question.rightOperand in 100..9999
+        })
+    }
+
+    // 引き算のレベル別テスト
+    @Test
+    fun 引き算のEASYレベルでは1から9の数が生成される() {
+        // Given: EASYレベルとSUBTRACTIONモードを指定する
+        val mode = Mode.SUBTRACTION
+        val level = Level.EASY
+        val generateQuiz = GenerateQuiz()
+
+        // When: クイズを生成する
+        val quiz = generateQuiz(mode, level)
+
+        // Then: 全問の左右オペランドが1〜9である
+        assertTrue(quiz.questions.all { question ->
+            question is Subtraction &&
+                    question.leftOperand in 1..9 &&
+                    question.rightOperand in 1..9
+        })
+    }
+
+    @Test
+    fun 引き算のNORMALレベルでは1から99の数が生成される() {
+        // Given: NORMALレベルとSUBTRACTIONモードを指定する
+        val mode = Mode.SUBTRACTION
+        val level = Level.NORMAL
+        val generateQuiz = GenerateQuiz()
+
+        // When: クイズを生成する
+        val quiz = generateQuiz(mode, level)
+
+        // Then: 全問の左右オペランドが1〜99である
+        assertTrue(quiz.questions.all { question ->
+            question is Subtraction &&
+                    question.leftOperand in 1..99 &&
+                    question.rightOperand in 1..99
+        })
+    }
+
+    @Test
+    fun 引き算のDIFFICULTレベルでは100から9999の数が生成される() {
+        // Given: DIFFICULTレベルとSUBTRACTIONモードを指定する
+        val mode = Mode.SUBTRACTION
+        val level = Level.DIFFICULT
+        val generateQuiz = GenerateQuiz()
+
+        // When: クイズを生成する
+        val quiz = generateQuiz(mode, level)
+
+        // Then: 全問の左右オペランドが100〜9999である
+        assertTrue(quiz.questions.all { question ->
+            question is Subtraction &&
+                    question.leftOperand in 100..9999 &&
+                    question.rightOperand in 100..9999
+        })
+    }
+
+    // 掛け算のレベル別テスト
+    @Test
+    fun 掛け算のEASYレベルでは1から9の数が生成される() {
+        // Given: EASYレベルとMULTIPLICATIONモードを指定する
+        val mode = Mode.MULTIPLICATION
+        val level = Level.EASY
+        val generateQuiz = GenerateQuiz()
+
+        // When: クイズを生成する
+        val quiz = generateQuiz(mode, level)
+
+        // Then: 全問の左右オペランドが1〜9である
+        assertTrue(quiz.questions.all { question ->
+            question is Multiplication &&
+                    question.leftOperand in 1..9 &&
+                    question.rightOperand in 1..9
+        })
+    }
+
+    @Test
+    fun 掛け算のNORMALレベルでは1から19の数が生成される() {
+        // Given: NORMALレベルとMULTIPLICATIONモードを指定する
+        val mode = Mode.MULTIPLICATION
+        val level = Level.NORMAL
+        val generateQuiz = GenerateQuiz()
+
+        // When: クイズを生成する
+        val quiz = generateQuiz(mode, level)
+
+        // Then: 全問の左右オペランドが1〜19である
+        assertTrue(quiz.questions.all { question ->
+            question is Multiplication &&
+                    question.leftOperand in 1..19 &&
+                    question.rightOperand in 1..19
+        })
+    }
+
+    @Test
+    fun 掛け算のDIFFICULTレベルでは1から99の数が生成される() {
+        // Given: DIFFICULTレベルとMULTIPLICATIONモードを指定する
+        val mode = Mode.MULTIPLICATION
+        val level = Level.DIFFICULT
+        val generateQuiz = GenerateQuiz()
+
+        // When: クイズを生成する
+        val quiz = generateQuiz(mode, level)
+
+        // Then: 全問の左右オペランドが1〜99である
+        assertTrue(quiz.questions.all { question ->
+            question is Multiplication &&
+                    question.leftOperand in 1..99 &&
+                    question.rightOperand in 1..99
+        })
+    }
+
+    // 割り算のレベル別テスト
+    @Test
+    fun 割り算のEASYレベルでは1から9の数が生成される() {
+        // Given: EASYレベルとDIVISIONモードを指定する
+        val mode = Mode.DIVISION
+        val level = Level.EASY
+        val generateQuiz = GenerateQuiz()
+
+        // When: クイズを生成する
+        val quiz = generateQuiz(mode, level)
+
+        // Then: 全問の除数と商が1〜9である
+        assertTrue(quiz.questions.all { question ->
+            question is Division &&
+                    question.divisor in 1..9 &&
+                    question.correctAnswer in 1..9
+        })
+    }
+
+    @Test
+    fun 割り算のNORMALレベルでは1から19の数が生成される() {
+        // Given: NORMALレベルとDIVISIONモードを指定する
+        val mode = Mode.DIVISION
+        val level = Level.NORMAL
+        val generateQuiz = GenerateQuiz()
+
+        // When: クイズを生成する
+        val quiz = generateQuiz(mode, level)
+
+        // Then: 全問の除数と商が1〜19である
+        assertTrue(quiz.questions.all { question ->
+            question is Division &&
+                    question.divisor in 1..19 &&
+                    question.correctAnswer in 1..19
+        })
+    }
+
+    @Test
+    fun 割り算のDIFFICULTレベルでは1から99の数が生成される() {
+        // Given: DIFFICULTレベルとDIVISIONモードを指定する
+        val mode = Mode.DIVISION
+        val level = Level.DIFFICULT
+        val generateQuiz = GenerateQuiz()
+
+        // When: クイズを生成する
+        val quiz = generateQuiz(mode, level)
+
+        // Then: 全問の除数と商が1〜99である
+        assertTrue(quiz.questions.all { question ->
+            question is Division &&
+                    question.divisor in 1..99 &&
+                    question.correctAnswer in 1..99
         })
     }
 
