@@ -41,14 +41,14 @@ private fun generateQuestion(mode: Mode, level: Level, random: Random): Question
 }
 
 private fun generateAddition(level: Level, random: Random): Addition {
-    val (min, max) = getRangeForLevel(level)
+    val (min, max) = getAdditionRangeForLevel(level)
     val left = random.nextInt(min, max + 1)
     val right = random.nextInt(min, max + 1)
     return Addition(left, right)
 }
 
 private fun generateSubtraction(level: Level, random: Random): Subtraction {
-    val (min, max) = getRangeForLevel(level)
+    val (min, max) = getSubtractionRangeForLevel(level)
     val a = random.nextInt(min, max + 1)
     val b = random.nextInt(min, max + 1)
     val left = maxOf(a, b)
@@ -71,7 +71,18 @@ private fun generateDivision(level: Level, random: Random): Division {
     return Division(dividend, divisor)
 }
 
-private fun getRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
+// 足し算用の範囲設定
+// 足し算は答えが2桁や3桁にならないように範囲を調整
+// EASY: 答えが最大10まで(1〜5)、NORMAL: 答えが最大100まで(1〜50)、DIFFICULT: 3桁以上の計算(100〜9999)
+private fun getAdditionRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
+    Level.EASY -> 1 to 5
+    Level.NORMAL -> 1 to 50
+    Level.DIFFICULT -> 100 to 9999
+}
+
+// 引き算用の範囲設定
+// EASY: 1桁同士の計算(1〜9)、NORMAL: 1〜2桁同士の計算(1〜99)、DIFFICULT: 3桁以上の計算(100〜9999)
+private fun getSubtractionRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
     Level.EASY -> 1 to 9
     Level.NORMAL -> 1 to 99
     Level.DIFFICULT -> 100 to 9999
@@ -79,7 +90,7 @@ private fun getRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
 
 // 掛け算は結果が大きくなりやすいため、足し算・引き算とは異なる範囲を設定
 // 割り算は掛け算と難易度を合わせるために掛け算の範囲と合わせる
-// EASY: 九九の範囲(1〜9)、NORMAL: 19の段まで(1〜19)、DIFFICULT: 二桁同士の計算(1〜99)
+// EASY: 九九の範囲(1〜9)、NORMAL: 19の段まで(1〜19)、DIFFICULT: 2桁同士の計算(1〜99)
 private fun getMultiplicationRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
     Level.EASY -> 1 to 9
     Level.NORMAL -> 1 to 19
