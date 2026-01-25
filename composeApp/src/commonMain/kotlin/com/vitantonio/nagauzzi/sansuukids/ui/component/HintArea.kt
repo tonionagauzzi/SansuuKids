@@ -22,7 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.vitantonio.nagauzzi.sansuukids.model.Question
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Subtraction
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.random.Random
@@ -32,73 +34,99 @@ private val fruitEmojis = listOf("🍎", "🍊", "🍋", "🍇", "🍓", "🍑",
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun HintArea(
-    question: Question.Math,
-    modifier: Modifier = Modifier
-) {
-    val (leftCount, rightCount) = when (question) {
-        is Question.Math.Addition -> question.leftOperand to question.rightOperand
-        is Question.Math.Subtraction -> question.leftOperand to question.rightOperand
-        is Question.Math.Multiplication -> question.leftOperand to question.rightOperand
-        is Question.Math.Division -> question.dividend to question.divisor
-    }
-
-    val fruitEmoji = remember(question) {
+    question: Math,
+    modifier: Modifier = Modifier,
+    fruitEmoji: String = remember(question) {
         fruitEmojis.shuffled(Random).first()
     }
+) {
+    when (question) {
+        // 足し算の場合、2つの数を別々のエリアに表示
+        is Addition -> Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Max),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            FlowRow(
+                modifier = Modifier
+                    .background(
+                        color = MaterialTheme.colorScheme.surfaceContainerLowest,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .fillMaxHeight()
+                    .padding(16.dp)
+                    .weight(1f)
+                    .testTag("hint_addition_left"),
+                horizontalArrangement = Arrangement.Start,
+                verticalArrangement = Arrangement.Top
+            ) {
+                repeat(question.leftOperand) {
+                    Text(
+                        text = fruitEmoji,
+                        style = MaterialTheme.typography.headlineLarge,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
 
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Max),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // Left operand hint
-        FlowRow(
+            Spacer(modifier = Modifier.width(16.dp))
+
+            FlowRow(
+                modifier = Modifier
+                    .background(
+                        color = MaterialTheme.colorScheme.surfaceContainerLowest,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .fillMaxHeight()
+                    .padding(16.dp)
+                    .weight(1f)
+                    .testTag("hint_addition_right"),
+                horizontalArrangement = Arrangement.Start,
+                verticalArrangement = Arrangement.Top
+            ) {
+                repeat(question.rightOperand) {
+                    Text(
+                        text = fruitEmoji,
+                        style = MaterialTheme.typography.headlineLarge,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+        }
+
+        // 引き算の場合、1つのエリアに表示し、引く数ぶんの絵文字に強調色をつける
+        is Subtraction -> FlowRow(
             modifier = Modifier
                 .background(
                     color = MaterialTheme.colorScheme.surfaceContainerLowest,
                     shape = RoundedCornerShape(16.dp)
                 )
-                .fillMaxHeight()
                 .padding(16.dp)
-                .weight(1f)
-                .testTag("hint_left"),
+                .testTag("hint_subtraction"),
             horizontalArrangement = Arrangement.Start,
             verticalArrangement = Arrangement.Top
         ) {
-            repeat(leftCount) {
+            repeat(question.correctAnswer) {
                 Text(
                     text = fruitEmoji,
                     style = MaterialTheme.typography.headlineLarge,
                     textAlign = TextAlign.Center
                 )
             }
-        }
-
-        Spacer(modifier = Modifier.width(16.dp))
-
-        // Right operand hint
-        FlowRow(
-            modifier = Modifier
-                .background(
-                    color = MaterialTheme.colorScheme.surfaceContainerLowest,
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .fillMaxHeight()
-                .padding(16.dp)
-                .weight(1f)
-                .testTag("hint_right"),
-            horizontalArrangement = Arrangement.Start,
-            verticalArrangement = Arrangement.Top
-        ) {
-            repeat(rightCount) {
+            repeat(question.rightOperand) {
                 Text(
                     text = fruitEmoji,
+                    modifier = Modifier
+                        .background(color = MaterialTheme.colorScheme.errorContainer),
                     style = MaterialTheme.typography.headlineLarge,
                     textAlign = TextAlign.Center
                 )
             }
         }
+
+        // 他のタイプはヒントなし
+        else -> {}
     }
 }
 
@@ -107,7 +135,8 @@ internal fun HintArea(
 private fun HintAreaPreviewAddition() {
     SansuuKidsTheme {
         HintArea(
-            question = Question.Math.Addition(leftOperand = 3, rightOperand = 5)
+            question = Addition(leftOperand = 3, rightOperand = 5),
+            fruitEmoji = "🍎"
         )
     }
 }
@@ -117,7 +146,8 @@ private fun HintAreaPreviewAddition() {
 private fun HintAreaPreviewSubtraction() {
     SansuuKidsTheme {
         HintArea(
-            question = Question.Math.Subtraction(leftOperand = 7, rightOperand = 2)
+            question = Subtraction(leftOperand = 7, rightOperand = 2),
+            fruitEmoji = "🍊"
         )
     }
 }
