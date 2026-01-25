@@ -19,7 +19,7 @@ internal class SettingsRepository(
      */
     var perQuestionAnswerCheckEnabled: Boolean
         get() {
-            // 幼児・低学年向けアプリのため、即座のフィードバックを重視してデフォルトでONにすfる
+            // 幼児・低学年向けアプリのため、即座のフィードバックを重視してデフォルトでONにする
             return settings.getBoolean(KEY_PER_QUESTION_ANSWER_CHECK, defaultValue = true)
         }
         set(value) {
