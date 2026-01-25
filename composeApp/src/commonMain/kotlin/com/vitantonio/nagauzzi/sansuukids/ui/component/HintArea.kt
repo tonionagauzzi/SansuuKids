@@ -27,7 +27,6 @@ import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Subtraction
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import kotlin.random.Random
 
 private val fruitEmojis = listOf("🍎", "🍊", "🍋", "🍇", "🍓", "🍑", "🍒", "🍌", "🥝", "🍐")
 
@@ -37,7 +36,7 @@ internal fun HintArea(
     question: Math,
     modifier: Modifier = Modifier,
     fruitEmoji: String = remember(question) {
-        fruitEmojis.shuffled(Random).first()
+        fruitEmojis.shuffled().first()
     }
 ) {
     when (question) {
