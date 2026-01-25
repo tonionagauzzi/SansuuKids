@@ -166,7 +166,8 @@ internal fun QuizScreen(
 
         // Answer check dialog
         val currentQuestion = quizState.currentQuestion
-        if (checkingAnswer && currentQuestion is Question.Math) {
+        val currentInput = quizState.currentInput
+        if (checkingAnswer && currentQuestion is Question.Math && currentInput != null) {
             Dialog(
                 onDismissRequest = {
                     checkingAnswer = false
@@ -183,7 +184,7 @@ internal fun QuizScreen(
                 ) {
                     AnswerCheck(
                         question = currentQuestion,
-                        answer = quizState.currentInput ?: 0
+                        answer = currentInput
                     )
                 }
             }
