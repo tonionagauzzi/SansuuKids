@@ -8,6 +8,8 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class QuizViewModelTest {
@@ -46,7 +48,7 @@ class QuizViewModelTest {
         viewModel.appendDigit(5)
 
         // Then: 入力が反映される
-        assertEquals("5", viewModel.quizState.value.currentInput)
+        assertEquals(5, viewModel.quizState.value.currentInput)
     }
 
     @Test
@@ -82,7 +84,7 @@ class QuizViewModelTest {
         viewModel.appendDigit(3)
 
         // Then: 入力が連結される
-        assertEquals("123", viewModel.quizState.value.currentInput)
+        assertEquals(123, viewModel.quizState.value.currentInput)
     }
 
     @Test
@@ -96,19 +98,19 @@ class QuizViewModelTest {
         viewModel.deleteLastDigit()
 
         // Then: 最後の数字が削除される
-        assertEquals("1", viewModel.quizState.value.currentInput)
+        assertEquals(1, viewModel.quizState.value.currentInput)
     }
 
     @Test
-    fun deleteLastDigitで空の入力には何も起こらない() {
-        // Given: 空の入力のViewModel
+    fun deleteLastDigitで何も入力していない場合は何も起こらない() {
+        // Given: 何も入力していないViewModel
         val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
 
         // When: 削除を試みる
         viewModel.deleteLastDigit()
 
-        // Then: 入力は空のまま
-        assertEquals("", viewModel.quizState.value.currentInput)
+        // Then: 入力はnullのまま
+        assertEquals(null, viewModel.quizState.value.currentInput)
     }
 
     @Test
@@ -171,7 +173,7 @@ class QuizViewModelTest {
         viewModel.submitAnswer()
 
         // Then: 入力がクリアされる
-        assertEquals("", viewModel.quizState.value.currentInput)
+        assertEquals(null, viewModel.quizState.value.currentInput)
     }
 
     @Test
@@ -198,19 +200,19 @@ class QuizViewModelTest {
 
         // When: 初期状態
         // Then: 入力が空なので無効
-        assertTrue(viewModel.quizState.value.currentInput.isEmpty())
+        assertNull(viewModel.quizState.value.currentInput)
 
         // When: 数字を入力する
         viewModel.appendDigit(5)
 
         // Then: 入力があるので有効
-        assertTrue(viewModel.quizState.value.currentInput.isNotEmpty())
+        assertNotNull(viewModel.quizState.value.currentInput)
 
         // When: 数字を削除する
         viewModel.deleteLastDigit()
 
         // Then: 入力が空なので無効
-        assertTrue(viewModel.quizState.value.currentInput.isEmpty())
+        assertNull(viewModel.quizState.value.currentInput)
     }
 
     @Test

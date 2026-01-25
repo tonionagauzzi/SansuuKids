@@ -3,16 +3,22 @@ package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.navigation3.ui.NavDisplay
+import com.russhwolf.settings.MapSettings
+import com.vitantonio.nagauzzi.sansuukids.data.SettingsRepository
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.MedalCollectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SettingsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -29,6 +35,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -57,6 +67,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -84,6 +98,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -109,6 +127,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -137,6 +159,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -166,6 +192,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -198,6 +228,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -226,6 +260,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -253,6 +291,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -270,5 +312,188 @@ class NavigationIntegrationTest {
         assertEquals(1, navigationState.entries.size)
         assertEquals(HomeRoute, navigationState.entries.last())
         onNodeWithTag("start_button").assertIsDisplayed()
+    }
+
+    @Test
+    fun ホーム画面でせっていボタンを押すと設定画面に遷移する() = runComposeUiTest {
+        // Given: ホーム画面を初期画面として表示する
+        val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute)
+        val navigationState = NavigationState(backStack)
+
+        setContent {
+            SansuuKidsTheme {
+                NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
+                    backStack = navigationState.entries,
+                    onBack = { navigationState.navigateBack() },
+                    entryProvider = { key ->
+                        navigationEntryProvider(key, navigationState)
+                    }
+                )
+            }
+        }
+
+        // When: せっていボタンをクリックする
+        onNodeWithTag("settings_button").performClick()
+
+        // Then: 設定画面に遷移する
+        assertEquals(2, navigationState.entries.size)
+        assertEquals(SettingsRoute, navigationState.entries.last())
+        onNodeWithTag("settings_title").assertIsDisplayed()
+    }
+
+    @Test
+    fun 設定画面で戻るボタンを押すとホーム画面に戻る() = runComposeUiTest {
+        // Given: 設定画面を表示する
+        val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute, SettingsRoute)
+        val navigationState = NavigationState(backStack)
+
+        setContent {
+            SansuuKidsTheme {
+                NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
+                    backStack = navigationState.entries,
+                    onBack = { navigationState.navigateBack() },
+                    entryProvider = { key ->
+                        navigationEntryProvider(key, navigationState)
+                    }
+                )
+            }
+        }
+
+        // When: 戻るボタンをクリックする
+        onNodeWithTag("settings_back_button").performClick()
+        waitForIdle()
+
+        // Then: ホーム画面に戻る
+        assertEquals(1, navigationState.entries.size)
+        assertEquals(HomeRoute, navigationState.entries.last())
+        onNodeWithTag("start_button").assertIsDisplayed()
+    }
+
+    @Test
+    fun 設定画面で一問ごとの答え合わせをONにするとクイズ画面に反映される() = runComposeUiTest {
+        // Given: テスト用のSettingsRepositoryを作成し、初期値をfalseに設定
+        val testSettings = MapSettings()
+        val settingsRepository = SettingsRepository(testSettings)
+        settingsRepository.perQuestionAnswerCheckEnabled = false
+
+        val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute)
+        val navigationState = NavigationState(backStack)
+
+        setContent {
+            SansuuKidsTheme {
+                NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
+                    backStack = navigationState.entries,
+                    onBack = { navigationState.navigateBack() },
+                    entryProvider = { key ->
+                        navigationEntryProvider(
+                            key = key,
+                            navigationState = navigationState,
+                            settingsRepository = settingsRepository
+                        )
+                    }
+                )
+            }
+        }
+
+        // When: 設定画面に遷移してスイッチをONにする
+        onNodeWithTag("settings_button").performClick()
+        waitForIdle()
+        onNodeWithTag("per_question_check_switch").performClick()
+        waitForIdle()
+
+        // Then: 設定がONになる
+        assertEquals(true, settingsRepository.perQuestionAnswerCheckEnabled)
+
+        // When: ホームに戻り、クイズを開始する
+        onNodeWithTag("settings_back_button").performClick()
+        waitForIdle()
+        onNodeWithTag("start_button").performClick()
+        waitForIdle()
+        onNodeWithTag("addition_button").performClick()
+        waitForIdle()
+        onNodeWithTag("easy_button").performClick()
+        waitForIdle()
+
+        // Then: QuizScreenが表示され、数字を入力して決定ボタンを押すとダイアログが表示される
+        onNodeWithTag("question_text").assertIsDisplayed()
+        onNodeWithTag("keypad_2").performClick()
+        waitForIdle()
+        onNodeWithTag("keypad_submit").performClick()
+        waitForIdle()
+
+        // Then: 答え合わせダイアログが表示される
+        onAllNodesWithTag("result_indicator", useUnmergedTree = true)[0].assertIsDisplayed()
+    }
+
+    @Test
+    fun 設定画面で一問ごとの答え合わせをOFFにするとクイズ画面に反映される() = runComposeUiTest {
+        // Given: テスト用のSettingsRepositoryを作成し、初期値をtrueに設定
+        val testSettings = MapSettings()
+        val settingsRepository = SettingsRepository(testSettings)
+        settingsRepository.perQuestionAnswerCheckEnabled = true
+
+        val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute)
+        val navigationState = NavigationState(backStack)
+
+        setContent {
+            SansuuKidsTheme {
+                NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
+                    backStack = navigationState.entries,
+                    onBack = { navigationState.navigateBack() },
+                    entryProvider = { key ->
+                        navigationEntryProvider(
+                            key = key,
+                            navigationState = navigationState,
+                            settingsRepository = settingsRepository
+                        )
+                    }
+                )
+            }
+        }
+
+        // When: 設定画面に遷移してスイッチをOFFにする
+        onNodeWithTag("settings_button").performClick()
+        waitForIdle()
+        onNodeWithTag("per_question_check_switch").performClick()
+        waitForIdle()
+
+        // Then: 設定がOFFになる
+        assertEquals(false, settingsRepository.perQuestionAnswerCheckEnabled)
+
+        // When: ホームに戻り、クイズを開始する
+        onNodeWithTag("settings_back_button").performClick()
+        waitForIdle()
+        onNodeWithTag("start_button").performClick()
+        waitForIdle()
+        onNodeWithTag("addition_button").performClick()
+        waitForIdle()
+        onNodeWithTag("easy_button").performClick()
+        waitForIdle()
+
+        // Then: QuizScreenが表示され、数字を入力して決定ボタンを押してもダイアログは表示されない
+        onNodeWithTag("question_text").assertIsDisplayed()
+        onNodeWithTag("keypad_2").performClick()
+        waitForIdle()
+        onNodeWithTag("keypad_submit").performClick()
+        waitForIdle()
+
+        // Then: 答え合わせダイアログは表示されない
+        onAllNodesWithTag("result_indicator", useUnmergedTree = true)[0].assertDoesNotExist()
     }
 }

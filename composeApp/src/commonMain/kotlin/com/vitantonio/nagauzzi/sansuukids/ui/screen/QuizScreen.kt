@@ -1,6 +1,7 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,18 +17,26 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import com.vitantonio.nagauzzi.sansuukids.model.Question
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
+import com.vitantonio.nagauzzi.sansuukids.ui.component.AnswerCheck
 import com.vitantonio.nagauzzi.sansuukids.ui.component.NumberKeypad
 import com.vitantonio.nagauzzi.sansuukids.ui.component.QuizProgressBar
 import org.jetbrains.compose.resources.painterResource
@@ -39,6 +48,7 @@ import sansuukids.composeapp.generated.resources.quiz_back
 @Composable
 internal fun QuizScreen(
     quizState: QuizState,
+    perQuestionAnswerCheckEnabled: Boolean,
     onDigitClick: (Int) -> Unit,
     onDeleteClick: () -> Unit,
     onSubmitClick: () -> Unit,
@@ -119,8 +129,9 @@ internal fun QuizScreen(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.testTag("input_display")
                 ) {
+                    val currentInputText = quizState.currentInput?.toString() ?: ""
                     Text(
-                        text = quizState.currentInput,
+                        text = currentInputText,
                         style = MaterialTheme.typography.displayMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -130,15 +141,49 @@ internal fun QuizScreen(
             }
         }
 
+        var checkingAnswer by remember { mutableStateOf(false) }
+
         // Number keypad
         NumberKeypad(
             onDigitClick = onDigitClick,
             onDeleteClick = onDeleteClick,
-            onSubmitClick = onSubmitClick,
+            onSubmitClick = {
+                if (perQuestionAnswerCheckEnabled) {
+                    checkingAnswer = true
+                } else {
+                    onSubmitClick()
+                }
+            },
             isSubmitEnabled = quizState.isSubmitEnabled,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
+
+        // Answer check dialog
+        val currentQuestion = quizState.currentQuestion
+        val currentInput = quizState.currentInput
+        if (checkingAnswer && currentQuestion is Question.Math && currentInput != null) {
+            Dialog(
+                onDismissRequest = {
+                    checkingAnswer = false
+                    onSubmitClick()
+                }
+            ) {
+                Card(
+                    modifier = Modifier
+                        .clickable {
+                            checkingAnswer = false
+                            onSubmitClick()
+                        },
+                    shape = RoundedCornerShape(16.dp),
+                ) {
+                    AnswerCheck(
+                        question = currentQuestion,
+                        answer = currentInput
+                    )
+                }
+            }
+        }
     }
 }

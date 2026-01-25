@@ -1,13 +1,12 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepository
+import com.vitantonio.nagauzzi.sansuukids.data.SettingsRepository
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.AnswerCheckRoute
@@ -18,6 +17,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ResultRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SettingsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.viewmodel.QuizViewModel
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.AnswerCheckScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.HomeScreen
@@ -26,23 +26,36 @@ import com.vitantonio.nagauzzi.sansuukids.ui.screen.MedalCollectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.QuizScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ResultScreen
+import com.vitantonio.nagauzzi.sansuukids.ui.screen.SettingsScreen
 
 internal fun navigationEntryProvider(
     key: SansuuKidsRoute,
     navigationState: NavigationState,
-    medalRepository: MedalRepository = MedalRepository()
+    medalRepository: MedalRepository = MedalRepository(),
+    settingsRepository: SettingsRepository = SettingsRepository()
 ): NavEntry<SansuuKidsRoute> {
     return when (key) {
         HomeRoute -> NavEntry(key) {
             HomeScreen(
                 onStartClick = { navigationState.navigateTo(ModeSelectionRoute) },
-                onMedalCollectionClick = { navigationState.navigateTo(MedalCollectionRoute) }
+                onMedalCollectionClick = { navigationState.navigateTo(MedalCollectionRoute) },
+                onSettingsClick = { navigationState.navigateTo(SettingsRoute) }
             )
         }
 
         MedalCollectionRoute -> NavEntry(key) {
             MedalCollectionScreen(
                 getMedal = medalRepository::getMedal,
+                onBackClick = { navigationState.navigateBack() }
+            )
+        }
+
+        SettingsRoute -> NavEntry(key) {
+            SettingsScreen(
+                initialPerQuestionAnswerCheckEnabled = settingsRepository.perQuestionAnswerCheckEnabled,
+                onPerQuestionAnswerCheckChanged = { enabled ->
+                    settingsRepository.perQuestionAnswerCheckEnabled = enabled
+                },
                 onBackClick = { navigationState.navigateBack() }
             )
         }
@@ -87,8 +100,8 @@ internal fun navigationEntryProvider(
         }
 
         is QuizRoute -> NavEntry(key) {
-            val viewModel = viewModel(key = "${key.mode.name}_${key.level.name}") {
-                QuizViewModel(key.mode, key.level)
+            val viewModel = viewModel {
+                QuizViewModel(mode = key.mode, level = key.level)
             }
             val quizState by viewModel.quizState.collectAsState()
 
@@ -114,11 +127,10 @@ internal fun navigationEntryProvider(
 
             QuizScreen(
                 quizState = quizState,
+                perQuestionAnswerCheckEnabled = settingsRepository.perQuestionAnswerCheckEnabled,
                 onDigitClick = { digit -> viewModel.appendDigit(digit) },
                 onDeleteClick = { viewModel.deleteLastDigit() },
-                onSubmitClick = {
-                    viewModel.submitAnswer()
-                },
+                onSubmitClick = { viewModel.submitAnswer() },
                 onBackClick = {
                     if (quizState.answeredCount > 0) {
                         viewModel.cancelLastAnswer()
@@ -130,15 +142,6 @@ internal fun navigationEntryProvider(
         }
 
         is ResultRoute -> NavEntry(key) {
-            val viewModelStoreOwner = LocalViewModelStoreOwner.current
-
-            DisposableEffect(Unit) {
-                onDispose {
-                    // 結果画面が破棄される時にViewModelStoreをクリア
-                    viewModelStoreOwner?.viewModelStore?.clear()
-                }
-            }
-
             ResultScreen(
                 score = key.score,
                 medal = key.medal,
@@ -164,8 +167,11 @@ internal fun navigationEntryProvider(
             AnswerCheckScreen(
                 questions = key.questions,
                 userAnswers = key.userAnswers,
-                onFinishClick = {
+                onBackClick = {
                     navigationState.navigateBack()
+                },
+                onFinishClick = {
+                    navigationState.popToHome()
                 }
             )
         }

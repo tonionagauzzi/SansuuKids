@@ -19,7 +19,8 @@ class HomeScreenTest {
             SansuuKidsTheme {
                 HomeScreen(
                     onStartClick = { clicked = true },
-                    onMedalCollectionClick = {}
+                    onMedalCollectionClick = {},
+                    onSettingsClick = {}
                 )
             }
         }
@@ -39,7 +40,8 @@ class HomeScreenTest {
             SansuuKidsTheme {
                 HomeScreen(
                     onStartClick = {},
-                    onMedalCollectionClick = { clicked = true }
+                    onMedalCollectionClick = { clicked = true },
+                    onSettingsClick = {}
                 )
             }
         }

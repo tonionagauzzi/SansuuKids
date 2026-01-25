@@ -1,9 +1,11 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
@@ -15,6 +17,7 @@ import com.vitantonio.nagauzzi.sansuukids.model.QuizState
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalTestApi::class)
@@ -40,6 +43,7 @@ class QuizScreenTest {
             SansuuKidsTheme {
                 QuizScreen(
                     quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
                     onDigitClick = { digit -> clickedDigit = digit },
                     onDeleteClick = {},
                     onSubmitClick = {},
@@ -64,6 +68,7 @@ class QuizScreenTest {
             SansuuKidsTheme {
                 QuizScreen(
                     quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = { clicked = true },
                     onSubmitClick = {},
@@ -88,6 +93,7 @@ class QuizScreenTest {
             SansuuKidsTheme {
                 QuizScreen(
                     quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
@@ -111,6 +117,7 @@ class QuizScreenTest {
             SansuuKidsTheme {
                 QuizScreen(
                     quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
@@ -133,6 +140,7 @@ class QuizScreenTest {
             SansuuKidsTheme {
                 QuizScreen(
                     quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
@@ -152,12 +160,13 @@ class QuizScreenTest {
         // Given: 数字が入力済みのクイズ画面を表示する
         val quizState = QuizState(
             quiz = createTestQuiz(),
-            currentInput = "5"
+            currentInput = 5
         )
         setContent {
             SansuuKidsTheme {
                 QuizScreen(
                     quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
@@ -170,5 +179,101 @@ class QuizScreenTest {
 
         // Then: 決定ボタンが有効化されている
         onNodeWithTag("keypad_submit").assertIsEnabled()
+    }
+
+    @Test
+    fun 一問ごとの答え合わせが有効の場合に決定ボタン押下で答え合わせダイアログが表示される() =
+        runComposeUiTest {
+            // Given: 答え合わせ有効でクイズ画面を表示
+            var submitCalled = false
+            val quizState = QuizState(
+                quiz = createTestQuiz(),
+                currentInput = 5
+            )
+
+            setContent {
+                SansuuKidsTheme {
+                    QuizScreen(
+                        quizState = quizState,
+                        perQuestionAnswerCheckEnabled = true,
+                        onDigitClick = {},
+                        onDeleteClick = {},
+                        onSubmitClick = { submitCalled = true },
+                        onBackClick = {}
+                    )
+                }
+            }
+
+            // When: 決定ボタンをクリック
+            onNodeWithTag("keypad_submit").performClick()
+            waitForIdle()
+
+            // Then: ダイアログ内の要素が表示され、まだsubmitは呼ばれていない
+            onAllNodesWithTag("result_indicator", useUnmergedTree = true)[0].assertIsDisplayed()
+            onAllNodesWithTag("question_text", useUnmergedTree = true)[0].assertIsDisplayed()
+            onAllNodesWithTag("user_answer_display", useUnmergedTree = true)[0].assertIsDisplayed()
+            assertFalse(submitCalled)
+        }
+
+    @Test
+    fun 答え合わせダイアログの表示部分をクリックするとonSubmitClickが呼ばれる() = runComposeUiTest {
+        // Given: 答え合わせダイアログ表示中
+        var submitCalled = false
+        val quizState = QuizState(
+            quiz = createTestQuiz(),
+            currentInput = 2
+        )
+
+        setContent {
+            SansuuKidsTheme {
+                QuizScreen(
+                    quizState = quizState,
+                    perQuestionAnswerCheckEnabled = true,
+                    onDigitClick = {},
+                    onDeleteClick = {},
+                    onSubmitClick = { submitCalled = true },
+                    onBackClick = {}
+                )
+            }
+        }
+
+        onNodeWithTag("keypad_submit").performClick()
+
+        // When: ダイアログのCard部分をクリック
+        // Note: ダイアログ自体はクリック可能なので、result_indicatorをクリックすることで間接的にCardをクリック
+        onAllNodesWithTag("result_indicator", useUnmergedTree = true)[0].performClick()
+
+        // Then: onSubmitClickが呼ばれる
+        assertTrue(submitCalled)
+    }
+
+    @Test
+    fun 一問ごとの答え合わせが無効の場合は即座にonSubmitClickが呼ばれる() = runComposeUiTest {
+        // Given: 答え合わせ無効でクイズ画面を表示
+        var submitCalled = false
+        val quizState = QuizState(
+            quiz = createTestQuiz(),
+            currentInput = 5
+        )
+
+        setContent {
+            SansuuKidsTheme {
+                QuizScreen(
+                    quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
+                    onDigitClick = {},
+                    onDeleteClick = {},
+                    onSubmitClick = { submitCalled = true },
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // When: 決定ボタンをクリック
+        onNodeWithTag("keypad_submit").performClick()
+
+        // Then: ダイアログは表示されず、即座にonSubmitClickが呼ばれる
+        onAllNodesWithTag("result_indicator", useUnmergedTree = true)[0].assertDoesNotExist()
+        assertTrue(submitCalled)
     }
 }
