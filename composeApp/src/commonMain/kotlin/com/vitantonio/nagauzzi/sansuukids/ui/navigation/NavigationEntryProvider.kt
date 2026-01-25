@@ -53,8 +53,12 @@ internal fun navigationEntryProvider(
         SettingsRoute -> NavEntry(key) {
             SettingsScreen(
                 initialPerQuestionAnswerCheckEnabled = settingsRepository.perQuestionAnswerCheckEnabled,
+                initialHintDisplayEnabled = settingsRepository.hintDisplayEnabled,
                 onPerQuestionAnswerCheckChanged = { enabled ->
                     settingsRepository.perQuestionAnswerCheckEnabled = enabled
+                },
+                onHintDisplayChanged = { enabled ->
+                    settingsRepository.hintDisplayEnabled = enabled
                 },
                 onBackClick = { navigationState.navigateBack() }
             )

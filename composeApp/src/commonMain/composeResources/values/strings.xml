@@ -5,6 +5,7 @@
     <string name="medal_collection">Medals</string>
     <string name="settings">Settings</string>
     <string name="settings_per_question_check">Check answer\nafter each question</string>
+    <string name="settings_hint_display">Show hints\n(Easy mode only)</string>
     <string name="settings_back">Back</string>
     <string name="mode_selection_title">Select Mode</string>
     <string name="mode_addition">Addition</string>
