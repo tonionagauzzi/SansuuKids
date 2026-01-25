@@ -92,7 +92,7 @@ class AnswerCheckScreenTest {
     }
 
     @Test
-    fun もどるボタンを押すとonFinishClickが呼ばれる() = runComposeUiTest {
+    fun もどるボタンを押すとonBackClickが呼ばれる() = runComposeUiTest {
         // Given: 複数の問題があり、最初の問題を表示
         var clicked = false
         val questions = listOf(
