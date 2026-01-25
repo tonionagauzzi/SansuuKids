@@ -129,11 +129,7 @@ internal fun QuizScreen(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.testTag("input_display")
                 ) {
-                    val currentInputText = if (quizState.currentInput == null) {
-                        ""
-                    } else {
-                        quizState.currentInput.toString()
-                    }
+                    val currentInputText = quizState.currentInput?.toString() ?: ""
                     Text(
                         text = currentInputText,
                         style = MaterialTheme.typography.displayMedium,
