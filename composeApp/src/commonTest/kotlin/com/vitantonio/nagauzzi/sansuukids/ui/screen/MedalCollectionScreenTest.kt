@@ -5,7 +5,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
-import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -19,7 +18,7 @@ class MedalCollectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 MedalCollectionScreen(
-                    getMedal = { _, _ -> Medal.Nothing },
+                    medalDisplays = emptyList(),
                     onBackClick = {}
                 )
             }
@@ -41,7 +40,7 @@ class MedalCollectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 MedalCollectionScreen(
-                    getMedal = { _, _ -> Medal.Nothing },
+                    medalDisplays = emptyList(),
                     onBackClick = { clicked = true }
                 )
             }

@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
+import com.vitantonio.nagauzzi.sansuukids.model.MedalDisplay
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.emojiRes
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
@@ -37,7 +38,7 @@ import sansuukids.composeapp.generated.resources.medal_collection_title
 
 @Composable
 internal fun MedalCollectionScreen(
-    getMedal: (Mode, Level) -> Medal,
+    medalDisplays: List<MedalDisplay>,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit
 ) {
@@ -62,7 +63,7 @@ internal fun MedalCollectionScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         MedalGrid(
-            getMedal = getMedal,
+            medalDisplays = medalDisplays,
             modifier = Modifier.testTag("medal_grid")
         )
 
@@ -81,7 +82,7 @@ internal fun MedalCollectionScreen(
 
 @Composable
 private fun MedalGrid(
-    getMedal: (Mode, Level) -> Medal,
+    medalDisplays: List<MedalDisplay>,
     modifier: Modifier = Modifier
 ) {
     val modes =
@@ -132,7 +133,9 @@ private fun MedalGrid(
                 )
                 // Medal cells
                 levels.forEach { level ->
-                    val medal = getMedal(mode, level)
+                    val medal = medalDisplays.firstOrNull {
+                        it.mode == mode && it.level == level
+                    }?.medal ?: Medal.Nothing
                     GridCell(
                         text = stringResource(medal.emojiRes),
                         isHeader = false,
@@ -151,7 +154,7 @@ private fun MedalGrid(
 private fun MedalCollectionScreenPreview() {
     SansuuKidsTheme {
         MedalCollectionScreen(
-            getMedal = { _, _ -> Medal.Nothing },
+            medalDisplays = emptyList(),
             onBackClick = {}
         )
     }
@@ -162,7 +165,15 @@ private fun MedalCollectionScreenPreview() {
 private fun MedalCollectionScreenWithMedalsPreview() {
     SansuuKidsTheme {
         MedalCollectionScreen(
-            getMedal = { _, _ -> Medal.Gold },
+            medalDisplays = listOf(
+                MedalDisplay(Mode.ADDITION, Level.EASY, Medal.Gold),
+                MedalDisplay(Mode.ADDITION, Level.NORMAL, Medal.Silver),
+                MedalDisplay(Mode.ADDITION, Level.DIFFICULT, Medal.Bronze),
+                MedalDisplay(Mode.SUBTRACTION, Level.EASY, Medal.Silver),
+                MedalDisplay(Mode.SUBTRACTION, Level.NORMAL, Medal.Bronze),
+                MedalDisplay(Mode.MULTIPLICATION, Level.EASY, Medal.Bronze),
+                MedalDisplay(Mode.ALL, Level.DIFFICULT, Medal.Gold)
+            ),
             onBackClick = {}
         )
     }

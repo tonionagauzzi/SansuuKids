@@ -49,13 +49,13 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelNavigation3)
             implementation(libs.jetbrains.navigation3.ui)
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.multiplatform.settings)
+            implementation(libs.datastore.preferences.core)
         }
         commonTest.dependencies {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
             implementation(libs.kotlin.test)
-            implementation(libs.multiplatform.settings.test)
+            implementation(libs.kotlinx.coroutines.test)
         }
         val desktopTest by getting {
             dependencies {

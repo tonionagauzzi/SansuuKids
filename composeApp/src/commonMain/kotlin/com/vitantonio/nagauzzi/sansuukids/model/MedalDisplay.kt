@@ -5,3 +5,6 @@ internal data class MedalDisplay(
     val level: Level,
     val medal: Medal
 )
+
+internal val MedalDisplay.key: String
+    get() = "medal_${mode.name}_${level.name}"

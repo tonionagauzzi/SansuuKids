@@ -3,12 +3,15 @@ package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepository
 import com.vitantonio.nagauzzi.sansuukids.data.SettingsRepository
 import com.vitantonio.nagauzzi.sansuukids.model.Level
+import com.vitantonio.nagauzzi.sansuukids.model.MedalDisplay
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import kotlinx.coroutines.launch
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.AnswerCheckRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
@@ -44,21 +47,31 @@ internal fun navigationEntryProvider(
         }
 
         MedalCollectionRoute -> NavEntry(key) {
+            val medalDisplays by medalRepository.medalDisplays.collectAsState(emptyList())
             MedalCollectionScreen(
-                getMedal = medalRepository::getMedal,
+                medalDisplays = medalDisplays,
                 onBackClick = { navigationState.navigateBack() }
             )
         }
 
         SettingsRoute -> NavEntry(key) {
+            val scope = rememberCoroutineScope()
+            val perQuestionAnswerCheckEnabled by settingsRepository.perQuestionAnswerCheckEnabled
+                .collectAsState(initial = true)
+            val hintDisplayEnabled by settingsRepository.hintDisplayEnabled
+                .collectAsState(initial = true)
             SettingsScreen(
-                initialPerQuestionAnswerCheckEnabled = settingsRepository.perQuestionAnswerCheckEnabled,
-                initialHintDisplayEnabled = settingsRepository.hintDisplayEnabled,
+                perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
+                hintDisplayEnabled = hintDisplayEnabled,
                 onPerQuestionAnswerCheckChanged = { enabled ->
-                    settingsRepository.perQuestionAnswerCheckEnabled = enabled
+                    scope.launch {
+                        settingsRepository.setPerQuestionAnswerCheckEnabled(enabled)
+                    }
                 },
                 onHintDisplayChanged = { enabled ->
-                    settingsRepository.hintDisplayEnabled = enabled
+                    scope.launch {
+                        settingsRepository.setHintDisplayEnabled(enabled)
+                    }
                 },
                 onBackClick = { navigationState.navigateBack() }
             )
@@ -112,9 +125,11 @@ internal fun navigationEntryProvider(
             LaunchedEffect(quizState.isQuizComplete) {
                 if (quizState.isQuizComplete) {
                     medalRepository.saveMedal(
-                        mode = key.mode,
-                        level = key.level,
-                        medal = viewModel.earnedMedal
+                        MedalDisplay(
+                            mode = key.mode,
+                            level = key.level,
+                            medal = viewModel.earnedMedal
+                        )
                     )
                     navigationState.navigateTo(
                         ResultRoute(
@@ -129,10 +144,15 @@ internal fun navigationEntryProvider(
                 }
             }
 
+            val perQuestionAnswerCheckEnabled by settingsRepository.perQuestionAnswerCheckEnabled
+                .collectAsState(initial = true)
+            val hintDisplayEnabled by settingsRepository.hintDisplayEnabled
+                .collectAsState(initial = true)
+
             QuizScreen(
                 quizState = quizState,
-                perQuestionAnswerCheckEnabled = settingsRepository.perQuestionAnswerCheckEnabled,
-                hintDisplayEnabled = settingsRepository.hintDisplayEnabled && key.level == Level.EASY,
+                perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
+                hintDisplayEnabled = hintDisplayEnabled && key.level == Level.EASY,
                 onDigitClick = { digit -> viewModel.appendDigit(digit) },
                 onDeleteClick = { viewModel.deleteLastDigit() },
                 onSubmitClick = { viewModel.submitAnswer() },
