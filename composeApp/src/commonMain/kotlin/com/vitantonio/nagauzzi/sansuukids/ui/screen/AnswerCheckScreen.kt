@@ -45,7 +45,7 @@ internal fun AnswerCheckScreen(
 ) {
     var currentIndex by rememberSaveable { mutableIntStateOf(0) }
 
-    val currentQuestion = questions.getOrNull(currentIndex) ?: return
+    val currentQuestion = questions.getOrNull(currentIndex) as? Question.Math ?: return
     val currentUserAnswer = userAnswers.getOrNull(currentIndex) ?: return
     val isFirstQuestion = currentIndex == 0
     val isLastQuestion = currentIndex == questions.size - 1

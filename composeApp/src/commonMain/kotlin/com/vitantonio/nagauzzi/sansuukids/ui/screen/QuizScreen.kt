@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.vitantonio.nagauzzi.sansuukids.model.Question
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AnswerCheck
 import com.vitantonio.nagauzzi.sansuukids.ui.component.NumberKeypad
@@ -164,7 +165,8 @@ internal fun QuizScreen(
         )
 
         // Answer check dialog
-        if (checkingAnswer) {
+        val currentQuestion = quizState.currentQuestion
+        if (checkingAnswer && currentQuestion is Question.Math) {
             Dialog(
                 onDismissRequest = {
                     checkingAnswer = false
@@ -180,7 +182,7 @@ internal fun QuizScreen(
                     shape = RoundedCornerShape(16.dp),
                 ) {
                     AnswerCheck(
-                        question = quizState.currentQuestion,
+                        question = currentQuestion,
                         answer = quizState.currentInput ?: 0
                     )
                 }

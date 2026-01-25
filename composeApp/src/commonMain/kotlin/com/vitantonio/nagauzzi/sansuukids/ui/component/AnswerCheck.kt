@@ -27,10 +27,10 @@ import sansuukids.composeapp.generated.resources.answer_check_your_answer
 
 @Composable
 internal fun AnswerCheck(
-    question: Question,
+    question: Question.Math,
     answer: Int
 ) {
-    val isCorrect = answer == (question as? Question.Math)?.correctAnswer
+    val isCorrect = answer == question.correctAnswer
     val accentColor = if (isCorrect) {
         MaterialTheme.colorScheme.onBackground
     } else {
@@ -65,14 +65,10 @@ internal fun AnswerCheck(
         Spacer(modifier = Modifier.height(24.dp))
 
         // Question text with correct answer
-        val questionWithAnswer = when (question) {
-            is Question.Math -> question.displayText.replace(
-                "?",
-                question.correctAnswer.toString()
-            )
-
-            is Question.None -> question.displayText
-        }
+        val questionWithAnswer = question.displayText.replace(
+            "?",
+            question.correctAnswer.toString()
+        )
         Text(
             text = questionWithAnswer,
             style = MaterialTheme.typography.displayMedium,
