@@ -4,6 +4,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
@@ -33,6 +35,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -61,6 +67,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -88,6 +98,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -113,6 +127,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -141,6 +159,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -170,6 +192,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -202,6 +228,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -230,6 +260,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -257,6 +291,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -285,6 +323,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -312,6 +354,10 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
@@ -344,10 +390,18 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
-                        navigationEntryProvider(key, navigationState, settingsRepository = settingsRepository)
+                        navigationEntryProvider(
+                            key = key,
+                            navigationState = navigationState,
+                            settingsRepository = settingsRepository
+                        )
                     }
                 )
             }
@@ -396,10 +450,18 @@ class NavigationIntegrationTest {
         setContent {
             SansuuKidsTheme {
                 NavDisplay(
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     backStack = navigationState.entries,
                     onBack = { navigationState.navigateBack() },
                     entryProvider = { key ->
-                        navigationEntryProvider(key, navigationState, settingsRepository = settingsRepository)
+                        navigationEntryProvider(
+                            key = key,
+                            navigationState = navigationState,
+                            settingsRepository = settingsRepository
+                        )
                     }
                 )
             }

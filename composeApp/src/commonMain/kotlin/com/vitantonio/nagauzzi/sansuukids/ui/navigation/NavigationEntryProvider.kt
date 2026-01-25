@@ -1,10 +1,8 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepository
@@ -102,21 +100,10 @@ internal fun navigationEntryProvider(
         }
 
         is QuizRoute -> NavEntry(key) {
-            val viewModelStoreOwner = LocalViewModelStoreOwner.current!!
-            val viewModel = viewModel(
-                viewModelStoreOwner = viewModelStoreOwner,
-                key = "${key.mode.name}_${key.level.name}"
-            ) {
+            val viewModel = viewModel {
                 QuizViewModel(mode = key.mode, level = key.level)
             }
             val quizState by viewModel.quizState.collectAsState()
-
-            DisposableEffect(Unit) {
-                onDispose {
-                    // 次回クイズ画面を開くときに状態をリセットしたいので、クイズ画面と共にQuizViewModelもクリア
-                    viewModelStoreOwner.viewModelStore.clear()
-                }
-            }
 
             LaunchedEffect(quizState.isQuizComplete) {
                 if (quizState.isQuizComplete) {

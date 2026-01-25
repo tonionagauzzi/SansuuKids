@@ -1,6 +1,8 @@
 package com.vitantonio.nagauzzi.sansuukids
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.navigationEntryProvider
@@ -15,6 +17,10 @@ fun App() {
         val navigationState = rememberNavigationState(HomeRoute)
 
         NavDisplay(
+            entryDecorators = listOf(
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator()
+            ),
             backStack = navigationState.entries,
             onBack = { navigationState.navigateBack() },
             entryProvider = { key ->
