@@ -144,7 +144,7 @@ internal fun navigationEntryProvider(
                     if (quizState.answeredCount > 0) {
                         viewModel.cancelLastAnswer()
                     } else {
-                        navigationState.popToHome()
+                        navigationState.navigateBack()
                     }
                 }
             )
