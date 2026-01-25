@@ -57,9 +57,9 @@ internal fun navigationEntryProvider(
         SettingsRoute -> NavEntry(key) {
             val scope = rememberCoroutineScope()
             val perQuestionAnswerCheckEnabled by settingsRepository.perQuestionAnswerCheckEnabled
-                .collectAsState(initial = false) // 初期表示はトグルスイッチOFFのためfalseを設定する
+                .collectAsState(initial = true)
             val hintDisplayEnabled by settingsRepository.hintDisplayEnabled
-                .collectAsState(initial = false) // 初期表示はトグルスイッチOFFのためfalseを設定する
+                .collectAsState(initial = true)
             SettingsScreen(
                 perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
                 hintDisplayEnabled = hintDisplayEnabled,
@@ -145,9 +145,9 @@ internal fun navigationEntryProvider(
             }
 
             val perQuestionAnswerCheckEnabled by settingsRepository.perQuestionAnswerCheckEnabled
-                .collectAsState(initial = true) // 幼児〜小学生向けアプリのため、初回はtrueを設定する
+                .collectAsState(initial = true)
             val hintDisplayEnabled by settingsRepository.hintDisplayEnabled
-                .collectAsState(initial = true) // 幼児〜小学生向けアプリのため、初回はtrueを設定する
+                .collectAsState(initial = true)
 
             QuizScreen(
                 quizState = quizState,
