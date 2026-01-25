@@ -37,6 +37,7 @@ import androidx.compose.ui.window.Dialog
 import com.vitantonio.nagauzzi.sansuukids.model.Question
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AnswerCheck
+import com.vitantonio.nagauzzi.sansuukids.ui.component.HintArea
 import com.vitantonio.nagauzzi.sansuukids.ui.component.NumberKeypad
 import com.vitantonio.nagauzzi.sansuukids.ui.component.QuizProgressBar
 import org.jetbrains.compose.resources.painterResource
@@ -49,6 +50,7 @@ import sansuukids.composeapp.generated.resources.quiz_back
 internal fun QuizScreen(
     quizState: QuizState,
     perQuestionAnswerCheckEnabled: Boolean,
+    hintDisplayEnabled: Boolean,
     onDigitClick: (Int) -> Unit,
     onDeleteClick: () -> Unit,
     onSubmitClick: () -> Unit,
@@ -95,7 +97,8 @@ internal fun QuizScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        val currentQuestion = quizState.currentQuestion
+        val currentInput = quizState.currentInput
 
         // Question display area
         Column(
@@ -105,9 +108,21 @@ internal fun QuizScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            // Hint area (Easy mode only)
+            if (hintDisplayEnabled && currentQuestion is Question.Math) {
+                HintArea(
+                    question = currentQuestion,
+                    modifier = Modifier
+                        .fillMaxWidth(0.9f)
+                        .testTag("hint_area")
+                )
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
             // Question text
             Text(
-                text = quizState.currentQuestion.displayText,
+                text = currentQuestion.displayText,
                 style = MaterialTheme.typography.displayMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
@@ -129,9 +144,8 @@ internal fun QuizScreen(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.testTag("input_display")
                 ) {
-                    val currentInputText = quizState.currentInput?.toString() ?: ""
                     Text(
-                        text = currentInputText,
+                        text = currentInput?.toString() ?: "",
                         style = MaterialTheme.typography.displayMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -161,8 +175,6 @@ internal fun QuizScreen(
         )
 
         // Answer check dialog
-        val currentQuestion = quizState.currentQuestion
-        val currentInput = quizState.currentInput
         if (checkingAnswer && currentQuestion is Question.Math && currentInput != null) {
             Dialog(
                 onDismissRequest = {

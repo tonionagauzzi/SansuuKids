@@ -129,9 +129,14 @@ internal fun navigationEntryProvider(
                 }
             }
 
+            // ヒントが有効なのは、設定が有効で「かんたん」モードかつ足し算か引き算の場合のみ
+            val hintDisplayEnabled = settingsRepository.hintDisplayEnabled &&
+                    key.level == Level.EASY && key.mode in listOf(Mode.ADDITION, Mode.SUBTRACTION)
+
             QuizScreen(
                 quizState = quizState,
                 perQuestionAnswerCheckEnabled = settingsRepository.perQuestionAnswerCheckEnabled,
+                hintDisplayEnabled = hintDisplayEnabled,
                 onDigitClick = { digit -> viewModel.appendDigit(digit) },
                 onDeleteClick = { viewModel.deleteLastDigit() },
                 onSubmitClick = { viewModel.submitAnswer() },
