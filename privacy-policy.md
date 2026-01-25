@@ -1,6 +1,6 @@
 # プライバシーポリシー
 
-最終更新日: 2025年1月25日
+最終更新日: 2026年1月25日
 
 ## はじめに
 
@@ -75,7 +75,7 @@
 
 # Privacy Policy
 
-Last Updated: January 25, 2025
+Last Updated: January 25, 2026
 
 ## Introduction
 
