@@ -11,6 +11,7 @@ internal class SettingsRepository(
 ) {
     companion object {
         private const val KEY_PER_QUESTION_ANSWER_CHECK = "per_question_answer_check"
+        private const val KEY_HINT_DISPLAY = "hint_display"
     }
 
     /**
@@ -24,5 +25,18 @@ internal class SettingsRepository(
         }
         set(value) {
             settings.putBoolean(KEY_PER_QUESTION_ANSWER_CHECK, value)
+        }
+
+    /**
+     * ヒント表示が有効かどうか（かんたんモードのみ適用）。
+     * 有効な場合true、無効な場合false（デフォルト: true）
+     */
+    var hintDisplayEnabled: Boolean
+        get() {
+            // 幼児向けアプリのため、ヒントありをデフォルトにする
+            return settings.getBoolean(KEY_HINT_DISPLAY, defaultValue = true)
+        }
+        set(value) {
+            settings.putBoolean(KEY_HINT_DISPLAY, value)
         }
 }

@@ -30,17 +30,23 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.settings
 import sansuukids.composeapp.generated.resources.settings_back
+import sansuukids.composeapp.generated.resources.settings_hint_display
 import sansuukids.composeapp.generated.resources.settings_per_question_check
 
 @Composable
 fun SettingsScreen(
     initialPerQuestionAnswerCheckEnabled: Boolean,
+    initialHintDisplayEnabled: Boolean,
     onPerQuestionAnswerCheckChanged: (Boolean) -> Unit,
+    onHintDisplayChanged: (Boolean) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var perQuestionCheckEnabled by rememberSaveable {
         mutableStateOf(initialPerQuestionAnswerCheckEnabled)
+    }
+    var hintDisplayEnabled by rememberSaveable {
+        mutableStateOf(initialHintDisplayEnabled)
     }
 
     Column(
@@ -91,6 +97,31 @@ fun SettingsScreen(
                     modifier = Modifier.testTag("per_question_check_switch")
                 )
             }
+
+            // Hint display setting (Easy mode only)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(Res.string.settings_hint_display),
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier.weight(1f)
+                )
+
+                Spacer(modifier = Modifier.padding(horizontal = 16.dp))
+
+                Switch(
+                    checked = hintDisplayEnabled,
+                    onCheckedChange = { enabled ->
+                        hintDisplayEnabled = enabled
+                        onHintDisplayChanged(enabled)
+                    },
+                    modifier = Modifier.testTag("hint_display_switch")
+                )
+            }
         }
 
         // Back button
@@ -111,7 +142,9 @@ private fun SettingsScreenPreview() {
     SansuuKidsTheme {
         SettingsScreen(
             initialPerQuestionAnswerCheckEnabled = false,
+            initialHintDisplayEnabled = false,
             onPerQuestionAnswerCheckChanged = {},
+            onHintDisplayChanged = {},
             onBackClick = {}
         )
     }
@@ -123,7 +156,9 @@ private fun SettingsScreenPreviewEnabled() {
     SansuuKidsTheme {
         SettingsScreen(
             initialPerQuestionAnswerCheckEnabled = true,
+            initialHintDisplayEnabled = true,
             onPerQuestionAnswerCheckChanged = {},
+            onHintDisplayChanged = {},
             onBackClick = {}
         )
     }

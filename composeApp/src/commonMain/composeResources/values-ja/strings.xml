@@ -5,6 +5,7 @@
     <string name="medal_collection">メダルずかん</string>
     <string name="settings">せってい</string>
     <string name="settings_per_question_check">1もんごとに\nこたえあわせをする</string>
+    <string name="settings_hint_display">ヒントをだす\n（かんたんモードのみ）</string>
     <string name="settings_back">もどる</string>
     <string name="mode_selection_title">モードをえらんでね</string>
     <string name="mode_addition">たしざん</string>

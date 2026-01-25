@@ -21,7 +21,9 @@ class SettingsScreenTest {
             SansuuKidsTheme {
                 SettingsScreen(
                     initialPerQuestionAnswerCheckEnabled = false,
+                    initialHintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = {},
+                    onHintDisplayChanged = {},
                     onBackClick = {}
                 )
             }
@@ -38,7 +40,9 @@ class SettingsScreenTest {
             SansuuKidsTheme {
                 SettingsScreen(
                     initialPerQuestionAnswerCheckEnabled = true,
+                    initialHintDisplayEnabled = true,
                     onPerQuestionAnswerCheckChanged = {},
+                    onHintDisplayChanged = {},
                     onBackClick = {}
                 )
             }
@@ -56,7 +60,9 @@ class SettingsScreenTest {
             SansuuKidsTheme {
                 SettingsScreen(
                     initialPerQuestionAnswerCheckEnabled = false,
+                    initialHintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = { changedValue = it },
+                    onHintDisplayChanged = {},
                     onBackClick = {}
                 )
             }
@@ -77,7 +83,9 @@ class SettingsScreenTest {
             SansuuKidsTheme {
                 SettingsScreen(
                     initialPerQuestionAnswerCheckEnabled = true,
+                    initialHintDisplayEnabled = true,
                     onPerQuestionAnswerCheckChanged = { changedValue = it },
+                    onHintDisplayChanged = {},
                     onBackClick = {}
                 )
             }
@@ -98,7 +106,9 @@ class SettingsScreenTest {
             SansuuKidsTheme {
                 SettingsScreen(
                     initialPerQuestionAnswerCheckEnabled = false,
+                    initialHintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = {},
+                    onHintDisplayChanged = {},
                     onBackClick = { clicked = true }
                 )
             }
@@ -109,5 +119,89 @@ class SettingsScreenTest {
 
         // Then: onBackClickが呼ばれる
         assertTrue(clicked)
+    }
+
+    @Test
+    fun ヒントスイッチが初期状態でオフを表示する() = runComposeUiTest {
+        // Given: ヒント初期状態がfalseの設定画面を表示
+        setContent {
+            SansuuKidsTheme {
+                SettingsScreen(
+                    initialPerQuestionAnswerCheckEnabled = false,
+                    initialHintDisplayEnabled = false,
+                    onPerQuestionAnswerCheckChanged = {},
+                    onHintDisplayChanged = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // Then: ヒントスイッチがオフの状態
+        onNodeWithTag("hint_display_switch").assertIsOff()
+    }
+
+    @Test
+    fun ヒントスイッチが初期状態でオンを表示する() = runComposeUiTest {
+        // Given: ヒント初期状態がtrueの設定画面を表示
+        setContent {
+            SansuuKidsTheme {
+                SettingsScreen(
+                    initialPerQuestionAnswerCheckEnabled = false,
+                    initialHintDisplayEnabled = true,
+                    onPerQuestionAnswerCheckChanged = {},
+                    onHintDisplayChanged = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // Then: ヒントスイッチがオンの状態
+        onNodeWithTag("hint_display_switch").assertIsOn()
+    }
+
+    @Test
+    fun ヒントスイッチをオンにするとコールバックがtrueで呼ばれる() = runComposeUiTest {
+        // Given: ヒント初期状態がfalseの設定画面を表示し、変更を追跡する
+        var changedValue: Boolean? = null
+        setContent {
+            SansuuKidsTheme {
+                SettingsScreen(
+                    initialPerQuestionAnswerCheckEnabled = false,
+                    initialHintDisplayEnabled = false,
+                    onPerQuestionAnswerCheckChanged = {},
+                    onHintDisplayChanged = { changedValue = it },
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // When: ヒントスイッチをクリックしてオンにする
+        onNodeWithTag("hint_display_switch").performClick()
+
+        // Then: コールバックがtrueで呼ばれる
+        assertEquals(true, changedValue)
+    }
+
+    @Test
+    fun ヒントスイッチをオフにするとコールバックがfalseで呼ばれる() = runComposeUiTest {
+        // Given: ヒント初期状態がtrueの設定画面を表示し、変更を追跡する
+        var changedValue: Boolean? = null
+        setContent {
+            SansuuKidsTheme {
+                SettingsScreen(
+                    initialPerQuestionAnswerCheckEnabled = false,
+                    initialHintDisplayEnabled = true,
+                    onPerQuestionAnswerCheckChanged = {},
+                    onHintDisplayChanged = { changedValue = it },
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // When: ヒントスイッチをクリックしてオフにする
+        onNodeWithTag("hint_display_switch").performClick()
+
+        // Then: コールバックがfalseで呼ばれる
+        assertEquals(false, changedValue)
     }
 }

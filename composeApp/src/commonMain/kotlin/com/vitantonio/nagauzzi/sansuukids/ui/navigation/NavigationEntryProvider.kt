@@ -53,8 +53,12 @@ internal fun navigationEntryProvider(
         SettingsRoute -> NavEntry(key) {
             SettingsScreen(
                 initialPerQuestionAnswerCheckEnabled = settingsRepository.perQuestionAnswerCheckEnabled,
+                initialHintDisplayEnabled = settingsRepository.hintDisplayEnabled,
                 onPerQuestionAnswerCheckChanged = { enabled ->
                     settingsRepository.perQuestionAnswerCheckEnabled = enabled
+                },
+                onHintDisplayChanged = { enabled ->
+                    settingsRepository.hintDisplayEnabled = enabled
                 },
                 onBackClick = { navigationState.navigateBack() }
             )
@@ -128,6 +132,7 @@ internal fun navigationEntryProvider(
             QuizScreen(
                 quizState = quizState,
                 perQuestionAnswerCheckEnabled = settingsRepository.perQuestionAnswerCheckEnabled,
+                hintDisplayEnabled = settingsRepository.hintDisplayEnabled && key.level == Level.EASY,
                 onDigitClick = { digit -> viewModel.appendDigit(digit) },
                 onDeleteClick = { viewModel.deleteLastDigit() },
                 onSubmitClick = { viewModel.submitAnswer() },
@@ -135,7 +140,7 @@ internal fun navigationEntryProvider(
                     if (quizState.answeredCount > 0) {
                         viewModel.cancelLastAnswer()
                     } else {
-                        navigationState.popToHome()
+                        navigationState.navigateBack()
                     }
                 }
             )
