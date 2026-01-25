@@ -24,14 +24,14 @@ import kotlin.test.assertTrue
 class QuizScreenTest {
     private val quizSize = 3
 
-    private fun createTestQuiz(): Quiz {
+    private fun createTestQuiz(level: Level = Level.EASY): Quiz {
         val questions = (1..quizSize).map { index ->
             Addition(
                 leftOperand = index,
                 rightOperand = 1
             )
         }
-        return Quiz(questions, Mode.ADDITION, Level.EASY)
+        return Quiz(questions, Mode.ADDITION, level)
     }
 
     @Test
@@ -44,6 +44,7 @@ class QuizScreenTest {
                 QuizScreen(
                     quizState = quizState,
                     perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onDigitClick = { digit -> clickedDigit = digit },
                     onDeleteClick = {},
                     onSubmitClick = {},
@@ -69,6 +70,7 @@ class QuizScreenTest {
                 QuizScreen(
                     quizState = quizState,
                     perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = { clicked = true },
                     onSubmitClick = {},
@@ -94,6 +96,7 @@ class QuizScreenTest {
                 QuizScreen(
                     quizState = quizState,
                     perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
@@ -118,6 +121,7 @@ class QuizScreenTest {
                 QuizScreen(
                     quizState = quizState,
                     perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
@@ -141,6 +145,7 @@ class QuizScreenTest {
                 QuizScreen(
                     quizState = quizState,
                     perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
@@ -167,6 +172,7 @@ class QuizScreenTest {
                 QuizScreen(
                     quizState = quizState,
                     perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = {},
@@ -196,6 +202,7 @@ class QuizScreenTest {
                     QuizScreen(
                         quizState = quizState,
                         perQuestionAnswerCheckEnabled = true,
+                        hintDisplayEnabled = false,
                         onDigitClick = {},
                         onDeleteClick = {},
                         onSubmitClick = { submitCalled = true },
@@ -229,6 +236,7 @@ class QuizScreenTest {
                 QuizScreen(
                     quizState = quizState,
                     perQuestionAnswerCheckEnabled = true,
+                    hintDisplayEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = { submitCalled = true },
@@ -261,6 +269,7 @@ class QuizScreenTest {
                 QuizScreen(
                     quizState = quizState,
                     perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onDigitClick = {},
                     onDeleteClick = {},
                     onSubmitClick = { submitCalled = true },
@@ -275,5 +284,49 @@ class QuizScreenTest {
         // Then: ダイアログは表示されず、即座にonSubmitClickが呼ばれる
         onAllNodesWithTag("result_indicator", useUnmergedTree = true)[0].assertDoesNotExist()
         assertTrue(submitCalled)
+    }
+
+    @Test
+    fun ヒント有効の場合ヒントエリアが表示される() = runComposeUiTest {
+        // Given: かんたんモードでヒント有効のクイズ画面を表示
+        val quizState = QuizState(createTestQuiz(Level.EASY))
+        setContent {
+            SansuuKidsTheme {
+                QuizScreen(
+                    quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = true,
+                    onDigitClick = {},
+                    onDeleteClick = {},
+                    onSubmitClick = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // Then: ヒントエリアが表示される
+        onNodeWithTag("hint_area").assertIsDisplayed()
+    }
+
+    @Test
+    fun ヒント無効の場合ヒントエリアが表示されない() = runComposeUiTest {
+        // Given: かんたんモードでヒント無効のクイズ画面を表示
+        val quizState = QuizState(createTestQuiz(Level.EASY))
+        setContent {
+            SansuuKidsTheme {
+                QuizScreen(
+                    quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
+                    onDigitClick = {},
+                    onDeleteClick = {},
+                    onSubmitClick = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // Then: ヒントエリアが表示されない
+        onNodeWithTag("hint_area").assertDoesNotExist()
     }
 }
