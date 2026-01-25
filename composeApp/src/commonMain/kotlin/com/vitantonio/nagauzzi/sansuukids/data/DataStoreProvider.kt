@@ -14,18 +14,4 @@ internal object DataStoreProvider {
 
     val dataStore: DataStore<Preferences>
         get() = _dataStore ?: createDataStore(::getDataStorePath).also { _dataStore = it }
-
-    /**
-     * テスト用にDataStoreを差し替える。
-     */
-    fun setDataStoreForTesting(dataStore: DataStore<Preferences>) {
-        _dataStore = dataStore
-    }
-
-    /**
-     * DataStoreをリセットする（テスト用）。
-     */
-    fun reset() {
-        _dataStore = null
-    }
 }
