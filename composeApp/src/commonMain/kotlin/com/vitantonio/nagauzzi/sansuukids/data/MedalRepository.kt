@@ -12,8 +12,6 @@ import com.vitantonio.nagauzzi.sansuukids.model.key
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-typealias Key = String
-
 /**
  * メダル情報を永続化するリポジトリ。
  * DataStore Preferencesを使用してKey-Value形式で保存する。
