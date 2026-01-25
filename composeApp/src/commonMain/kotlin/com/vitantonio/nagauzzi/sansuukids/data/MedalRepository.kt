@@ -41,11 +41,14 @@ internal class MedalRepository(
     val medalDisplays: Flow<List<MedalDisplay>>
         get() {
             return dataStore.data.map { preferences ->
-                // 保存されている全メダルをMedalDisplayのリストで返す
-                preferences.asMap().mapNotNull { (key, value) ->
-                    val medal = (value as? String)?.toMedal() ?: return@mapNotNull null
-                    key.toMedalDisplay(medal)
-                }.toList()
+                // 既知のMode×Levelの組み合わせでキーを生成して取得
+                Mode.entries.flatMap { mode ->
+                    Level.entries.map { level ->
+                        val key = stringPreferencesKey(MedalDisplay(mode, level, Medal.Nothing).key)
+                        val medal = preferences[key]?.toMedal() ?: Medal.Nothing
+                        MedalDisplay(mode, level, medal)
+                    }
+                }
             }
         }
 }
@@ -53,12 +56,3 @@ internal class MedalRepository(
 private fun String.toMedal(): Medal = Medal.entries.firstOrNull {
     it.name == this
 } ?: Medal.Nothing
-
-private fun Preferences.Key<*>.toMedalDisplay(medal: Medal): MedalDisplay = name
-    .split("_")
-    .takeLast(2)
-    .let { modeAndLevel ->
-        val mode = Mode.valueOf(modeAndLevel[0])
-        val level = Level.valueOf(modeAndLevel[1])
-        MedalDisplay(mode, level, medal)
-    }
