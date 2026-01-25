@@ -8,7 +8,7 @@ androidx-lifecycle = "2.10.0-alpha07"
 composeMultiplatform = "1.10.0-rc02"
 kotlin = "2.3.0"
 kotlinx-serialization = "1.9.0"
-multiplatformSettings = "1.1.1"
+datastore = "1.2.0"
 navigation3-ui = "1.0.0-alpha06"
 
 [libraries]
@@ -19,8 +19,8 @@ androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle
 androidx-lifecycle-viewmodelNavigation3 = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle" }
 jetbrains-navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "navigation3-ui" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-multiplatform-settings = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatformSettings" }
-multiplatform-settings-test = { module = "com.russhwolf:multiplatform-settings-test", version.ref = "multiplatformSettings" }
+datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version = "1.8.1" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

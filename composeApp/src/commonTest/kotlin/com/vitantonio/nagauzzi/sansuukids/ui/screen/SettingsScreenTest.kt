@@ -20,8 +20,8 @@ class SettingsScreenTest {
         setContent {
             SansuuKidsTheme {
                 SettingsScreen(
-                    initialPerQuestionAnswerCheckEnabled = false,
-                    initialHintDisplayEnabled = false,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = {},
                     onHintDisplayChanged = {},
                     onBackClick = {}
@@ -39,8 +39,8 @@ class SettingsScreenTest {
         setContent {
             SansuuKidsTheme {
                 SettingsScreen(
-                    initialPerQuestionAnswerCheckEnabled = true,
-                    initialHintDisplayEnabled = true,
+                    perQuestionAnswerCheckEnabled = true,
+                    hintDisplayEnabled = true,
                     onPerQuestionAnswerCheckChanged = {},
                     onHintDisplayChanged = {},
                     onBackClick = {}
@@ -59,8 +59,8 @@ class SettingsScreenTest {
         setContent {
             SansuuKidsTheme {
                 SettingsScreen(
-                    initialPerQuestionAnswerCheckEnabled = false,
-                    initialHintDisplayEnabled = false,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = { changedValue = it },
                     onHintDisplayChanged = {},
                     onBackClick = {}
@@ -82,8 +82,8 @@ class SettingsScreenTest {
         setContent {
             SansuuKidsTheme {
                 SettingsScreen(
-                    initialPerQuestionAnswerCheckEnabled = true,
-                    initialHintDisplayEnabled = true,
+                    perQuestionAnswerCheckEnabled = true,
+                    hintDisplayEnabled = true,
                     onPerQuestionAnswerCheckChanged = { changedValue = it },
                     onHintDisplayChanged = {},
                     onBackClick = {}
@@ -105,8 +105,8 @@ class SettingsScreenTest {
         setContent {
             SansuuKidsTheme {
                 SettingsScreen(
-                    initialPerQuestionAnswerCheckEnabled = false,
-                    initialHintDisplayEnabled = false,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = {},
                     onHintDisplayChanged = {},
                     onBackClick = { clicked = true }
@@ -127,8 +127,8 @@ class SettingsScreenTest {
         setContent {
             SansuuKidsTheme {
                 SettingsScreen(
-                    initialPerQuestionAnswerCheckEnabled = false,
-                    initialHintDisplayEnabled = false,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = {},
                     onHintDisplayChanged = {},
                     onBackClick = {}
@@ -146,8 +146,8 @@ class SettingsScreenTest {
         setContent {
             SansuuKidsTheme {
                 SettingsScreen(
-                    initialPerQuestionAnswerCheckEnabled = false,
-                    initialHintDisplayEnabled = true,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = true,
                     onPerQuestionAnswerCheckChanged = {},
                     onHintDisplayChanged = {},
                     onBackClick = {}
@@ -166,8 +166,8 @@ class SettingsScreenTest {
         setContent {
             SansuuKidsTheme {
                 SettingsScreen(
-                    initialPerQuestionAnswerCheckEnabled = false,
-                    initialHintDisplayEnabled = false,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = {},
                     onHintDisplayChanged = { changedValue = it },
                     onBackClick = {}
@@ -189,8 +189,8 @@ class SettingsScreenTest {
         setContent {
             SansuuKidsTheme {
                 SettingsScreen(
-                    initialPerQuestionAnswerCheckEnabled = false,
-                    initialHintDisplayEnabled = true,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = true,
                     onPerQuestionAnswerCheckChanged = {},
                     onHintDisplayChanged = { changedValue = it },
                     onBackClick = {}

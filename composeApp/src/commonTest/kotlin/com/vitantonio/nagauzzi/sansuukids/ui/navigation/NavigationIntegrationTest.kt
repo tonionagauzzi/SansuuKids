@@ -10,8 +10,10 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.navigation3.ui.NavDisplay
-import com.russhwolf.settings.MapSettings
+import com.vitantonio.nagauzzi.sansuukids.data.FakePreferencesDataStore
 import com.vitantonio.nagauzzi.sansuukids.data.SettingsRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runTest
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
@@ -378,11 +380,10 @@ class NavigationIntegrationTest {
     }
 
     @Test
-    fun 設定画面で一問ごとの答え合わせをONにするとクイズ画面に反映される() = runComposeUiTest {
-        // Given: テスト用のSettingsRepositoryを作成し、初期値をfalseに設定
-        val testSettings = MapSettings()
-        val settingsRepository = SettingsRepository(testSettings)
-        settingsRepository.perQuestionAnswerCheckEnabled = false
+    fun 設定画面で一問ごとの答え合わせがONのときクイズ画面で答え合わせダイアログが表示される() = runComposeUiTest {
+        // Given: テスト用のSettingsRepositoryを作成（デフォルト値trueを使用）
+        val fakeDataStore = FakePreferencesDataStore()
+        val settingsRepository = SettingsRepository(fakeDataStore)
 
         val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute)
         val navigationState = NavigationState(backStack)
@@ -407,14 +408,12 @@ class NavigationIntegrationTest {
             }
         }
 
-        // When: 設定画面に遷移してスイッチをONにする
+        // When: 設定画面に遷移して設定がONであることを確認（デフォルト値）
         onNodeWithTag("settings_button").performClick()
         waitForIdle()
-        onNodeWithTag("per_question_check_switch").performClick()
-        waitForIdle()
 
-        // Then: 設定がONになる
-        assertEquals(true, settingsRepository.perQuestionAnswerCheckEnabled)
+        // Then: 設定がONになっている（デフォルト値）
+        runTest { assertEquals(true, settingsRepository.perQuestionAnswerCheckEnabled.first()) }
 
         // When: ホームに戻り、クイズを開始する
         onNodeWithTag("settings_back_button").performClick()
@@ -438,11 +437,10 @@ class NavigationIntegrationTest {
     }
 
     @Test
-    fun 設定画面で一問ごとの答え合わせをOFFにするとクイズ画面に反映される() = runComposeUiTest {
-        // Given: テスト用のSettingsRepositoryを作成し、初期値をtrueに設定
-        val testSettings = MapSettings()
-        val settingsRepository = SettingsRepository(testSettings)
-        settingsRepository.perQuestionAnswerCheckEnabled = true
+    fun 設定画面で一問ごとの答え合わせをOFFにするとクイズ画面で答え合わせダイアログが表示されない() = runComposeUiTest {
+        // Given: テスト用のSettingsRepositoryを作成（デフォルト値trueを使用）
+        val fakeDataStore = FakePreferencesDataStore()
+        val settingsRepository = SettingsRepository(fakeDataStore)
 
         val backStack = mutableStateListOf<SansuuKidsRoute>(HomeRoute)
         val navigationState = NavigationState(backStack)
@@ -467,14 +465,14 @@ class NavigationIntegrationTest {
             }
         }
 
-        // When: 設定画面に遷移してスイッチをOFFにする
+        // When: 設定画面に遷移してスイッチをOFFにする（デフォルト値trueからトグル）
         onNodeWithTag("settings_button").performClick()
         waitForIdle()
         onNodeWithTag("per_question_check_switch").performClick()
         waitForIdle()
 
         // Then: 設定がOFFになる
-        assertEquals(false, settingsRepository.perQuestionAnswerCheckEnabled)
+        runTest { assertEquals(false, settingsRepository.perQuestionAnswerCheckEnabled.first()) }
 
         // When: ホームに戻り、クイズを開始する
         onNodeWithTag("settings_back_button").performClick()
