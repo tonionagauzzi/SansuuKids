@@ -113,7 +113,7 @@ internal fun navigationEntryProvider(
 
             DisposableEffect(Unit) {
                 onDispose {
-                    // クイズ画面が破棄される時にViewModelStoreをクリア
+                    // 次回クイズ画面を開くときに状態をリセットしたいので、クイズ画面と共にQuizViewModelもクリア
                     viewModelStoreOwner.viewModelStore.clear()
                 }
             }
