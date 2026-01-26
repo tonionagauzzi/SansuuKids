@@ -7,7 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepository
-import com.vitantonio.nagauzzi.sansuukids.data.SettingsRepository
+import com.vitantonio.nagauzzi.sansuukids.data.SettingRepository
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.MedalDisplay
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
@@ -34,8 +34,8 @@ import kotlinx.coroutines.launch
 internal fun navigationEntryProvider(
     key: SansuuKidsRoute,
     navigationState: NavigationState,
-    medalRepository: MedalRepository = MedalRepository(),
-    settingsRepository: SettingsRepository = SettingsRepository()
+    medalRepository: MedalRepository,
+    settingRepository: SettingRepository
 ): NavEntry<SansuuKidsRoute> {
     return when (key) {
         HomeRoute -> NavEntry(key) {
@@ -56,21 +56,21 @@ internal fun navigationEntryProvider(
 
         SettingsRoute -> NavEntry(key) {
             val scope = rememberCoroutineScope()
-            val perQuestionAnswerCheckEnabled by settingsRepository.perQuestionAnswerCheckEnabled
+            val perQuestionAnswerCheckEnabled by settingRepository.perQuestionAnswerCheckEnabled
                 .collectAsStateWithLifecycle(true)
-            val hintDisplayEnabled by settingsRepository.hintDisplayEnabled
+            val hintDisplayEnabled by settingRepository.hintDisplayEnabled
                 .collectAsStateWithLifecycle(true)
             SettingsScreen(
                 perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
                 hintDisplayEnabled = hintDisplayEnabled,
                 onPerQuestionAnswerCheckChanged = { enabled ->
                     scope.launch {
-                        settingsRepository.setPerQuestionAnswerCheckEnabled(enabled)
+                        settingRepository.setPerQuestionAnswerCheckEnabled(enabled)
                     }
                 },
                 onHintDisplayChanged = { enabled ->
                     scope.launch {
-                        settingsRepository.setHintDisplayEnabled(enabled)
+                        settingRepository.setHintDisplayEnabled(enabled)
                     }
                 },
                 onBackClick = { navigationState.navigateBack() }
@@ -144,9 +144,9 @@ internal fun navigationEntryProvider(
                 }
             }
 
-            val perQuestionAnswerCheckEnabled by settingsRepository.perQuestionAnswerCheckEnabled
+            val perQuestionAnswerCheckEnabled by settingRepository.perQuestionAnswerCheckEnabled
                 .collectAsStateWithLifecycle(true)
-            val hintDisplayEnabled by settingsRepository.hintDisplayEnabled
+            val hintDisplayEnabled by settingRepository.hintDisplayEnabled
                 .collectAsStateWithLifecycle(true)
 
             QuizScreen(

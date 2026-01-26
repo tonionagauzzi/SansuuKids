@@ -8,23 +8,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 /**
- * アプリケーション設定を永続化するリポジトリ。
- * DataStore Preferencesを使用してKey-Value形式で保存する。
+ * DataStore Preferencesを使用してアプリケーション設定をKey-Value形式で永続化するリポジトリ。
  */
-internal class SettingsRepository(
+internal class SettingRepositoryImpl(
     private val dataStore: DataStore<Preferences> = DataStoreProvider.dataStore
-) {
+) : SettingRepository {
     private companion object {
-        val KEY_PER_QUESTION_ANSWER_CHECK =
-            booleanPreferencesKey("per_question_answer_check")
+        val KEY_PER_QUESTION_ANSWER_CHECK = booleanPreferencesKey("per_question_answer_check")
         val KEY_HINT_DISPLAY = booleanPreferencesKey("hint_display")
     }
 
     /**
      * 1問ごとの答え合わせモードが有効かどうか。
-     * 有効な場合true、無効な場合false（デフォルト: true）
+     *
+     * @return 有効な場合true、無効な場合false（デフォルト: true）
      */
-    val perQuestionAnswerCheckEnabled: Flow<Boolean>
+    override val perQuestionAnswerCheckEnabled: Flow<Boolean>
         get() {
             return dataStore.data.map { preferences ->
                 // 幼児・低学年向けアプリのため、即座のフィードバックを重視してデフォルトでONにする
@@ -34,9 +33,10 @@ internal class SettingsRepository(
 
     /**
      * ヒント表示が有効かどうか（かんたんモードのみ適用）。
-     * 有効な場合true、無効な場合false（デフォルト: true）
+     *
+     * @return 有効な場合true、無効な場合false（デフォルト: true）
      */
-    val hintDisplayEnabled: Flow<Boolean>
+    override val hintDisplayEnabled: Flow<Boolean>
         get() {
             return dataStore.data.map { preferences ->
                 // 幼児向けアプリのため、ヒントありをデフォルトにする
@@ -47,7 +47,7 @@ internal class SettingsRepository(
     /**
      * 1問ごとの答え合わせモードの有効/無効を設定する。
      */
-    suspend fun setPerQuestionAnswerCheckEnabled(enabled: Boolean) {
+    override suspend fun setPerQuestionAnswerCheckEnabled(enabled: Boolean) {
         dataStore.edit { preferences ->
             preferences[KEY_PER_QUESTION_ANSWER_CHECK] = enabled
         }
@@ -56,7 +56,7 @@ internal class SettingsRepository(
     /**
      * ヒント表示の有効/無効を設定する。
      */
-    suspend fun setHintDisplayEnabled(enabled: Boolean) {
+    override suspend fun setHintDisplayEnabled(enabled: Boolean) {
         dataStore.edit { preferences ->
             preferences[KEY_HINT_DISPLAY] = enabled
         }
