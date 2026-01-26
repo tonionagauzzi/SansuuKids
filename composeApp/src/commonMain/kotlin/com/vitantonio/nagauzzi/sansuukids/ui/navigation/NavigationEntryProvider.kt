@@ -124,7 +124,7 @@ internal fun navigationEntryProvider(
 
             LaunchedEffect(quizState.isQuizComplete) {
                 if (quizState.isQuizComplete) {
-                    medalRepository.saveMedal(
+                    medalRepository.save(
                         MedalDisplay(
                             mode = key.mode,
                             level = key.level,
