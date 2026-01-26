@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.vitantonio.nagauzzi.sansuukids.data.MedalRepositoryProvider
+import com.vitantonio.nagauzzi.sansuukids.data.SettingRepositoryProvider
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.navigationEntryProvider
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.rememberNavigationState
@@ -24,7 +26,12 @@ fun App() {
             backStack = navigationState.entries,
             onBack = { navigationState.navigateBack() },
             entryProvider = { key ->
-                navigationEntryProvider(key, navigationState)
+                navigationEntryProvider(
+                    key = key,
+                    navigationState = navigationState,
+                    medalRepository = MedalRepositoryProvider.medalRepository,
+                    settingRepository = SettingRepositoryProvider.settingRepository
+                )
             }
         )
     }
