@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.map
 internal class SettingsRepository(
     private val dataStore: DataStore<Preferences> = DataStoreProvider.dataStore
 ) {
-    companion object {
-        private val KEY_PER_QUESTION_ANSWER_CHECK =
+    private companion object {
+        val KEY_PER_QUESTION_ANSWER_CHECK =
             booleanPreferencesKey("per_question_answer_check")
-        private val KEY_HINT_DISPLAY = booleanPreferencesKey("hint_display")
+        val KEY_HINT_DISPLAY = booleanPreferencesKey("hint_display")
     }
 
     /**
