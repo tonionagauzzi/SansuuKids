@@ -1,9 +1,9 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepository
@@ -11,7 +11,6 @@ import com.vitantonio.nagauzzi.sansuukids.data.SettingsRepository
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.MedalDisplay
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
-import kotlinx.coroutines.launch
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.AnswerCheckRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
@@ -30,6 +29,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.QuizScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ResultScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.SettingsScreen
+import kotlinx.coroutines.launch
 
 internal fun navigationEntryProvider(
     key: SansuuKidsRoute,
@@ -47,7 +47,7 @@ internal fun navigationEntryProvider(
         }
 
         MedalCollectionRoute -> NavEntry(key) {
-            val medalDisplays by medalRepository.medalDisplays.collectAsState(emptyList())
+            val medalDisplays by medalRepository.medalDisplays.collectAsStateWithLifecycle(emptyList())
             MedalCollectionScreen(
                 medalDisplays = medalDisplays,
                 onBackClick = { navigationState.navigateBack() }
@@ -57,9 +57,9 @@ internal fun navigationEntryProvider(
         SettingsRoute -> NavEntry(key) {
             val scope = rememberCoroutineScope()
             val perQuestionAnswerCheckEnabled by settingsRepository.perQuestionAnswerCheckEnabled
-                .collectAsState(initial = true)
+                .collectAsStateWithLifecycle(true)
             val hintDisplayEnabled by settingsRepository.hintDisplayEnabled
-                .collectAsState(initial = true)
+                .collectAsStateWithLifecycle(true)
             SettingsScreen(
                 perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
                 hintDisplayEnabled = hintDisplayEnabled,
@@ -120,7 +120,7 @@ internal fun navigationEntryProvider(
             val viewModel = viewModel {
                 QuizViewModel(mode = key.mode, level = key.level)
             }
-            val quizState by viewModel.quizState.collectAsState()
+            val quizState by viewModel.quizState.collectAsStateWithLifecycle()
 
             LaunchedEffect(quizState.isQuizComplete) {
                 if (quizState.isQuizComplete) {
@@ -145,9 +145,9 @@ internal fun navigationEntryProvider(
             }
 
             val perQuestionAnswerCheckEnabled by settingsRepository.perQuestionAnswerCheckEnabled
-                .collectAsState(initial = true)
+                .collectAsStateWithLifecycle(true)
             val hintDisplayEnabled by settingsRepository.hintDisplayEnabled
-                .collectAsState(initial = true)
+                .collectAsStateWithLifecycle(true)
 
             QuizScreen(
                 quizState = quizState,
