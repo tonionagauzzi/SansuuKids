@@ -380,4 +380,25 @@ class GenerateQuizTest {
             question is Division && question.dividend / question.divisor == question.correctAnswer
         })
     }
+
+    @Test
+    fun 生成されたクイズに同一問題の重複がない() {
+        // Given: 全モードとレベルの組み合わせ
+        val modes = listOf(Mode.ADDITION, Mode.SUBTRACTION, Mode.MULTIPLICATION, Mode.DIVISION, Mode.ALL)
+        val levels = listOf(Level.EASY, Level.NORMAL, Level.DIFFICULT)
+        val generateQuiz = GenerateQuiz()
+
+        // When/Then: 各組み合わせでクイズを生成し、重複がないことを確認
+        modes.forEach { mode ->
+            levels.forEach { level ->
+                val quiz = generateQuiz(mode, level)
+                val distinctQuestions = quiz.questions.distinct()
+                assertEquals(
+                    quiz.questions.size,
+                    distinctQuestions.size,
+                    "Mode: $mode, Level: $level で重複問題が発生"
+                )
+            }
+        }
+    }
 }

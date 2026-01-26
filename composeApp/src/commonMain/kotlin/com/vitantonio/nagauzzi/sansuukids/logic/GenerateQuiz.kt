@@ -29,10 +29,11 @@ internal class GenerateQuiz(private val totalQuestions: Int = QUIZ_SIZE) {
      */
     operator fun invoke(mode: Mode, level: Level): Quiz {
         val random = Random
-        val questions = (1..totalQuestions).map {
-            generateQuestion(mode, level, random)
+        val questions = mutableSetOf<Question>() // 問題の重複を避けるためSetを使用
+        while (questions.size < totalQuestions) {
+            questions.add(generateQuestion(mode, level, random))
         }
-        return Quiz(questions, mode, level)
+        return Quiz(questions.toList(), mode, level)
     }
 }
 
