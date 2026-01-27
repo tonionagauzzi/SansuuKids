@@ -139,8 +139,8 @@ private fun generateDivision(level: Level, random: Random): Division {
  */
 private fun getAdditionRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
     Level.EASY -> 1 to 5
-    Level.NORMAL -> 1 to 50
-    Level.DIFFICULT -> 100 to 9999
+    Level.NORMAL -> 11 to 50
+    Level.DIFFICULT -> 101 to 9999
 }
 
 /**
@@ -155,8 +155,8 @@ private fun getAdditionRangeForLevel(level: Level): Pair<Int, Int> = when (level
  */
 private fun getSubtractionRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
     Level.EASY -> 1 to 9
-    Level.NORMAL -> 1 to 99
-    Level.DIFFICULT -> 100 to 9999
+    Level.NORMAL -> 11 to 99
+    Level.DIFFICULT -> 101 to 9999
 }
 
 /**
@@ -173,6 +173,6 @@ private fun getSubtractionRangeForLevel(level: Level): Pair<Int, Int> = when (le
  */
 private fun getMultiplicationRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
     Level.EASY -> 1 to 9
-    Level.NORMAL -> 1 to 19
-    Level.DIFFICULT -> 1 to 99
+    Level.NORMAL -> 6 to 19
+    Level.DIFFICULT -> 11 to 99
 }
