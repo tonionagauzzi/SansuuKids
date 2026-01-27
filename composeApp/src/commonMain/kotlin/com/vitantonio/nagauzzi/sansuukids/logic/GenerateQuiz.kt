@@ -131,32 +131,32 @@ private fun generateDivision(level: Level, random: Random): Division {
  *
  * 足し算は答えが2桁や3桁にならないように範囲を調整している。
  * - EASY: 答えが最大10まで（1〜5）
- * - NORMAL: 答えが最大100まで（1〜50）
- * - DIFFICULT: 3桁以上の計算（100〜9999）
+ * - NORMAL: 答えが最大100まで（11〜50）
+ * - DIFFICULT: 3桁以上の計算（101〜9999）
  *
  * @param level 難易度レベル
  * @return 最小値と最大値のペア
  */
 private fun getAdditionRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
     Level.EASY -> 1 to 5
-    Level.NORMAL -> 1 to 50
-    Level.DIFFICULT -> 100 to 9999
+    Level.NORMAL -> 11 to 50
+    Level.DIFFICULT -> 101 to 9999
 }
 
 /**
  * 引き算用の数値範囲を取得する。
  *
  * - EASY: 1桁同士の計算（1〜9）
- * - NORMAL: 1〜2桁同士の計算（1〜99）
- * - DIFFICULT: 3桁以上の計算（100〜9999）
+ * - NORMAL: 2桁同士の計算（11〜99）
+ * - DIFFICULT: 3桁以上の計算（101〜9999）
  *
  * @param level 難易度レベル
  * @return 最小値と最大値のペア
  */
 private fun getSubtractionRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
     Level.EASY -> 1 to 9
-    Level.NORMAL -> 1 to 99
-    Level.DIFFICULT -> 100 to 9999
+    Level.NORMAL -> 11 to 99
+    Level.DIFFICULT -> 101 to 9999
 }
 
 /**
@@ -165,14 +165,14 @@ private fun getSubtractionRangeForLevel(level: Level): Pair<Int, Int> = when (le
  * 掛け算は結果が大きくなりやすいため、足し算・引き算とは異なる範囲を設定。
  * 割り算は掛け算と難易度を合わせるためにこの範囲を共用する。
  * - EASY: 九九の範囲（1〜9）
- * - NORMAL: 19の段まで（1〜19）
- * - DIFFICULT: 2桁同士の計算（1〜99）
+ * - NORMAL: 19の段まで（6〜19）
+ * - DIFFICULT: 2桁同士の計算（11〜99）
  *
  * @param level 難易度レベル
  * @return 最小値と最大値のペア
  */
 private fun getMultiplicationRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
     Level.EASY -> 1 to 9
-    Level.NORMAL -> 1 to 19
-    Level.DIFFICULT -> 1 to 99
+    Level.NORMAL -> 6 to 19
+    Level.DIFFICULT -> 11 to 99
 }

@@ -92,7 +92,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 足し算のNORMALレベルでは1から50の数が生成される() {
+    fun 足し算のNORMALレベルでは11から50の数が生成される() {
         // Given: NORMALレベルとADDITIONモードを指定する
         val mode = Mode.ADDITION
         val level = Level.NORMAL
@@ -101,16 +101,16 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の左右オペランドが1〜50である（答えが3桁にならないように）
+        // Then: 全問の左右オペランドが11〜50である（答えが3桁にならないように）
         assertTrue(quiz.questions.all { question ->
             question is Addition &&
-                    question.leftOperand in 1..50 &&
-                    question.rightOperand in 1..50
+                    question.leftOperand in 11..50 &&
+                    question.rightOperand in 11..50
         })
     }
 
     @Test
-    fun 足し算のDIFFICULTレベルでは100から9999の数が生成される() {
+    fun 足し算のDIFFICULTレベルでは101から9999の数が生成される() {
         // Given: DIFFICULTレベルとADDITIONモードを指定する
         val mode = Mode.ADDITION
         val level = Level.DIFFICULT
@@ -119,11 +119,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の左右オペランドが100〜9999である
+        // Then: 全問の左右オペランドが101〜9999である
         assertTrue(quiz.questions.all { question ->
             question is Addition &&
-                    question.leftOperand in 100..9999 &&
-                    question.rightOperand in 100..9999
+                    question.leftOperand in 101..9999 &&
+                    question.rightOperand in 101..9999
         })
     }
 
@@ -147,7 +147,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 引き算のNORMALレベルでは1から99の数が生成される() {
+    fun 引き算のNORMALレベルでは11から99の数が生成される() {
         // Given: NORMALレベルとSUBTRACTIONモードを指定する
         val mode = Mode.SUBTRACTION
         val level = Level.NORMAL
@@ -156,16 +156,16 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の左右オペランドが1〜99である
+        // Then: 全問の左右オペランドが11〜99である
         assertTrue(quiz.questions.all { question ->
             question is Subtraction &&
-                    question.leftOperand in 1..99 &&
-                    question.rightOperand in 1..99
+                    question.leftOperand in 11..99 &&
+                    question.rightOperand in 11..99
         })
     }
 
     @Test
-    fun 引き算のDIFFICULTレベルでは100から9999の数が生成される() {
+    fun 引き算のDIFFICULTレベルでは101から9999の数が生成される() {
         // Given: DIFFICULTレベルとSUBTRACTIONモードを指定する
         val mode = Mode.SUBTRACTION
         val level = Level.DIFFICULT
@@ -174,11 +174,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の左右オペランドが100〜9999である
+        // Then: 全問の左右オペランドが101〜9999である
         assertTrue(quiz.questions.all { question ->
             question is Subtraction &&
-                    question.leftOperand in 100..9999 &&
-                    question.rightOperand in 100..9999
+                    question.leftOperand in 101..9999 &&
+                    question.rightOperand in 101..9999
         })
     }
 
@@ -202,7 +202,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 掛け算のNORMALレベルでは1から19の数が生成される() {
+    fun 掛け算のNORMALレベルでは6から19の数が生成される() {
         // Given: NORMALレベルとMULTIPLICATIONモードを指定する
         val mode = Mode.MULTIPLICATION
         val level = Level.NORMAL
@@ -211,16 +211,16 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の左右オペランドが1〜19である
+        // Then: 全問の左右オペランドが6〜19である
         assertTrue(quiz.questions.all { question ->
             question is Multiplication &&
-                    question.leftOperand in 1..19 &&
-                    question.rightOperand in 1..19
+                    question.leftOperand in 6..19 &&
+                    question.rightOperand in 6..19
         })
     }
 
     @Test
-    fun 掛け算のDIFFICULTレベルでは1から99の数が生成される() {
+    fun 掛け算のDIFFICULTレベルでは11から99の数が生成される() {
         // Given: DIFFICULTレベルとMULTIPLICATIONモードを指定する
         val mode = Mode.MULTIPLICATION
         val level = Level.DIFFICULT
@@ -229,11 +229,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の左右オペランドが1〜99である
+        // Then: 全問の左右オペランドが11〜99である
         assertTrue(quiz.questions.all { question ->
             question is Multiplication &&
-                    question.leftOperand in 1..99 &&
-                    question.rightOperand in 1..99
+                    question.leftOperand in 11..99 &&
+                    question.rightOperand in 11..99
         })
     }
 
@@ -257,7 +257,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 割り算のNORMALレベルでは1から19の数が生成される() {
+    fun 割り算のNORMALレベルでは6から19の数が生成される() {
         // Given: NORMALレベルとDIVISIONモードを指定する
         val mode = Mode.DIVISION
         val level = Level.NORMAL
@@ -266,16 +266,16 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の除数と商が1〜19である
+        // Then: 全問の除数と商が6〜19である
         assertTrue(quiz.questions.all { question ->
             question is Division &&
-                    question.divisor in 1..19 &&
-                    question.correctAnswer in 1..19
+                    question.divisor in 6..19 &&
+                    question.correctAnswer in 6..19
         })
     }
 
     @Test
-    fun 割り算のDIFFICULTレベルでは1から99の数が生成される() {
+    fun 割り算のDIFFICULTレベルでは11から99の数が生成される() {
         // Given: DIFFICULTレベルとDIVISIONモードを指定する
         val mode = Mode.DIVISION
         val level = Level.DIFFICULT
@@ -284,11 +284,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の除数と商が1〜99である
+        // Then: 全問の除数と商が11〜99である
         assertTrue(quiz.questions.all { question ->
             question is Division &&
-                    question.divisor in 1..99 &&
-                    question.correctAnswer in 1..99
+                    question.divisor in 11..99 &&
+                    question.correctAnswer in 11..99
         })
     }
 
