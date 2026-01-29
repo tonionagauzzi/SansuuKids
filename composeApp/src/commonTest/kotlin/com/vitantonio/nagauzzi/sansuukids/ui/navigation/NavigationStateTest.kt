@@ -1,11 +1,16 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.saveable.SaverScope
+import com.vitantonio.nagauzzi.sansuukids.model.Level
+import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute as TestRouteA
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute as TestRouteB
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 class NavigationStateTest {
@@ -120,5 +125,48 @@ class NavigationStateTest {
         // Then: ルートは変わらない
         assertEquals(1, navigationState.entries.size)
         assertEquals(TestRouteA, navigationState.entries[0])
+    }
+
+    @Test
+    fun NavigationStateを保存して復元できる() {
+        // Given: 複数のルートを持つNavigationStateを作成する
+        val backStack = mutableStateListOf(
+            TestRouteA,
+            TestRouteB,
+            QuizRoute(Mode.ADDITION, Level.EASY)
+        )
+        val originalState = NavigationState(backStack)
+        val saver = NavigationState.saver()
+
+        // When: 保存して復元する
+        val saved = with(saver) { SaverScope { true }.save(originalState) }
+        assertNotNull(saved)
+        val restoredState = saver.restore(saved)
+
+        // Then: 復元されたStateが元のStateと同じエントリを持つ
+        assertNotNull(restoredState)
+        assertEquals(3, restoredState.entries.size)
+        assertEquals(TestRouteA, restoredState.entries[0])
+        assertEquals(TestRouteB, restoredState.entries[1])
+        val quizRoute = restoredState.entries[2] as QuizRoute
+        assertEquals(Mode.ADDITION, quizRoute.mode)
+        assertEquals(Level.EASY, quizRoute.level)
+    }
+
+    @Test
+    fun 空のバックスタックを保存して復元できる() {
+        // Given: 空のバックスタックを持つNavigationStateを作成する
+        val backStack = mutableStateListOf<SansuuKidsRoute>()
+        val originalState = NavigationState(backStack)
+        val saver = NavigationState.saver()
+
+        // When: 保存して復元する
+        val saved = with(saver) { SaverScope { true }.save(originalState) }
+        assertNotNull(saved)
+        val restoredState = saver.restore(saved)
+
+        // Then: 復元されたStateが空のエントリを持つ
+        assertNotNull(restoredState)
+        assertEquals(0, restoredState.entries.size)
     }
 }
