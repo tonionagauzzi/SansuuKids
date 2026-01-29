@@ -133,7 +133,7 @@ class QuizScreenTest {
         // When: 画面が表示される
 
         // Then: 最初の問題が表示される
-        onNodeWithTag("question_text").assertTextEquals("1 + 1 = ?")
+        onNodeWithTag("question_text").assertTextEquals("1 + 1 = ")
     }
 
     @Test

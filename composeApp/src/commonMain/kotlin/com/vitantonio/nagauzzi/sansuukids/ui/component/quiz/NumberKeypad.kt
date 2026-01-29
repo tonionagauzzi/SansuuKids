@@ -1,10 +1,9 @@
-package com.vitantonio.nagauzzi.sansuukids.ui.component
+package com.vitantonio.nagauzzi.sansuukids.ui.component.quiz
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -15,11 +14,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.backspace
 import sansuukids.composeapp.generated.resources.check
@@ -122,8 +123,7 @@ private fun KeypadButton(
     Button(
         onClick = onClick,
         enabled = enabled,
-        modifier = modifier
-            .height(64.dp),
+        modifier = modifier,
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
@@ -146,7 +146,7 @@ private fun KeypadButton(
 
 @Composable
 private fun KeypadIconButton(
-    iconPainter: androidx.compose.ui.graphics.painter.Painter,
+    iconPainter: Painter,
     contentDescription: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -157,8 +157,7 @@ private fun KeypadIconButton(
     Button(
         onClick = onClick,
         enabled = enabled,
-        modifier = modifier
-            .height(64.dp),
+        modifier = modifier,
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
@@ -177,4 +176,15 @@ private fun KeypadIconButton(
             modifier = Modifier.size(32.dp)
         )
     }
+}
+
+@Preview
+@Composable
+private fun NumberKeypadPreview() {
+    NumberKeypad(
+        onDigitClick = {},
+        onDeleteClick = {},
+        onSubmitClick = {},
+        isSubmitEnabled = true
+    )
 }

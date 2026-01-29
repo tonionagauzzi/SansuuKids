@@ -45,7 +45,6 @@ fun HomeScreen(
     BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
             .safeContentPadding()
     ) {
         if (maxWidth > maxHeight) {
@@ -187,7 +186,8 @@ private fun HomeScreenPreview() {
         HomeScreen(
             onStartClick = {},
             onMedalCollectionClick = {},
-            onSettingsClick = {}
+            onSettingsClick = {},
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )
     }
 }

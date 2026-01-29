@@ -24,7 +24,7 @@ internal sealed interface Question {
             val leftOperand: Int,
             val rightOperand: Int
         ) : Math {
-            override val displayText: String get() = "$leftOperand + $rightOperand = ?"
+            override val displayText: String get() = "$leftOperand + $rightOperand ="
             override val correctAnswer: Int get() = leftOperand + rightOperand
         }
 
@@ -34,7 +34,7 @@ internal sealed interface Question {
             val leftOperand: Int,
             val rightOperand: Int
         ) : Math {
-            override val displayText: String get() = "$leftOperand - $rightOperand = ?"
+            override val displayText: String get() = "$leftOperand - $rightOperand ="
             override val correctAnswer: Int get() = leftOperand - rightOperand
         }
 
@@ -44,7 +44,7 @@ internal sealed interface Question {
             val leftOperand: Int,
             val rightOperand: Int
         ) : Math {
-            override val displayText: String get() = "$leftOperand × $rightOperand = ?"
+            override val displayText: String get() = "$leftOperand × $rightOperand ="
             override val correctAnswer: Int get() = leftOperand * rightOperand
         }
 
@@ -54,7 +54,7 @@ internal sealed interface Question {
             val dividend: Int,
             val divisor: Int
         ) : Math {
-            override val displayText: String get() = "$dividend ÷ $divisor = ?"
+            override val displayText: String get() = "$dividend ÷ $divisor ="
             override val correctAnswer: Int get() = dividend / divisor
         }
     }

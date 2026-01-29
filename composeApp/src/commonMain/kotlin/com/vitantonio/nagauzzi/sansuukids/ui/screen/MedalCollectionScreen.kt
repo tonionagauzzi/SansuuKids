@@ -3,6 +3,7 @@ package com.vitantonio.nagauzzi.sansuukids.ui.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,12 +15,10 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
@@ -27,13 +26,12 @@ import com.vitantonio.nagauzzi.sansuukids.model.MedalDisplay
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.emojiRes
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
+import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
 import com.vitantonio.nagauzzi.sansuukids.ui.component.GridCell
-import com.vitantonio.nagauzzi.sansuukids.ui.component.LargeButton
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
-import sansuukids.composeapp.generated.resources.medal_collection_back
 import sansuukids.composeapp.generated.resources.medal_collection_title
 
 @Composable
@@ -45,38 +43,32 @@ internal fun MedalCollectionScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
             .safeContentPadding()
             .padding(horizontal = 16.dp, vertical = 24.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Top
     ) {
-        Text(
-            text = stringResource(Res.string.medal_collection_title),
-            style = MaterialTheme.typography.displaySmall,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
+        AppHeader(
+            title = stringResource(Res.string.medal_collection_title),
+            isMultiLine = false,
+            onBackClick = onBackClick,
             modifier = Modifier.testTag("medal_collection_title")
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        MedalGrid(
-            medalDisplays = medalDisplays,
-            modifier = Modifier.testTag("medal_grid")
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        LargeButton(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            text = stringResource(Res.string.medal_collection_back),
-            textStyle = MaterialTheme.typography.headlineSmall,
-            onClick = onBackClick,
-            modifier = Modifier.height(56.dp).testTag("medal_collection_back_button")
-        )
+        Box(
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .weight(1f),
+            contentAlignment = Alignment.Center
+        ) {
+            MedalGrid(
+                medalDisplays = medalDisplays,
+                modifier = Modifier.testTag("medal_grid")
+            )
+        }
     }
 }
 
@@ -149,20 +141,12 @@ private fun MedalGrid(
     }
 }
 
-@Preview
+@Preview(widthDp = 360, heightDp = 640) // 縦画面
+@Preview(widthDp = 640, heightDp = 360) // 横画面
+@Preview(widthDp = 480, heightDp = 480) // 正方形画面
+@Preview(widthDp = 481, heightDp = 480) // 僅かに横画面
 @Composable
 private fun MedalCollectionScreenPreview() {
-    SansuuKidsTheme {
-        MedalCollectionScreen(
-            medalDisplays = emptyList(),
-            onBackClick = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun MedalCollectionScreenWithMedalsPreview() {
     SansuuKidsTheme {
         MedalCollectionScreen(
             medalDisplays = listOf(
@@ -174,7 +158,8 @@ private fun MedalCollectionScreenWithMedalsPreview() {
                 MedalDisplay(Mode.MULTIPLICATION, Level.EASY, Medal.Bronze),
                 MedalDisplay(Mode.ALL, Level.DIFFICULT, Medal.Gold)
             ),
-            onBackClick = {}
+            onBackClick = {},
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )
     }
 }

@@ -22,7 +22,8 @@ class ModeSelectionScreenTest {
                     onSubtractionClick = {},
                     onMultiplicationClick = {},
                     onDivisionClick = {},
-                    onAllClick = {}
+                    onAllClick = {},
+                    onBackClick = {}
                 )
             }
         }
@@ -45,7 +46,8 @@ class ModeSelectionScreenTest {
                     onSubtractionClick = { clicked = true },
                     onMultiplicationClick = {},
                     onDivisionClick = {},
-                    onAllClick = {}
+                    onAllClick = {},
+                    onBackClick = {}
                 )
             }
         }
@@ -68,7 +70,8 @@ class ModeSelectionScreenTest {
                     onSubtractionClick = {},
                     onMultiplicationClick = { clicked = true },
                     onDivisionClick = {},
-                    onAllClick = {}
+                    onAllClick = {},
+                    onBackClick = {}
                 )
             }
         }
@@ -91,7 +94,8 @@ class ModeSelectionScreenTest {
                     onSubtractionClick = {},
                     onMultiplicationClick = {},
                     onDivisionClick = { clicked = true },
-                    onAllClick = {}
+                    onAllClick = {},
+                    onBackClick = {}
                 )
             }
         }
@@ -114,7 +118,8 @@ class ModeSelectionScreenTest {
                     onSubtractionClick = {},
                     onMultiplicationClick = {},
                     onDivisionClick = {},
-                    onAllClick = { clicked = true }
+                    onAllClick = { clicked = true },
+                    onBackClick = {}
                 )
             }
         }

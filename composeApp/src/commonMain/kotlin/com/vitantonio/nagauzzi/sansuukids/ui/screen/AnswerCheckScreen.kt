@@ -2,9 +2,10 @@ package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,9 +24,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Question
 import com.vitantonio.nagauzzi.sansuukids.model.UserAnswer
-import com.vitantonio.nagauzzi.sansuukids.ui.component.AnswerCheck
+import com.vitantonio.nagauzzi.sansuukids.ui.component.quiz.AnswerCheck
 import com.vitantonio.nagauzzi.sansuukids.ui.component.LargeButton
-import com.vitantonio.nagauzzi.sansuukids.ui.component.QuizProgressBar
+import com.vitantonio.nagauzzi.sansuukids.ui.component.quiz.QuizProgressBar
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -57,111 +58,290 @@ internal fun AnswerCheckScreen(
         MaterialTheme.colorScheme.errorContainer
     }
 
-    Column(
+    BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
             .background(backgroundColor)
             .safeContentPadding()
-            .padding(horizontal = 24.dp, vertical = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header: Progress
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            QuizProgressBar(
-                currentQuestion = currentIndex + 1,
+        if (maxWidth > maxHeight) {
+            AnswerCheckScreenLandscape(
+                currentIndex = currentIndex,
                 totalQuestions = questions.size,
-                progress = (currentIndex + 1) / questions.size.toFloat(),
-                modifier = Modifier.width(150.dp)
+                currentQuestion = currentQuestion,
+                currentUserAnswer = currentUserAnswer,
+                isFirstQuestion = isFirstQuestion,
+                isLastQuestion = isLastQuestion,
+                onBackClick = onBackClick,
+                onFinishClick = onFinishClick,
+                onPreviousClick = { currentIndex-- },
+                onNextClick = { currentIndex++ }
             )
-        }
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // Question and Answer display area
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            AnswerCheck(
-                question = currentQuestion,
-                answer = currentUserAnswer.answer
-            )
-        }
-
-        // Navigation buttons
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
-        ) {
-            LargeButton(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                text = if (isFirstQuestion) {
-                    stringResource(Res.string.answer_check_back)
-                } else {
-                    stringResource(Res.string.answer_check_previous)
-                },
-                textStyle = MaterialTheme.typography.headlineSmall,
-                onClick = {
-                    if (isFirstQuestion) {
-                        onBackClick()
-                    } else {
-                        currentIndex--
-                    }
-                },
-                modifier = Modifier
-                    .weight(1f)
-                    .height(56.dp)
-                    .testTag(
-                        if (isFirstQuestion) {
-                            "back_button"
-                        } else {
-                            "previous_button"
-                        }
-                    )
-            )
-
-            LargeButton(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                text = if (isLastQuestion) {
-                    stringResource(Res.string.answer_check_finish)
-                } else {
-                    stringResource(Res.string.answer_check_next)
-                },
-                textStyle = MaterialTheme.typography.headlineSmall,
-                onClick = {
-                    if (isLastQuestion) {
-                        onFinishClick()
-                    } else {
-                        currentIndex++
-                    }
-                },
-                modifier = Modifier
-                    .weight(1f)
-                    .height(56.dp)
-                    .testTag(
-                        if (isLastQuestion) {
-                            "finish_button"
-                        } else {
-                            "next_button"
-                        }
-                    )
+        } else {
+            AnswerCheckScreenPortrait(
+                currentIndex = currentIndex,
+                totalQuestions = questions.size,
+                currentQuestion = currentQuestion,
+                currentUserAnswer = currentUserAnswer,
+                isFirstQuestion = isFirstQuestion,
+                isLastQuestion = isLastQuestion,
+                onBackClick = onBackClick,
+                onFinishClick = onFinishClick,
+                onPreviousClick = { currentIndex-- },
+                onNextClick = { currentIndex++ }
             )
         }
     }
 }
 
-@Preview
+@Composable
+private fun AnswerCheckScreenPortrait(
+    currentIndex: Int,
+    totalQuestions: Int,
+    currentQuestion: Question.Math,
+    currentUserAnswer: UserAnswer,
+    isFirstQuestion: Boolean,
+    isLastQuestion: Boolean,
+    onBackClick: () -> Unit,
+    onFinishClick: () -> Unit,
+    onPreviousClick: () -> Unit,
+    onNextClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 24.dp, vertical = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        QuizProgressBar(
+            currentQuestion = currentIndex + 1,
+            totalQuestions = totalQuestions,
+            progress = (currentIndex + 1) / totalQuestions.toFloat(),
+            modifier = Modifier.width(150.dp)
+        )
+
+        AnswerCheck(
+            question = currentQuestion,
+            answer = currentUserAnswer.answer,
+            modifier = Modifier.weight(1f)
+        )
+
+        AnswerCheckButtonsRow(
+            isFirstQuestion = isFirstQuestion,
+            isLastQuestion = isLastQuestion,
+            onBackClick = onBackClick,
+            onFinishClick = onFinishClick,
+            onPreviousClick = onPreviousClick,
+            onNextClick = onNextClick
+        )
+    }
+}
+
+@Composable
+private fun AnswerCheckScreenLandscape(
+    currentIndex: Int,
+    totalQuestions: Int,
+    currentQuestion: Question.Math,
+    currentUserAnswer: UserAnswer,
+    isFirstQuestion: Boolean,
+    isLastQuestion: Boolean,
+    onBackClick: () -> Unit,
+    onFinishClick: () -> Unit,
+    onPreviousClick: () -> Unit,
+    onNextClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 24.dp, vertical = 16.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(
+            modifier = Modifier
+                .weight(2f)
+                .fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            QuizProgressBar(
+                currentQuestion = currentIndex + 1,
+                totalQuestions = totalQuestions,
+                progress = (currentIndex + 1) / totalQuestions.toFloat(),
+                modifier = Modifier.width(150.dp)
+            )
+
+            AnswerCheck(
+                question = currentQuestion,
+                answer = currentUserAnswer.answer,
+                modifier = Modifier.weight(1f)
+            )
+        }
+
+        AnswerCheckButtonsColumn(
+            isFirstQuestion = isFirstQuestion,
+            isLastQuestion = isLastQuestion,
+            onBackClick = onBackClick,
+            onFinishClick = onFinishClick,
+            onPreviousClick = onPreviousClick,
+            onNextClick = onNextClick,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Composable
+private fun AnswerCheckButtonsRow(
+    isFirstQuestion: Boolean,
+    isLastQuestion: Boolean,
+    onBackClick: () -> Unit,
+    onFinishClick: () -> Unit,
+    onPreviousClick: () -> Unit,
+    onNextClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
+    ) {
+        LargeButton(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            text = if (isFirstQuestion) {
+                stringResource(Res.string.answer_check_back)
+            } else {
+                stringResource(Res.string.answer_check_previous)
+            },
+            textStyle = MaterialTheme.typography.headlineSmall,
+            onClick = {
+                if (isFirstQuestion) {
+                    onBackClick()
+                } else {
+                    onPreviousClick()
+                }
+            },
+            modifier = Modifier
+                .weight(1f)
+                .height(56.dp)
+                .testTag(
+                    if (isFirstQuestion) {
+                        "back_button"
+                    } else {
+                        "previous_button"
+                    }
+                )
+        )
+
+        LargeButton(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            text = if (isLastQuestion) {
+                stringResource(Res.string.answer_check_finish)
+            } else {
+                stringResource(Res.string.answer_check_next)
+            },
+            textStyle = MaterialTheme.typography.headlineSmall,
+            onClick = {
+                if (isLastQuestion) {
+                    onFinishClick()
+                } else {
+                    onNextClick()
+                }
+            },
+            modifier = Modifier
+                .weight(1f)
+                .height(56.dp)
+                .testTag(
+                    if (isLastQuestion) {
+                        "finish_button"
+                    } else {
+                        "next_button"
+                    }
+                )
+        )
+    }
+}
+
+@Composable
+private fun AnswerCheckButtonsColumn(
+    isFirstQuestion: Boolean,
+    isLastQuestion: Boolean,
+    onBackClick: () -> Unit,
+    onFinishClick: () -> Unit,
+    onPreviousClick: () -> Unit,
+    onNextClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
+    ) {
+        LargeButton(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            text = if (isFirstQuestion) {
+                stringResource(Res.string.answer_check_back)
+            } else {
+                stringResource(Res.string.answer_check_previous)
+            },
+            textStyle = MaterialTheme.typography.headlineSmall,
+            onClick = {
+                if (isFirstQuestion) {
+                    onBackClick()
+                } else {
+                    onPreviousClick()
+                }
+            },
+            modifier = Modifier
+                .height(56.dp)
+                .testTag(
+                    if (isFirstQuestion) {
+                        "back_button"
+                    } else {
+                        "previous_button"
+                    }
+                )
+        )
+
+        LargeButton(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            text = if (isLastQuestion) {
+                stringResource(Res.string.answer_check_finish)
+            } else {
+                stringResource(Res.string.answer_check_next)
+            },
+            textStyle = MaterialTheme.typography.headlineSmall,
+            onClick = {
+                if (isLastQuestion) {
+                    onFinishClick()
+                } else {
+                    onNextClick()
+                }
+            },
+            modifier = Modifier
+                .height(56.dp)
+                .testTag(
+                    if (isLastQuestion) {
+                        "finish_button"
+                    } else {
+                        "next_button"
+                    }
+                )
+        )
+    }
+}
+
+@Preview(widthDp = 360, heightDp = 640) // 縦画面
+@Preview(widthDp = 640, heightDp = 360) // 横画面
+@Preview(widthDp = 480, heightDp = 480) // 正方形画面
+@Preview(widthDp = 481, heightDp = 480) // 僅かに横画面
 @Composable
 private fun AnswerCheckScreenCorrectPreview() {
     SansuuKidsTheme {

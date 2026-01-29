@@ -20,7 +20,8 @@ class LevelSelectionScreenTest {
                 LevelSelectionScreen(
                     onEasyClick = { clicked = true },
                     onNormalClick = {},
-                    onDifficultClick = {}
+                    onDifficultClick = {},
+                    onBackClick = {}
                 )
             }
         }
@@ -41,7 +42,8 @@ class LevelSelectionScreenTest {
                 LevelSelectionScreen(
                     onEasyClick = {},
                     onNormalClick = { clicked = true },
-                    onDifficultClick = {}
+                    onDifficultClick = {},
+                    onBackClick = {}
                 )
             }
         }
@@ -62,7 +64,8 @@ class LevelSelectionScreenTest {
                 LevelSelectionScreen(
                     onEasyClick = {},
                     onNormalClick = {},
-                    onDifficultClick = { clicked = true }
+                    onDifficultClick = { clicked = true },
+                    onBackClick = {}
                 )
             }
         }
