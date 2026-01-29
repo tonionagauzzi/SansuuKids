@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -43,9 +42,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
-        modifier = modifier
-            .fillMaxSize()
-            .safeContentPadding()
+        modifier = modifier.fillMaxSize()
     ) {
         if (maxWidth > maxHeight) {
             HomeScreenLandscape(

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -38,9 +37,7 @@ fun SettingsScreen(
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
-        modifier = modifier
-            .fillMaxSize()
-            .safeContentPadding()
+        modifier = modifier.fillMaxSize()
     ) {
         SettingsScreenPortrait(
             perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
