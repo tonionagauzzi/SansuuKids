@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -60,7 +61,7 @@ internal fun AppHeader(
         }
 
         if (isMultiLine) {
-            Box(contentAlignment = Alignment.Center, modifier = modifier) {
+            Box(contentAlignment = Alignment.Center) {
                 AppHeaderTitle(title = title, modifier = Modifier.padding(top = 8.dp))
             }
         }
@@ -86,7 +87,8 @@ private fun AppHeaderPreview() {
         AppHeader(
             title = "せってい",
             isMultiLine = false,
-            onBackClick = {}
+            onBackClick = {},
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )
     }
 }
@@ -98,7 +100,8 @@ private fun AppHeaderMultilinePreview() {
         AppHeader(
             title = "せってい",
             isMultiLine = true,
-            onBackClick = {}
+            onBackClick = {},
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )
     }
 }
