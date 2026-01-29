@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.component.quiz
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +30,8 @@ internal fun QuestionArea(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        val displayText = "${currentQuestion.displayText} ${currentInput ?: ""}"
+        val inputText = currentInput?.toString() ?: ""
+        val displayText = "${currentQuestion.displayText} $inputText".trimEnd()
 
         Text(
             text = displayText,
@@ -67,6 +69,7 @@ private fun QuestionAreaPreview() {
             currentInput = 12,
             hintDisplayEnabled = false,
             modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
                 .testTag("question_area_preview")
         )

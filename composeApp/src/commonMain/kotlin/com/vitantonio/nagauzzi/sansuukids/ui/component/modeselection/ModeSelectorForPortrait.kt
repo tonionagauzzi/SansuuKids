@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.component.modeselection
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -11,6 +12,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.ui.component.LargeButton
+import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
@@ -99,11 +101,14 @@ internal fun ModeSelectorForPortrait(
 @Preview
 @Composable
 private fun ModeSelectorForPortraitPreview() {
-    ModeSelectorForPortrait(
-        onAdditionClick = {},
-        onSubtractionClick = {},
-        onMultiplicationClick = {},
-        onDivisionClick = {},
-        onAllClick = {}
-    )
+    SansuuKidsTheme {
+        ModeSelectorForPortrait(
+            onAdditionClick = {},
+            onSubtractionClick = {},
+            onMultiplicationClick = {},
+            onDivisionClick = {},
+            onAllClick = {},
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
+        )
+    }
 }
