@@ -101,7 +101,7 @@ private fun SettingsContent(
     ) {
         // Per-question answer check setting
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
