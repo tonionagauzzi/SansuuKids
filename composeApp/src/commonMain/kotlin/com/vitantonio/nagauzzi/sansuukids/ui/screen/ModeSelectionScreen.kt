@@ -15,8 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
-import com.vitantonio.nagauzzi.sansuukids.ui.component.modeselection.ModeSelectorForLandscape
-import com.vitantonio.nagauzzi.sansuukids.ui.component.modeselection.ModeSelectorForPortrait
+import com.vitantonio.nagauzzi.sansuukids.ui.component.modeselection.ModeSelector
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -57,23 +56,14 @@ fun ModeSelectionScreen(
                     .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
-                if (isLandscape) {
-                    ModeSelectorForLandscape(
-                        onAdditionClick = onAdditionClick,
-                        onSubtractionClick = onSubtractionClick,
-                        onMultiplicationClick = onMultiplicationClick,
-                        onDivisionClick = onDivisionClick,
-                        onAllClick = onAllClick
-                    )
-                } else {
-                    ModeSelectorForPortrait(
-                        onAdditionClick = onAdditionClick,
-                        onSubtractionClick = onSubtractionClick,
-                        onMultiplicationClick = onMultiplicationClick,
-                        onDivisionClick = onDivisionClick,
-                        onAllClick = onAllClick
-                    )
-                }
+                ModeSelector(
+                    isLandscape = isLandscape,
+                    onAdditionClick = onAdditionClick,
+                    onSubtractionClick = onSubtractionClick,
+                    onMultiplicationClick = onMultiplicationClick,
+                    onDivisionClick = onDivisionClick,
+                    onAllClick = onAllClick
+                )
             }
         }
     }
