@@ -61,9 +61,7 @@ internal fun AppHeader(
         }
 
         if (isMultiLine) {
-            Box(contentAlignment = Alignment.Center) {
-                AppHeaderTitle(title = title, modifier = Modifier.padding(top = 8.dp))
-            }
+            AppHeaderTitle(title = title, modifier = Modifier.padding(top = 8.dp))
         }
     }
 }
