@@ -19,6 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Question
@@ -34,6 +35,14 @@ import sansuukids.composeapp.generated.resources.answer_check_back
 import sansuukids.composeapp.generated.resources.answer_check_finish
 import sansuukids.composeapp.generated.resources.answer_check_next
 import sansuukids.composeapp.generated.resources.answer_check_previous
+
+private data class AnswerCheckButtonConfig(
+    val containerColor: @Composable () -> Color,
+    val contentColor: @Composable () -> Color,
+    val text: @Composable () -> String,
+    val onClick: () -> Unit,
+    val testTag: String
+)
 
 @Composable
 internal fun AnswerCheckScreen(
@@ -126,7 +135,8 @@ private fun AnswerCheckScreenPortrait(
             modifier = Modifier.weight(1f)
         )
 
-        AnswerCheckButtonsRow(
+        AnswerCheckButtons(
+            isLandscape = false,
             isFirstQuestion = isFirstQuestion,
             isLastQuestion = isLastQuestion,
             onBackClick = onBackClick,
@@ -179,7 +189,8 @@ private fun AnswerCheckScreenLandscape(
             )
         }
 
-        AnswerCheckButtonsColumn(
+        AnswerCheckButtons(
+            isLandscape = true,
             isFirstQuestion = isFirstQuestion,
             isLastQuestion = isLastQuestion,
             onBackClick = onBackClick,
@@ -192,7 +203,8 @@ private fun AnswerCheckScreenLandscape(
 }
 
 @Composable
-private fun AnswerCheckButtonsRow(
+private fun AnswerCheckButtons(
+    isLandscape: Boolean,
     isFirstQuestion: Boolean,
     isLastQuestion: Boolean,
     onBackClick: () -> Unit,
@@ -201,138 +213,69 @@ private fun AnswerCheckButtonsRow(
     onNextClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
-    ) {
-        LargeButton(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            text = if (isFirstQuestion) {
-                stringResource(Res.string.answer_check_back)
-            } else {
-                stringResource(Res.string.answer_check_previous)
+    val buttons = listOf(
+        AnswerCheckButtonConfig(
+            containerColor = { MaterialTheme.colorScheme.secondaryContainer },
+            contentColor = { MaterialTheme.colorScheme.onSecondaryContainer },
+            text = {
+                if (isFirstQuestion) stringResource(Res.string.answer_check_back)
+                else stringResource(Res.string.answer_check_previous)
             },
-            textStyle = MaterialTheme.typography.headlineSmall,
-            onClick = {
-                if (isFirstQuestion) {
-                    onBackClick()
-                } else {
-                    onPreviousClick()
-                }
+            onClick = { if (isFirstQuestion) onBackClick() else onPreviousClick() },
+            testTag = if (isFirstQuestion) "back_button" else "previous_button"
+        ),
+        AnswerCheckButtonConfig(
+            containerColor = { MaterialTheme.colorScheme.primaryContainer },
+            contentColor = { MaterialTheme.colorScheme.onPrimaryContainer },
+            text = {
+                if (isLastQuestion) stringResource(Res.string.answer_check_finish)
+                else stringResource(Res.string.answer_check_next)
             },
-            modifier = Modifier
-                .weight(1f)
-                .height(56.dp)
-                .testTag(
-                    if (isFirstQuestion) {
-                        "back_button"
-                    } else {
-                        "previous_button"
-                    }
-                )
+            onClick = { if (isLastQuestion) onFinishClick() else onNextClick() },
+            testTag = if (isLastQuestion) "finish_button" else "next_button"
         )
+    )
 
-        LargeButton(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            text = if (isLastQuestion) {
-                stringResource(Res.string.answer_check_finish)
-            } else {
-                stringResource(Res.string.answer_check_next)
-            },
-            textStyle = MaterialTheme.typography.headlineSmall,
-            onClick = {
-                if (isLastQuestion) {
-                    onFinishClick()
-                } else {
-                    onNextClick()
-                }
-            },
-            modifier = Modifier
-                .weight(1f)
-                .height(56.dp)
-                .testTag(
-                    if (isLastQuestion) {
-                        "finish_button"
-                    } else {
-                        "next_button"
-                    }
+    if (isLandscape) {
+        Column(
+            modifier = modifier,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
+        ) {
+            buttons.forEach { config ->
+                LargeButton(
+                    containerColor = config.containerColor(),
+                    contentColor = config.contentColor(),
+                    text = config.text(),
+                    textStyle = MaterialTheme.typography.headlineSmall,
+                    onClick = config.onClick,
+                    modifier = Modifier
+                        .height(56.dp)
+                        .testTag(config.testTag)
                 )
-        )
-    }
-}
-
-@Composable
-private fun AnswerCheckButtonsColumn(
-    isFirstQuestion: Boolean,
-    isLastQuestion: Boolean,
-    onBackClick: () -> Unit,
-    onFinishClick: () -> Unit,
-    onPreviousClick: () -> Unit,
-    onNextClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
-    ) {
-        LargeButton(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            text = if (isFirstQuestion) {
-                stringResource(Res.string.answer_check_back)
-            } else {
-                stringResource(Res.string.answer_check_previous)
-            },
-            textStyle = MaterialTheme.typography.headlineSmall,
-            onClick = {
-                if (isFirstQuestion) {
-                    onBackClick()
-                } else {
-                    onPreviousClick()
-                }
-            },
-            modifier = Modifier
-                .height(56.dp)
-                .testTag(
-                    if (isFirstQuestion) {
-                        "back_button"
-                    } else {
-                        "previous_button"
-                    }
+            }
+        }
+    } else {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
+        ) {
+            buttons.forEach { config ->
+                LargeButton(
+                    containerColor = config.containerColor(),
+                    contentColor = config.contentColor(),
+                    text = config.text(),
+                    textStyle = MaterialTheme.typography.headlineSmall,
+                    onClick = config.onClick,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(56.dp)
+                        .testTag(config.testTag)
                 )
-        )
-
-        LargeButton(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            text = if (isLastQuestion) {
-                stringResource(Res.string.answer_check_finish)
-            } else {
-                stringResource(Res.string.answer_check_next)
-            },
-            textStyle = MaterialTheme.typography.headlineSmall,
-            onClick = {
-                if (isLastQuestion) {
-                    onFinishClick()
-                } else {
-                    onNextClick()
-                }
-            },
-            modifier = Modifier
-                .height(56.dp)
-                .testTag(
-                    if (isLastQuestion) {
-                        "finish_button"
-                    } else {
-                        "next_button"
-                    }
-                )
-        )
+            }
+        }
     }
 }
 
