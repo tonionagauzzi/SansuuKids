@@ -3,7 +3,6 @@ package com.vitantonio.nagauzzi.sansuukids.ui.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,11 +39,7 @@ internal fun MedalCollectionScreen(
     onBackClick: () -> Unit
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 24.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.padding(16.dp),
         verticalArrangement = Arrangement.Top
     ) {
         AppHeader(
@@ -54,14 +49,15 @@ internal fun MedalCollectionScreen(
             modifier = Modifier.testTag("medal_collection_title")
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Box(
+        Column(
             modifier = Modifier
-                .padding(bottom = 16.dp)
-                .weight(1f),
-            contentAlignment = Alignment.Center
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
+            Spacer(modifier = Modifier.height(24.dp))
+
             MedalGrid(
                 medalDisplays = medalDisplays,
                 modifier = Modifier.testTag("medal_grid")
