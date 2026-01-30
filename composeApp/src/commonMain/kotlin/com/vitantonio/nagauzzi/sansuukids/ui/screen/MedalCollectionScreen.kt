@@ -39,12 +39,12 @@ internal fun MedalCollectionScreen(
     onBackClick: () -> Unit
 ) {
     Column(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier,
         verticalArrangement = Arrangement.Top
     ) {
         AppHeader(
             title = stringResource(Res.string.medal_collection_title),
-            isMultiLine = false,
+            isMultiLine = true,
             onBackClick = onBackClick,
             modifier = Modifier.testTag("medal_collection_title")
         )
@@ -60,7 +60,7 @@ internal fun MedalCollectionScreen(
 
             MedalGrid(
                 medalDisplays = medalDisplays,
-                modifier = Modifier.testTag("medal_grid")
+                modifier = Modifier.padding(16.dp).testTag("medal_grid")
             )
         }
     }
