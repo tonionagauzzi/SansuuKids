@@ -26,8 +26,8 @@ import sansuukids.composeapp.generated.resources.mode_multiplication
 import sansuukids.composeapp.generated.resources.mode_subtraction
 
 private data class ModeButtonConfig(
-    val containerColor: @Composable () -> Color,
-    val contentColor: @Composable () -> Color,
+    val containerColor: Color,
+    val contentColor: Color,
     val textRes: StringResource,
     val onClick: () -> Unit,
     val testTag: String
@@ -45,36 +45,36 @@ internal fun ModeSelector(
 ) {
     val buttons = listOf(
         ModeButtonConfig(
-            containerColor = { MaterialTheme.colorScheme.primaryContainer },
-            contentColor = { MaterialTheme.colorScheme.onPrimaryContainer },
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             textRes = Res.string.mode_addition,
             onClick = onAdditionClick,
             testTag = "addition_button"
         ),
         ModeButtonConfig(
-            containerColor = { MaterialTheme.colorScheme.secondaryContainer },
-            contentColor = { MaterialTheme.colorScheme.onSecondaryContainer },
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             textRes = Res.string.mode_subtraction,
             onClick = onSubtractionClick,
             testTag = "subtraction_button"
         ),
         ModeButtonConfig(
-            containerColor = { MaterialTheme.colorScheme.tertiaryContainer },
-            contentColor = { MaterialTheme.colorScheme.onTertiaryContainer },
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
             textRes = Res.string.mode_multiplication,
             onClick = onMultiplicationClick,
             testTag = "multiplication_button"
         ),
         ModeButtonConfig(
-            containerColor = { MaterialTheme.colorScheme.primaryContainer },
-            contentColor = { MaterialTheme.colorScheme.onPrimaryContainer },
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             textRes = Res.string.mode_division,
             onClick = onDivisionClick,
             testTag = "division_button"
         ),
         ModeButtonConfig(
-            containerColor = { MaterialTheme.colorScheme.secondaryContainer },
-            contentColor = { MaterialTheme.colorScheme.onSecondaryContainer },
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             textRes = Res.string.mode_all,
             onClick = onAllClick,
             testTag = "all_button"
@@ -90,8 +90,8 @@ internal fun ModeSelector(
         ) {
             buttons.forEach { config ->
                 LargeButton(
-                    containerColor = config.containerColor(),
-                    contentColor = config.contentColor(),
+                    containerColor = config.containerColor,
+                    contentColor = config.contentColor,
                     text = stringResource(config.textRes),
                     textAlign = TextAlign.Center,
                     textStyle = MaterialTheme.typography.headlineSmall,
@@ -111,8 +111,8 @@ internal fun ModeSelector(
         ) {
             buttons.forEach { config ->
                 LargeButton(
-                    containerColor = config.containerColor(),
-                    contentColor = config.contentColor(),
+                    containerColor = config.containerColor,
+                    contentColor = config.contentColor,
                     text = stringResource(config.textRes),
                     textAlign = TextAlign.Center,
                     textStyle = MaterialTheme.typography.headlineSmall,

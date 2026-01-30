@@ -37,9 +37,9 @@ import sansuukids.composeapp.generated.resources.answer_check_next
 import sansuukids.composeapp.generated.resources.answer_check_previous
 
 private data class AnswerCheckButtonConfig(
-    val containerColor: @Composable () -> Color,
-    val contentColor: @Composable () -> Color,
-    val text: @Composable () -> String,
+    val containerColor: Color,
+    val contentColor: Color,
+    val text: String,
     val onClick: () -> Unit,
     val testTag: String
 )
@@ -215,22 +215,18 @@ private fun AnswerCheckButtons(
 ) {
     val buttons = listOf(
         AnswerCheckButtonConfig(
-            containerColor = { MaterialTheme.colorScheme.secondaryContainer },
-            contentColor = { MaterialTheme.colorScheme.onSecondaryContainer },
-            text = {
-                if (isFirstQuestion) stringResource(Res.string.answer_check_back)
-                else stringResource(Res.string.answer_check_previous)
-            },
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            text = if (isFirstQuestion) stringResource(Res.string.answer_check_back)
+                else stringResource(Res.string.answer_check_previous),
             onClick = { if (isFirstQuestion) onBackClick() else onPreviousClick() },
             testTag = if (isFirstQuestion) "back_button" else "previous_button"
         ),
         AnswerCheckButtonConfig(
-            containerColor = { MaterialTheme.colorScheme.primaryContainer },
-            contentColor = { MaterialTheme.colorScheme.onPrimaryContainer },
-            text = {
-                if (isLastQuestion) stringResource(Res.string.answer_check_finish)
-                else stringResource(Res.string.answer_check_next)
-            },
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            text = if (isLastQuestion) stringResource(Res.string.answer_check_finish)
+                else stringResource(Res.string.answer_check_next),
             onClick = { if (isLastQuestion) onFinishClick() else onNextClick() },
             testTag = if (isLastQuestion) "finish_button" else "next_button"
         )
@@ -244,9 +240,9 @@ private fun AnswerCheckButtons(
         ) {
             buttons.forEach { config ->
                 LargeButton(
-                    containerColor = config.containerColor(),
-                    contentColor = config.contentColor(),
-                    text = config.text(),
+                    containerColor = config.containerColor,
+                    contentColor = config.contentColor,
+                    text = config.text,
                     textStyle = MaterialTheme.typography.headlineSmall,
                     onClick = config.onClick,
                     modifier = Modifier
@@ -264,9 +260,9 @@ private fun AnswerCheckButtons(
         ) {
             buttons.forEach { config ->
                 LargeButton(
-                    containerColor = config.containerColor(),
-                    contentColor = config.contentColor(),
-                    text = config.text(),
+                    containerColor = config.containerColor,
+                    contentColor = config.contentColor,
+                    text = config.text,
                     textStyle = MaterialTheme.typography.headlineSmall,
                     onClick = config.onClick,
                     modifier = Modifier
