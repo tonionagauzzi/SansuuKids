@@ -44,7 +44,6 @@ fun LargeButton(
     ) {
         Text(
             text = text,
-            modifier = Modifier.fillMaxWidth(),
             fontWeight = FontWeight.Bold,
             textAlign = textAlign,
             maxLines = 2,
