@@ -2,7 +2,6 @@ package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -36,32 +35,8 @@ fun SettingsScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    BoxWithConstraints(
-        modifier = modifier.fillMaxSize()
-    ) {
-        SettingsScreenPortrait(
-            perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
-            hintDisplayEnabled = hintDisplayEnabled,
-            onPerQuestionAnswerCheckChanged = onPerQuestionAnswerCheckChanged,
-            onHintDisplayChanged = onHintDisplayChanged,
-            onBackClick = onBackClick
-        )
-    }
-}
-
-@Composable
-private fun SettingsScreenPortrait(
-    perQuestionAnswerCheckEnabled: Boolean,
-    hintDisplayEnabled: Boolean,
-    onPerQuestionAnswerCheckChanged: (Boolean) -> Unit,
-    onHintDisplayChanged: (Boolean) -> Unit,
-    onBackClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
@@ -81,7 +56,8 @@ private fun SettingsScreenPortrait(
             perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
             hintDisplayEnabled = hintDisplayEnabled,
             onPerQuestionAnswerCheckChanged = onPerQuestionAnswerCheckChanged,
-            onHintDisplayChanged = onHintDisplayChanged
+            onHintDisplayChanged = onHintDisplayChanged,
+            modifier = Modifier.padding(16.dp)
         )
     }
 }
