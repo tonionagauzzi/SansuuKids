@@ -25,8 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Subtraction
-import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 private val fruitEmojis = listOf("🍎", "🍊", "🍋", "🍇", "🍓", "🍑", "🍒", "🍌", "🥝", "🍐")
 
@@ -126,27 +124,5 @@ internal fun HintArea(
 
         // 他のタイプはヒントなし
         else -> {}
-    }
-}
-
-@Preview
-@Composable
-private fun HintAreaPreviewAddition() {
-    SansuuKidsTheme {
-        HintArea(
-            question = Addition(leftOperand = 3, rightOperand = 5),
-            fruitEmoji = "🍎"
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun HintAreaPreviewSubtraction() {
-    SansuuKidsTheme {
-        HintArea(
-            question = Subtraction(leftOperand = 7, rightOperand = 2),
-            fruitEmoji = "🍊"
-        )
     }
 }

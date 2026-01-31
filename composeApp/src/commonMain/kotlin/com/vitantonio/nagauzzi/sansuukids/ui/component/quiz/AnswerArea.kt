@@ -15,8 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.vitantonio.nagauzzi.sansuukids.model.Question
-import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun AnswerArea(
@@ -77,21 +75,5 @@ private fun AnswerCheckDialog(
                 AnswerCheck(question = currentQuestion, answer = currentInput)
             }
         }
-    }
-}
-
-@Preview
-@Composable
-private fun AnswerAreaPreview() {
-    SansuuKidsTheme {
-        AnswerArea(
-            currentQuestion = Question.Math.Addition(leftOperand = 1, rightOperand = 2),
-            currentInput = 3,
-            isSubmitEnabled = true,
-            perQuestionAnswerCheckEnabled = true,
-            onDigitClick = {},
-            onDeleteClick = {},
-            onSubmitClick = {}
-        )
     }
 }

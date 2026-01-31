@@ -14,8 +14,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun LargeButton(
@@ -48,36 +46,6 @@ internal fun LargeButton(
             textAlign = textAlign,
             maxLines = 2,
             style = textStyle
-        )
-    }
-}
-
-@Preview(widthDp = 120)
-@Composable
-private fun LargeButtonPreview() {
-    SansuuKidsTheme {
-        LargeButton(
-            text = "テキスト",
-            textStyle = MaterialTheme.typography.headlineSmall,
-            onClick = {},
-            textAlign = TextAlign.Center,
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-        )
-    }
-}
-
-@Preview(widthDp = 120)
-@Composable
-private fun LargeButtonLongTextPreview() {
-    SansuuKidsTheme {
-        LargeButton(
-            text = "長めのテキスト",
-            textStyle = MaterialTheme.typography.headlineSmall,
-            onClick = {},
-            textAlign = TextAlign.Start,
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
 }

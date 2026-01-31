@@ -19,9 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Question
-import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.answer_check_correct
 import sansuukids.composeapp.generated.resources.answer_check_incorrect
@@ -130,14 +128,4 @@ private fun UserAnswerDisplay(
             )
         }
     }
-}
-
-@Preview
-@Composable
-private fun AnswerCheckCorrectPreview() {
-    AnswerCheck(
-        question = Addition(leftOperand = 3, rightOperand = 5),
-        answer = 8,
-        modifier = Modifier.background(MaterialTheme.colorScheme.background)
-    )
 }

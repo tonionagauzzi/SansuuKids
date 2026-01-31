@@ -1,6 +1,5 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.component
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,10 +19,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.arrow_back
 import sansuukids.composeapp.generated.resources.quiz_back
@@ -76,30 +73,4 @@ private fun AppHeaderTitle(title: String, modifier: Modifier = Modifier) {
         textAlign = TextAlign.Center,
         modifier = modifier.fillMaxWidth()
     )
-}
-
-@Preview
-@Composable
-private fun AppHeaderPreview() {
-    SansuuKidsTheme {
-        AppHeader(
-            title = "せってい",
-            isMultiLine = false,
-            onBackClick = {},
-            modifier = Modifier.background(MaterialTheme.colorScheme.background)
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun AppHeaderMultilinePreview() {
-    SansuuKidsTheme {
-        AppHeader(
-            title = "せってい",
-            isMultiLine = true,
-            onBackClick = {},
-            modifier = Modifier.background(MaterialTheme.colorScheme.background)
-        )
-    }
 }
