@@ -1,7 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,6 +9,7 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepositoryProvider
 import com.vitantonio.nagauzzi.sansuukids.data.SettingRepositoryProvider
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.fadeTransition
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.navigationEntryProvider
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.rememberNavigationState
@@ -30,6 +30,9 @@ fun App() {
             ),
             backStack = navigationState.entries,
             onBack = { navigationState.navigateBack() },
+            transitionSpec = { fadeTransition() },
+            popTransitionSpec = { fadeTransition() },
+            predictivePopTransitionSpec = { fadeTransition() },
             entryProvider = { key ->
                 navigationEntryProvider(
                     key = key,
