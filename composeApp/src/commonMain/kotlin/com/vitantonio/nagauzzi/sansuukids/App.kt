@@ -14,10 +14,8 @@ import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.navigationEntryProvider
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.rememberNavigationState
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-@Preview
 fun App() {
     SansuuKidsTheme {
         val navigationState = rememberNavigationState(HomeRoute)

@@ -20,7 +20,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.MedalCollectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
-import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SettingsRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SettingRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -395,14 +395,14 @@ class NavigationIntegrationTest {
 
         // Then: 設定画面に遷移する
         assertEquals(2, navigationState.entries.size)
-        assertEquals(SettingsRoute, navigationState.entries.last())
+        assertEquals(SettingRoute, navigationState.entries.last())
         onNodeWithTag("settings_title").assertIsDisplayed()
     }
 
     @Test
     fun 設定画面で戻るボタンを押すとホーム画面に戻る() = runComposeUiTest {
         // Given: 設定画面を表示する
-        val backStack = mutableStateListOf(HomeRoute, SettingsRoute)
+        val backStack = mutableStateListOf(HomeRoute, SettingRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {

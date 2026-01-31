@@ -19,7 +19,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ResultRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
-import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SettingsRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SettingRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.viewmodel.QuizViewModel
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.AnswerCheckScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.HomeScreen
@@ -28,7 +28,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.screen.MedalCollectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.QuizScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ResultScreen
-import com.vitantonio.nagauzzi.sansuukids.ui.screen.SettingsScreen
+import com.vitantonio.nagauzzi.sansuukids.ui.screen.SettingScreen
 import kotlinx.coroutines.launch
 
 internal fun navigationEntryProvider(
@@ -42,7 +42,7 @@ internal fun navigationEntryProvider(
             HomeScreen(
                 onStartClick = { navigationState.navigateTo(ModeSelectionRoute) },
                 onMedalCollectionClick = { navigationState.navigateTo(MedalCollectionRoute) },
-                onSettingsClick = { navigationState.navigateTo(SettingsRoute) }
+                onSettingClick = { navigationState.navigateTo(SettingRoute) }
             )
         }
 
@@ -54,13 +54,13 @@ internal fun navigationEntryProvider(
             )
         }
 
-        SettingsRoute -> NavEntry(key) {
+        SettingRoute -> NavEntry(key) {
             val scope = rememberCoroutineScope()
             val perQuestionAnswerCheckEnabled by settingRepository.perQuestionAnswerCheckEnabled
                 .collectAsStateWithLifecycle(true)
             val hintDisplayEnabled by settingRepository.hintDisplayEnabled
                 .collectAsStateWithLifecycle(true)
-            SettingsScreen(
+            SettingScreen(
                 perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
                 hintDisplayEnabled = hintDisplayEnabled,
                 onPerQuestionAnswerCheckChanged = { enabled ->
@@ -125,7 +125,7 @@ internal fun navigationEntryProvider(
                             level = key.level,
                             score = viewModel.earnedScore,
                             medal = viewModel.earnedMedal,
-                            questions = quizState.totalQuestions,
+                            questions = quizState.quiz.questions,
                             userAnswers = quizState.userAnswers
                         )
                     )

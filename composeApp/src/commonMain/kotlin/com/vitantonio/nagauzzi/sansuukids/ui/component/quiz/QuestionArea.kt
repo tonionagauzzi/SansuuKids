@@ -1,6 +1,5 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.component.quiz
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,8 +14,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Question
-import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun QuestionArea(
@@ -57,21 +54,5 @@ internal fun QuestionArea(
                     .testTag("hint_area")
             )
         }
-    }
-}
-
-@Preview
-@Composable
-private fun QuestionAreaPreview() {
-    SansuuKidsTheme {
-        QuestionArea(
-            currentQuestion = Question.Math.Addition(leftOperand = 1999, rightOperand = 2001),
-            currentInput = 12,
-            hintDisplayEnabled = false,
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp)
-                .testTag("question_area_preview")
-        )
     }
 }

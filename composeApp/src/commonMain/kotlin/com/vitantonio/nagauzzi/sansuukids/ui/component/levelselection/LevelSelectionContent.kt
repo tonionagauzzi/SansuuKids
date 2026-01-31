@@ -11,16 +11,14 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.ui.component.LargeButton
-import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.level_difficult
 import sansuukids.composeapp.generated.resources.level_easy
 import sansuukids.composeapp.generated.resources.level_normal
 
 @Composable
-internal fun LevelSelector(
+internal fun LevelSelectionContent(
     onEasyClick: () -> Unit,
     onNormalClick: () -> Unit,
     onDifficultClick: () -> Unit,
@@ -65,18 +63,6 @@ internal fun LevelSelector(
             modifier = Modifier
                 .height(56.dp)
                 .testTag("difficult_button")
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun LevelSelectorPreview() {
-    SansuuKidsTheme {
-        LevelSelector(
-            onEasyClick = {},
-            onNormalClick = {},
-            onDifficultClick = {}
         )
     }
 }

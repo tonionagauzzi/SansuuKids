@@ -1,6 +1,5 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.component.modeselection
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -14,10 +13,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.ui.component.LargeButton
-import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.mode_addition
 import sansuukids.composeapp.generated.resources.mode_all
@@ -34,7 +31,7 @@ private data class ModeButtonConfig(
 )
 
 @Composable
-internal fun ModeSelector(
+internal fun ModeSelectionContent(
     isLandscape: Boolean,
     onAdditionClick: () -> Unit,
     onSubtractionClick: () -> Unit,
@@ -123,37 +120,5 @@ internal fun ModeSelector(
                 )
             }
         }
-    }
-}
-
-@Preview
-@Composable
-private fun ModeSelectorLandscapePreview() {
-    SansuuKidsTheme {
-        ModeSelector(
-            isLandscape = true,
-            onAdditionClick = {},
-            onSubtractionClick = {},
-            onMultiplicationClick = {},
-            onDivisionClick = {},
-            onAllClick = {},
-            modifier = Modifier.background(MaterialTheme.colorScheme.background)
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun ModeSelectorPortraitPreview() {
-    SansuuKidsTheme {
-        ModeSelector(
-            isLandscape = false,
-            onAdditionClick = {},
-            onSubtractionClick = {},
-            onMultiplicationClick = {},
-            onDivisionClick = {},
-            onAllClick = {},
-            modifier = Modifier.background(MaterialTheme.colorScheme.background)
-        )
     }
 }

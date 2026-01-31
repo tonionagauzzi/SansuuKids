@@ -20,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.backspace
 import sansuukids.composeapp.generated.resources.check
@@ -176,15 +175,4 @@ private fun KeypadIconButton(
             modifier = Modifier.size(32.dp)
         )
     }
-}
-
-@Preview
-@Composable
-private fun NumberKeypadPreview() {
-    NumberKeypad(
-        onDigitClick = {},
-        onDeleteClick = {},
-        onSubmitClick = {},
-        isSubmitEnabled = true
-    )
 }

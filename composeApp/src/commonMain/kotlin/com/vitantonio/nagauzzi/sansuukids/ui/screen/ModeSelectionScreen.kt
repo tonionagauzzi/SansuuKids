@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
-import com.vitantonio.nagauzzi.sansuukids.ui.component.modeselection.ModeSelector
+import com.vitantonio.nagauzzi.sansuukids.ui.component.modeselection.ModeSelectionContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -46,7 +46,7 @@ fun ModeSelectionScreen(
         ) {
             AppHeader(
                 title = stringResource(Res.string.mode_selection_title),
-                isMultiLine = true,
+                isMultiLine = !isLandscape,
                 modifier = Modifier
                     .fillMaxWidth()
                     .testTag("mode_selection_title"),
@@ -59,7 +59,7 @@ fun ModeSelectionScreen(
                     .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
-                ModeSelector(
+                ModeSelectionContent(
                     isLandscape = isLandscape,
                     onAdditionClick = onAdditionClick,
                     onSubtractionClick = onSubtractionClick,
