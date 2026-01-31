@@ -23,9 +23,7 @@ fun App() {
         val navigationState = rememberNavigationState(HomeRoute)
 
         NavDisplay(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .safeContentPadding(),
+            modifier = Modifier.background(MaterialTheme.colorScheme.background),
             entryDecorators = listOf(
                 rememberSaveableStateHolderNavEntryDecorator(),
                 rememberViewModelStoreNavEntryDecorator()

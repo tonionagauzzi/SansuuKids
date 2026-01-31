@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -68,8 +69,9 @@ internal fun AnswerCheckScreen(
 
     BoxWithConstraints(
         modifier = modifier
-            .fillMaxSize()
             .background(backgroundColor)
+            .safeContentPadding()
+            .fillMaxSize()
     ) {
         if (maxWidth > maxHeight) {
             AnswerCheckScreenLandscape(
