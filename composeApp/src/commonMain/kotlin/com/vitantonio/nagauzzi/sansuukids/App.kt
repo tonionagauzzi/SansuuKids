@@ -1,7 +1,10 @@
 package com.vitantonio.nagauzzi.sansuukids
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +18,12 @@ import com.vitantonio.nagauzzi.sansuukids.ui.navigation.navigationEntryProvider
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.rememberNavigationState
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+
+private const val TRANSITION_DURATION_MS = 300
+
+private fun fadeTransition() =
+    fadeIn(animationSpec = tween(durationMillis = TRANSITION_DURATION_MS)) togetherWith
+        fadeOut(animationSpec = tween(durationMillis = TRANSITION_DURATION_MS))
 
 @Composable
 @Preview
@@ -30,6 +39,9 @@ fun App() {
             ),
             backStack = navigationState.entries,
             onBack = { navigationState.navigateBack() },
+            transitionSpec = { fadeTransition() },
+            popTransitionSpec = { fadeTransition() },
+            predictivePopTransitionSpec = { fadeTransition() },
             entryProvider = { key ->
                 navigationEntryProvider(
                     key = key,
