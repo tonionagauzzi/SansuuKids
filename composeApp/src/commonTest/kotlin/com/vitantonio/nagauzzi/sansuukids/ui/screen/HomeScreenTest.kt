@@ -20,7 +20,7 @@ class HomeScreenTest {
                 HomeScreen(
                     onStartClick = { clicked = true },
                     onMedalCollectionClick = {},
-                    onSettingsClick = {}
+                    onSettingClick = {}
                 )
             }
         }
@@ -41,7 +41,7 @@ class HomeScreenTest {
                 HomeScreen(
                     onStartClick = {},
                     onMedalCollectionClick = { clicked = true },
-                    onSettingsClick = {}
+                    onSettingClick = {}
                 )
             }
         }

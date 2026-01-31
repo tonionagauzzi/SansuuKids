@@ -3,4 +3,4 @@ package com.vitantonio.nagauzzi.sansuukids.ui.navigation.key
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object SettingsRoute : SansuuKidsRoute
+internal data object SettingRoute : SansuuKidsRoute

@@ -13,14 +13,14 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalTestApi::class)
-class SettingsScreenTest {
+class SettingScreenTest {
 
     @Test
     fun ヘッダータイトルが表示される() = runComposeUiTest {
         // Given: 設定画面を表示する
         setContent {
             SansuuKidsTheme {
-                SettingsScreen(
+                SettingScreen(
                     perQuestionAnswerCheckEnabled = false,
                     hintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = {},
@@ -41,7 +41,7 @@ class SettingsScreenTest {
         // Given: 初期状態がfalseの設定画面を表示
         setContent {
             SansuuKidsTheme {
-                SettingsScreen(
+                SettingScreen(
                     perQuestionAnswerCheckEnabled = false,
                     hintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = {},
@@ -60,7 +60,7 @@ class SettingsScreenTest {
         // Given: 初期状態がtrueの設定画面を表示
         setContent {
             SansuuKidsTheme {
-                SettingsScreen(
+                SettingScreen(
                     perQuestionAnswerCheckEnabled = true,
                     hintDisplayEnabled = true,
                     onPerQuestionAnswerCheckChanged = {},
@@ -80,7 +80,7 @@ class SettingsScreenTest {
         var changedValue: Boolean? = null
         setContent {
             SansuuKidsTheme {
-                SettingsScreen(
+                SettingScreen(
                     perQuestionAnswerCheckEnabled = false,
                     hintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = { changedValue = it },
@@ -103,7 +103,7 @@ class SettingsScreenTest {
         var changedValue: Boolean? = null
         setContent {
             SansuuKidsTheme {
-                SettingsScreen(
+                SettingScreen(
                     perQuestionAnswerCheckEnabled = true,
                     hintDisplayEnabled = true,
                     onPerQuestionAnswerCheckChanged = { changedValue = it },
@@ -126,7 +126,7 @@ class SettingsScreenTest {
         var clicked = false
         setContent {
             SansuuKidsTheme {
-                SettingsScreen(
+                SettingScreen(
                     perQuestionAnswerCheckEnabled = false,
                     hintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = {},
@@ -148,7 +148,7 @@ class SettingsScreenTest {
         // Given: ヒント初期状態がfalseの設定画面を表示
         setContent {
             SansuuKidsTheme {
-                SettingsScreen(
+                SettingScreen(
                     perQuestionAnswerCheckEnabled = false,
                     hintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = {},
@@ -167,7 +167,7 @@ class SettingsScreenTest {
         // Given: ヒント初期状態がtrueの設定画面を表示
         setContent {
             SansuuKidsTheme {
-                SettingsScreen(
+                SettingScreen(
                     perQuestionAnswerCheckEnabled = false,
                     hintDisplayEnabled = true,
                     onPerQuestionAnswerCheckChanged = {},
@@ -187,7 +187,7 @@ class SettingsScreenTest {
         var changedValue: Boolean? = null
         setContent {
             SansuuKidsTheme {
-                SettingsScreen(
+                SettingScreen(
                     perQuestionAnswerCheckEnabled = false,
                     hintDisplayEnabled = false,
                     onPerQuestionAnswerCheckChanged = {},
@@ -210,7 +210,7 @@ class SettingsScreenTest {
         var changedValue: Boolean? = null
         setContent {
             SansuuKidsTheme {
-                SettingsScreen(
+                SettingScreen(
                     perQuestionAnswerCheckEnabled = false,
                     hintDisplayEnabled = true,
                     onPerQuestionAnswerCheckChanged = {},

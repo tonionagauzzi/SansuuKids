@@ -13,11 +13,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
 import sansuukids.composeapp.generated.resources.Res
-import sansuukids.composeapp.generated.resources.settings_hint_display
-import sansuukids.composeapp.generated.resources.settings_per_question_check
+import sansuukids.composeapp.generated.resources.setting_hint_display
+import sansuukids.composeapp.generated.resources.setting_per_question_check
 
 @Composable
-internal fun SettingsContent(
+internal fun SettingContent(
     perQuestionAnswerCheckEnabled: Boolean,
     hintDisplayEnabled: Boolean,
     onPerQuestionAnswerCheckChanged: (Boolean) -> Unit,
@@ -35,7 +35,7 @@ internal fun SettingsContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(Res.string.settings_per_question_check),
+                text = stringResource(Res.string.setting_per_question_check),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.weight(1f)
@@ -56,7 +56,7 @@ internal fun SettingsContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(Res.string.settings_hint_display),
+                text = stringResource(Res.string.setting_hint_display),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.weight(1f)

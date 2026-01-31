@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
-import com.vitantonio.nagauzzi.sansuukids.ui.component.setting.SettingsContent
+import com.vitantonio.nagauzzi.sansuukids.ui.component.setting.SettingContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -23,7 +23,7 @@ import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.settings
 
 @Composable
-fun SettingsScreen(
+fun SettingScreen(
     perQuestionAnswerCheckEnabled: Boolean,
     hintDisplayEnabled: Boolean,
     onPerQuestionAnswerCheckChanged: (Boolean) -> Unit,
@@ -51,8 +51,7 @@ fun SettingsScreen(
                 onBackClick = onBackClick
             )
 
-            // Settings content
-            SettingsContent(
+            SettingContent(
                 perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
                 hintDisplayEnabled = hintDisplayEnabled,
                 onPerQuestionAnswerCheckChanged = onPerQuestionAnswerCheckChanged,
@@ -70,9 +69,9 @@ fun SettingsScreen(
 @Preview(widthDp = 480, heightDp = 480) // 正方形画面
 @Preview(widthDp = 481, heightDp = 480) // 僅かに横画面
 @Composable
-private fun SettingsScreenPreview() {
+private fun SettingScreenPreview() {
     SansuuKidsTheme {
-        SettingsScreen(
+        SettingScreen(
             perQuestionAnswerCheckEnabled = false,
             hintDisplayEnabled = false,
             onPerQuestionAnswerCheckChanged = {},
@@ -86,9 +85,9 @@ private fun SettingsScreenPreview() {
 @Preview(widthDp = 360, heightDp = 640) // 縦画面
 @Preview(widthDp = 640, heightDp = 360) // 横画面
 @Composable
-private fun SettingsScreenPreviewEnabled() {
+private fun SettingScreenPreviewEnabled() {
     SansuuKidsTheme {
-        SettingsScreen(
+        SettingScreen(
             perQuestionAnswerCheckEnabled = true,
             hintDisplayEnabled = true,
             onPerQuestionAnswerCheckChanged = {},

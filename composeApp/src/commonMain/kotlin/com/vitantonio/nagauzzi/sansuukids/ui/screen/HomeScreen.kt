@@ -15,7 +15,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun HomeScreen(
     onStartClick: () -> Unit,
     onMedalCollectionClick: () -> Unit,
-    onSettingsClick: () -> Unit,
+    onSettingClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
@@ -27,7 +27,7 @@ fun HomeScreen(
             isLandscape = maxWidth > maxHeight,
             onStartClick = onStartClick,
             onMedalCollectionClick = onMedalCollectionClick,
-            onSettingsClick = onSettingsClick
+            onSettingClick = onSettingClick
         )
     }
 }
@@ -42,7 +42,7 @@ private fun HomeScreenPreview() {
         HomeScreen(
             onStartClick = {},
             onMedalCollectionClick = {},
-            onSettingsClick = {},
+            onSettingClick = {},
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )
     }

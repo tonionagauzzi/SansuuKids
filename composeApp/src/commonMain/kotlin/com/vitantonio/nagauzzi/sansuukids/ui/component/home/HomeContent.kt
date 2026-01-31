@@ -35,7 +35,7 @@ internal fun HomeContent(
     isLandscape: Boolean,
     onStartClick: () -> Unit,
     onMedalCollectionClick: () -> Unit,
-    onSettingsClick: () -> Unit,
+    onSettingClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (isLandscape) {
@@ -62,7 +62,7 @@ internal fun HomeContent(
             HomeButtons(
                 onStartClick = onStartClick,
                 onMedalCollectionClick = onMedalCollectionClick,
-                onSettingsClick = onSettingsClick,
+                onSettingClick = onSettingClick,
                 modifier = Modifier.weight(1f)
             )
         }
@@ -88,7 +88,7 @@ internal fun HomeContent(
             HomeButtons(
                 onStartClick = onStartClick,
                 onMedalCollectionClick = onMedalCollectionClick,
-                onSettingsClick = onSettingsClick,
+                onSettingClick = onSettingClick,
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -100,7 +100,7 @@ internal fun HomeContent(
 private fun HomeButtons(
     onStartClick: () -> Unit,
     onMedalCollectionClick: () -> Unit,
-    onSettingsClick: () -> Unit,
+    onSettingClick: () -> Unit,
     modifier: Modifier = Modifier,
     spacing: Dp = 24.dp
 ) {
@@ -132,7 +132,7 @@ private fun HomeButtons(
             contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
             text = stringResource(Res.string.settings),
             textStyle = MaterialTheme.typography.headlineMedium,
-            onClick = onSettingsClick,
+            onClick = onSettingClick,
             modifier = Modifier.height(72.dp).testTag("settings_button")
         )
     }
