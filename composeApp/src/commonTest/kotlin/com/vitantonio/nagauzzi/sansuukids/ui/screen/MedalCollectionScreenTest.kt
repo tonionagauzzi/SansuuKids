@@ -47,7 +47,7 @@ class MedalCollectionScreenTest {
         }
 
         // When: 戻るボタンをクリックする
-        onNodeWithTag("medal_collection_back_button").performClick()
+        onNodeWithTag("back_button").performClick()
 
         // Then: onBackClickが呼ばれる
         assertTrue(clicked)

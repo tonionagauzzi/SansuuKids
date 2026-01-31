@@ -44,9 +44,8 @@ fun HomeScreen(
 ) {
     BoxWithConstraints(
         modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
             .safeContentPadding()
+            .fillMaxSize()
     ) {
         if (maxWidth > maxHeight) {
             HomeScreenLandscape(
@@ -82,7 +81,7 @@ private fun HomeScreenPortrait(
             painter = painterResource(Res.drawable.app_icon),
             contentDescription = stringResource(Res.string.app_title),
             modifier = Modifier
-                .weight(2f)
+                .weight(1f)
                 .sizeIn(maxWidth = 400.dp, maxHeight = 400.dp)
                 .aspectRatio(1f)
                 .testTag("home_title"),
@@ -94,7 +93,6 @@ private fun HomeScreenPortrait(
             onMedalCollectionClick = onMedalCollectionClick,
             onSettingsClick = onSettingsClick,
             modifier = Modifier
-                .weight(1f)
                 .fillMaxWidth()
         )
     }
@@ -178,14 +176,18 @@ private fun HomeButtons(
     }
 }
 
-@Preview
+@Preview(widthDp = 360, heightDp = 640) // 縦画面
+@Preview(widthDp = 640, heightDp = 360) // 横画面
+@Preview(widthDp = 480, heightDp = 480) // 正方形画面
+@Preview(widthDp = 481, heightDp = 480) // 僅かに横画面
 @Composable
 private fun HomeScreenPreview() {
     SansuuKidsTheme {
         HomeScreen(
             onStartClick = {},
             onMedalCollectionClick = {},
-            onSettingsClick = {}
+            onSettingsClick = {},
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )
     }
 }

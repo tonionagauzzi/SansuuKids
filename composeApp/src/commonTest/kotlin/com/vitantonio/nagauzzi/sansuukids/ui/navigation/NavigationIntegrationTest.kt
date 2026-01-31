@@ -354,7 +354,7 @@ class NavigationIntegrationTest {
         }
 
         // When: 戻るボタンをクリックする
-        onNodeWithTag("medal_collection_back_button").performClick()
+        onNodeWithTag("back_button").performClick()
         waitForIdle()
 
         // Then: ホーム画面に戻る
@@ -427,7 +427,7 @@ class NavigationIntegrationTest {
         }
 
         // When: 戻るボタンをクリックする
-        onNodeWithTag("settings_back_button").performClick()
+        onNodeWithTag("back_button").performClick()
         waitForIdle()
 
         // Then: ホーム画面に戻る
@@ -472,7 +472,7 @@ class NavigationIntegrationTest {
             runTest { assertEquals(true, settingRepository.perQuestionAnswerCheckEnabled.first()) }
 
             // When: ホームに戻り、クイズを開始する
-            onNodeWithTag("settings_back_button").performClick()
+            onNodeWithTag("back_button").performClick()
             waitForIdle()
             onNodeWithTag("start_button").performClick()
             waitForIdle()
@@ -530,7 +530,7 @@ class NavigationIntegrationTest {
             runTest { assertEquals(false, settingRepository.perQuestionAnswerCheckEnabled.first()) }
 
             // When: ホームに戻り、クイズを開始する
-            onNodeWithTag("settings_back_button").performClick()
+            onNodeWithTag("back_button").performClick()
             waitForIdle()
             onNodeWithTag("start_button").performClick()
             waitForIdle()

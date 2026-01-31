@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.component
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -11,7 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LargeButton(
@@ -19,6 +23,7 @@ fun LargeButton(
     textStyle: TextStyle,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    textAlign: TextAlign = TextAlign.Center,
     containerColor: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary
 ) {
@@ -34,12 +39,45 @@ fun LargeButton(
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 4.dp,
             pressedElevation = 8.dp
-        )
+        ),
+        contentPadding = PaddingValues(4.dp)
     ) {
         Text(
             text = text,
-            style = textStyle,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = textAlign,
+            maxLines = 2,
+            style = textStyle
+        )
+    }
+}
+
+@Preview(widthDp = 120)
+@Composable
+private fun LargeButtonPreview() {
+    SansuuKidsTheme {
+        LargeButton(
+            text = "テキスト",
+            textStyle = MaterialTheme.typography.headlineSmall,
+            onClick = {},
+            textAlign = TextAlign.Center,
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        )
+    }
+}
+
+@Preview(widthDp = 120)
+@Composable
+private fun LargeButtonLongTextPreview() {
+    SansuuKidsTheme {
+        LargeButton(
+            text = "長めのテキスト",
+            textStyle = MaterialTheme.typography.headlineSmall,
+            onClick = {},
+            textAlign = TextAlign.Start,
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
 }

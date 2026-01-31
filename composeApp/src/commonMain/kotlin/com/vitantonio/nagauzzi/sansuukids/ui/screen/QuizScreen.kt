@@ -1,50 +1,32 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
+import com.vitantonio.nagauzzi.sansuukids.model.Level
+import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.Question
+import com.vitantonio.nagauzzi.sansuukids.model.Quiz
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
-import com.vitantonio.nagauzzi.sansuukids.ui.component.AnswerCheck
-import com.vitantonio.nagauzzi.sansuukids.ui.component.HintArea
-import com.vitantonio.nagauzzi.sansuukids.ui.component.NumberKeypad
-import com.vitantonio.nagauzzi.sansuukids.ui.component.QuizProgressBar
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
-import sansuukids.composeapp.generated.resources.Res
-import sansuukids.composeapp.generated.resources.arrow_back
-import sansuukids.composeapp.generated.resources.quiz_back
+import com.vitantonio.nagauzzi.sansuukids.ui.component.quiz.AnswerArea
+import com.vitantonio.nagauzzi.sansuukids.ui.component.quiz.QuestionArea
+import com.vitantonio.nagauzzi.sansuukids.ui.component.quiz.QuizHeader
+import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun QuizScreen(
@@ -57,145 +39,162 @@ internal fun QuizScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    BoxWithConstraints(
+        modifier = modifier
+            .safeContentPadding()
+            .fillMaxSize()
+    ) {
+        if (maxWidth > maxHeight) {
+            QuizScreenLandscape(
+                quizState = quizState,
+                perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
+                hintDisplayEnabled = hintDisplayEnabled,
+                onDigitClick = onDigitClick,
+                onDeleteClick = onDeleteClick,
+                onSubmitClick = onSubmitClick,
+                onBackClick = onBackClick
+            )
+        } else {
+            QuizScreenPortrait(
+                quizState = quizState,
+                perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
+                hintDisplayEnabled = hintDisplayEnabled,
+                onDigitClick = onDigitClick,
+                onDeleteClick = onDeleteClick,
+                onSubmitClick = onSubmitClick,
+                onBackClick = onBackClick
+            )
+        }
+    }
+}
+
+@Composable
+private fun QuizScreenPortrait(
+    quizState: QuizState,
+    perQuestionAnswerCheckEnabled: Boolean,
+    hintDisplayEnabled: Boolean,
+    onDigitClick: (Int) -> Unit,
+    onDeleteClick: () -> Unit,
+    onSubmitClick: () -> Unit,
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly
+    ) {
+        QuizHeader(quizState = quizState, onBackClick = onBackClick)
+
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            QuestionArea(
+                currentQuestion = quizState.currentQuestion,
+                currentInput = quizState.currentInput,
+                hintDisplayEnabled = hintDisplayEnabled,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            )
+
+            AnswerArea(
+                currentQuestion = quizState.currentQuestion,
+                currentInput = quizState.currentInput,
+                isSubmitEnabled = quizState.isSubmitEnabled,
+                perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
+                onDigitClick = onDigitClick,
+                onDeleteClick = onDeleteClick,
+                onSubmitClick = onSubmitClick
+            )
+        }
+    }
+}
+
+@Composable
+private fun QuizScreenLandscape(
+    quizState: QuizState,
+    perQuestionAnswerCheckEnabled: Boolean,
+    hintDisplayEnabled: Boolean,
+    onDigitClick: (Int) -> Unit,
+    onDeleteClick: () -> Unit,
+    onSubmitClick: () -> Unit,
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .safeContentPadding()
             .padding(horizontal = 24.dp, vertical = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        // Header: Cancel button and Progress
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Button(
-                onClick = onBackClick,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
-                    contentColor = MaterialTheme.colorScheme.onErrorContainer
-                ),
-                modifier = Modifier
-                    .height(64.dp)
-                    .testTag("cancel_button"),
-                shape = RoundedCornerShape(12.dp),
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.arrow_back),
-                    contentDescription = stringResource(Res.string.quiz_back),
-                    modifier = Modifier.size(32.dp)
-                )
-            }
-
-            QuizProgressBar(
-                currentQuestion = quizState.currentQuestionIndex + 1,
-                totalQuestions = quizState.totalQuestions.size,
-                progress = quizState.progress,
-                modifier = Modifier.width(150.dp)
-            )
-        }
-
-        val currentQuestion = quizState.currentQuestion
-        val currentInput = quizState.currentInput
-
-        // Question display area
+        // Left side: Header and Question area
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .weight(1f)
+                .fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Hint area (Easy mode only)
-            if (hintDisplayEnabled && currentQuestion is Question.Math) {
-                HintArea(
-                    question = currentQuestion,
-                    modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .testTag("hint_area")
-                )
-            }
+            QuizHeader(quizState = quizState, onBackClick = onBackClick)
 
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // Question text
-            Text(
-                text = currentQuestion.displayText,
-                style = MaterialTheme.typography.displayMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.testTag("question_text")
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Input display
-            Surface(
+            QuestionArea(
+                currentQuestion = quizState.currentQuestion,
+                currentInput = quizState.currentInput,
+                hintDisplayEnabled = hintDisplayEnabled,
                 modifier = Modifier
-                    .fillMaxWidth(0.6f)
-                    .height(80.dp),
-                shape = RoundedCornerShape(16.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.testTag("input_display")
-                ) {
-                    Text(
-                        text = currentInput?.toString() ?: "",
-                        style = MaterialTheme.typography.displayMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textAlign = TextAlign.Center
-                    )
-                }
-            }
+                    .fillMaxWidth()
+                    .weight(1f)
+            )
         }
 
-        var checkingAnswer by remember { mutableStateOf(false) }
+        Spacer(modifier = Modifier.padding(horizontal = 8.dp))
 
-        // Number keypad
-        NumberKeypad(
-            onDigitClick = onDigitClick,
-            onDeleteClick = onDeleteClick,
-            onSubmitClick = {
-                if (perQuestionAnswerCheckEnabled) {
-                    checkingAnswer = true
-                } else {
-                    onSubmitClick()
-                }
-            },
-            isSubmitEnabled = quizState.isSubmitEnabled,
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
-        )
-
-        // Answer check dialog
-        if (checkingAnswer && currentQuestion is Question.Math && currentInput != null) {
-            Dialog(
-                onDismissRequest = {
-                    checkingAnswer = false
-                    onSubmitClick()
-                }
-            ) {
-                Card(
-                    modifier = Modifier
-                        .clickable {
-                            checkingAnswer = false
-                            onSubmitClick()
-                        },
-                    shape = RoundedCornerShape(16.dp),
-                ) {
-                    AnswerCheck(
-                        question = currentQuestion,
-                        answer = currentInput
-                    )
-                }
-            }
+                .fillMaxHeight()
+                .weight(1f),
+            contentAlignment = Alignment.Center
+        ) {
+            AnswerArea(
+                currentQuestion = quizState.currentQuestion,
+                currentInput = quizState.currentInput,
+                isSubmitEnabled = quizState.isSubmitEnabled,
+                perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
+                onDigitClick = onDigitClick,
+                onDeleteClick = onDeleteClick,
+                onSubmitClick = onSubmitClick
+            )
         }
+    }
+}
+
+@Preview(widthDp = 360, heightDp = 640) // 縦画面
+@Preview(widthDp = 640, heightDp = 360) // 横画面
+@Preview(widthDp = 480, heightDp = 480) // 正方形画面
+@Preview(widthDp = 481, heightDp = 480) // 僅かに横画面
+@Composable
+private fun QuizScreenPreview() {
+    SansuuKidsTheme {
+        QuizScreen(
+            quizState = QuizState(
+                quiz = Quiz(
+                    questions = listOf(
+                        Question.Math.Addition(3, 5),
+                        Question.Math.Subtraction(10, 4),
+                        Question.Math.Multiplication(2, 6)
+                    ),
+                    mode = Mode.ADDITION,
+                    level = Level.EASY
+                )
+            ),
+            perQuestionAnswerCheckEnabled = true,
+            hintDisplayEnabled = true,
+            onDigitClick = {},
+            onDeleteClick = {},
+            onSubmitClick = {},
+            onBackClick = {},
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
+        )
     }
 }

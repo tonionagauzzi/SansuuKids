@@ -1,4 +1,4 @@
-package com.vitantonio.nagauzzi.sansuukids.ui.component
+package com.vitantonio.nagauzzi.sansuukids.ui.component.quiz
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

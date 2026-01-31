@@ -2,8 +2,9 @@ package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,7 +20,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.model.descriptionRes
 import com.vitantonio.nagauzzi.sansuukids.model.emojiRes
@@ -43,14 +43,94 @@ internal fun ResultScreen(
     onHomeClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    BoxWithConstraints(
+        modifier = modifier
+            .safeContentPadding()
+            .fillMaxSize()
+    ) {
+        if (maxWidth > maxHeight) {
+            ResultScreenLandscape(
+                score = score,
+                medal = medal,
+                onCheckAnswersClick = onCheckAnswersClick,
+                onRetryClick = onRetryClick,
+                onHomeClick = onHomeClick
+            )
+        } else {
+            ResultScreenPortrait(
+                score = score,
+                medal = medal,
+                onCheckAnswersClick = onCheckAnswersClick,
+                onRetryClick = onRetryClick,
+                onHomeClick = onHomeClick
+            )
+        }
+    }
+}
+
+@Composable
+private fun ResultScreenPortrait(
+    score: Int,
+    medal: Medal,
+    onCheckAnswersClick: () -> Unit,
+    onRetryClick: () -> Unit,
+    onHomeClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .safeContentPadding()
             .padding(horizontal = 32.dp, vertical = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.SpaceEvenly
+    ) {
+        ResultInfo(score = score, medal = medal, modifier = Modifier.weight(1f))
+
+        ResultButtons(
+            onCheckAnswersClick = onCheckAnswersClick,
+            onRetryClick = onRetryClick,
+            onHomeClick = onHomeClick
+        )
+    }
+}
+
+@Composable
+private fun ResultScreenLandscape(
+    score: Int,
+    medal: Medal,
+    onCheckAnswersClick: () -> Unit,
+    onRetryClick: () -> Unit,
+    onHomeClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 32.dp, vertical = 24.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        ResultInfo(score = score, medal = medal, modifier = Modifier.weight(1f))
+
+        ResultButtons(
+            onCheckAnswersClick = onCheckAnswersClick,
+            onRetryClick = onRetryClick,
+            onHomeClick = onHomeClick,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Composable
+private fun ResultInfo(
+    score: Int,
+    medal: Medal,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly
     ) {
         Text(
             text = stringResource(Res.string.result_title),
@@ -60,8 +140,6 @@ internal fun ResultScreen(
             modifier = Modifier.testTag("result_title")
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
-
         Text(
             text = stringResource(Res.string.result_score, score),
             style = MaterialTheme.typography.displayMedium,
@@ -70,8 +148,6 @@ internal fun ResultScreen(
             textAlign = TextAlign.Center,
             modifier = Modifier.testTag("result_score")
         )
-
-        Spacer(modifier = Modifier.height(24.dp))
 
         val medalDescription = stringResource(medal.descriptionRes)
 
@@ -83,44 +159,54 @@ internal fun ResultScreen(
                 .testTag("result_medal")
                 .semantics { contentDescription = medalDescription }
         )
-
-        Spacer(modifier = Modifier.height(48.dp))
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            LargeButton(
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                text = stringResource(Res.string.result_check_answers),
-                textStyle = MaterialTheme.typography.headlineSmall,
-                onClick = onCheckAnswersClick,
-                modifier = Modifier.height(56.dp).testTag("check_answers_button")
-            )
-
-            LargeButton(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                text = stringResource(Res.string.result_retry),
-                textStyle = MaterialTheme.typography.headlineSmall,
-                onClick = onRetryClick,
-                modifier = Modifier.height(56.dp).testTag("retry_button")
-            )
-
-            LargeButton(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                text = stringResource(Res.string.result_home),
-                textStyle = MaterialTheme.typography.headlineSmall,
-                onClick = onHomeClick,
-                modifier = Modifier.height(56.dp).testTag("home_button")
-            )
-        }
     }
 }
 
-@Preview
+@Composable
+private fun ResultButtons(
+    onCheckAnswersClick: () -> Unit,
+    onRetryClick: () -> Unit,
+    onHomeClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        LargeButton(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+            text = stringResource(Res.string.result_check_answers),
+            textStyle = MaterialTheme.typography.headlineSmall,
+            onClick = onCheckAnswersClick,
+            modifier = Modifier.height(56.dp).testTag("check_answers_button")
+        )
+
+        LargeButton(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            text = stringResource(Res.string.result_retry),
+            textStyle = MaterialTheme.typography.headlineSmall,
+            onClick = onRetryClick,
+            modifier = Modifier.height(56.dp).testTag("retry_button")
+        )
+
+        LargeButton(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            text = stringResource(Res.string.result_home),
+            textStyle = MaterialTheme.typography.headlineSmall,
+            onClick = onHomeClick,
+            modifier = Modifier.height(56.dp).testTag("home_button")
+        )
+    }
+}
+
+@Preview(widthDp = 360, heightDp = 640) // 縦画面
+@Preview(widthDp = 640, heightDp = 360) // 横画面
+@Preview(widthDp = 480, heightDp = 480) // 正方形画面
+@Preview(widthDp = 481, heightDp = 480) // 僅かに横画面
 @Composable
 private fun ResultScreenPreview() {
     SansuuKidsTheme {
@@ -129,7 +215,8 @@ private fun ResultScreenPreview() {
             medal = Medal.Silver,
             onCheckAnswersClick = {},
             onRetryClick = {},
-            onHomeClick = {}
+            onHomeClick = {},
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )
     }
 }

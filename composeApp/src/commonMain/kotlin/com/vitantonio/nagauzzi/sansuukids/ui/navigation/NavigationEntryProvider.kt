@@ -83,28 +83,15 @@ internal fun navigationEntryProvider(
                 onSubtractionClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.SUBTRACTION)) },
                 onMultiplicationClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.MULTIPLICATION)) },
                 onDivisionClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.DIVISION)) },
-                onAllClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.ALL)) }
+                onAllClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.ALL)) },
+                onBackClick = { navigationState.navigateBack() }
             )
         }
 
         is LevelSelectionRoute -> NavEntry(key) {
             LevelSelectionScreen(
-                onEasyClick = {
-                    navigationState.navigateTo(
-                        QuizRoute(
-                            key.mode,
-                            Level.EASY
-                        )
-                    )
-                },
-                onNormalClick = {
-                    navigationState.navigateTo(
-                        QuizRoute(
-                            key.mode,
-                            Level.NORMAL
-                        )
-                    )
-                },
+                onEasyClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.EASY)) },
+                onNormalClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.NORMAL)) },
                 onDifficultClick = {
                     navigationState.navigateTo(
                         QuizRoute(
@@ -112,7 +99,8 @@ internal fun navigationEntryProvider(
                             Level.DIFFICULT
                         )
                     )
-                }
+                },
+                onBackClick = { navigationState.navigateBack() }
             )
         }
 

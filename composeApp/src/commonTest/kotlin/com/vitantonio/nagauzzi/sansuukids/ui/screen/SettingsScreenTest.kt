@@ -1,6 +1,7 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.onNodeWithTag
@@ -13,6 +14,27 @@ import kotlin.test.assertTrue
 
 @OptIn(ExperimentalTestApi::class)
 class SettingsScreenTest {
+
+    @Test
+    fun ヘッダータイトルが表示される() = runComposeUiTest {
+        // Given: 設定画面を表示する
+        setContent {
+            SansuuKidsTheme {
+                SettingsScreen(
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = false,
+                    onPerQuestionAnswerCheckChanged = {},
+                    onHintDisplayChanged = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // When: 画面が表示される
+
+        // Then: ヘッダータイトルが表示される
+        onNodeWithTag("settings_title").assertIsDisplayed()
+    }
 
     @Test
     fun スイッチが初期状態でオフを表示する() = runComposeUiTest {
@@ -115,7 +137,7 @@ class SettingsScreenTest {
         }
 
         // When: 戻るボタンをクリックする
-        onNodeWithTag("settings_back_button").performClick()
+        onNodeWithTag("back_button").performClick()
 
         // Then: onBackClickが呼ばれる
         assertTrue(clicked)

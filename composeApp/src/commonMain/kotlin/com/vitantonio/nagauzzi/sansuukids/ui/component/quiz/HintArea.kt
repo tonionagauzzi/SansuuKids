@@ -1,4 +1,4 @@
-package com.vitantonio.nagauzzi.sansuukids.ui.component
+package com.vitantonio.nagauzzi.sansuukids.ui.component.quiz
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -63,7 +63,7 @@ internal fun HintArea(
                 repeat(question.leftOperand) {
                     Text(
                         text = fruitEmoji,
-                        style = MaterialTheme.typography.headlineLarge,
+                        style = MaterialTheme.typography.headlineMedium,
                         textAlign = TextAlign.Center
                     )
                 }
@@ -87,7 +87,7 @@ internal fun HintArea(
                 repeat(question.rightOperand) {
                     Text(
                         text = fruitEmoji,
-                        style = MaterialTheme.typography.headlineLarge,
+                        style = MaterialTheme.typography.headlineMedium,
                         textAlign = TextAlign.Center
                     )
                 }
@@ -109,7 +109,7 @@ internal fun HintArea(
             repeat(question.correctAnswer) {
                 Text(
                     text = fruitEmoji,
-                    style = MaterialTheme.typography.headlineLarge,
+                    style = MaterialTheme.typography.headlineMedium,
                     textAlign = TextAlign.Center
                 )
             }
@@ -118,7 +118,7 @@ internal fun HintArea(
                     text = fruitEmoji,
                     modifier = Modifier
                         .background(color = MaterialTheme.colorScheme.errorContainer),
-                    style = MaterialTheme.typography.headlineLarge,
+                    style = MaterialTheme.typography.headlineMedium,
                     textAlign = TextAlign.Center
                 )
             }
