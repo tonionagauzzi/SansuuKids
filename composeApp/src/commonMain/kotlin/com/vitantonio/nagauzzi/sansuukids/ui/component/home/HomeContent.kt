@@ -27,7 +27,7 @@ import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.app_icon
 import sansuukids.composeapp.generated.resources.app_title
 import sansuukids.composeapp.generated.resources.medal_collection
-import sansuukids.composeapp.generated.resources.settings
+import sansuukids.composeapp.generated.resources.setting
 import sansuukids.composeapp.generated.resources.start
 
 @Composable
@@ -130,7 +130,7 @@ private fun HomeButtons(
         LargeButton(
             containerColor = MaterialTheme.colorScheme.tertiaryContainer,
             contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-            text = stringResource(Res.string.settings),
+            text = stringResource(Res.string.setting),
             textStyle = MaterialTheme.typography.headlineMedium,
             onClick = onSettingClick,
             modifier = Modifier.height(72.dp).testTag("settings_button")

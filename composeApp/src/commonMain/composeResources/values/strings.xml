@@ -3,7 +3,7 @@
     <string name="app_title">Sansuu\nKids</string>
     <string name="start">Start</string>
     <string name="medal_collection">Medals</string>
-    <string name="settings">Settings</string>
+    <string name="setting">Settings</string>
     <string name="setting_per_question_check">Check answer\nafter each question</string>
     <string name="setting_hint_display">Show hints\n(Easy mode only)</string>
     <string name="settings_back">Back</string>

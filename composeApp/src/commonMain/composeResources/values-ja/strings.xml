@@ -3,7 +3,7 @@
     <string name="app_title">さんすう\nキッズ</string>
     <string name="start">スタート</string>
     <string name="medal_collection">メダルずかん</string>
-    <string name="settings">せってい</string>
+    <string name="setting">せってい</string>
     <string name="setting_per_question_check">1もんごとに\nこたえあわせをする</string>
     <string name="setting_hint_display">ヒントをだす\n（かんたんモードのみ）</string>
     <string name="settings_back">もどる</string>

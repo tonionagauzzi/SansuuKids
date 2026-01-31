@@ -20,7 +20,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
-import sansuukids.composeapp.generated.resources.settings
+import sansuukids.composeapp.generated.resources.setting
 
 @Composable
 fun SettingScreen(
@@ -43,7 +43,7 @@ fun SettingScreen(
             verticalArrangement = Arrangement.Top
         ) {
             AppHeader(
-                title = stringResource(Res.string.settings),
+                title = stringResource(Res.string.setting),
                 isMultiLine = !isLandscape,
                 modifier = Modifier
                     .fillMaxWidth()
