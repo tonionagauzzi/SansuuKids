@@ -1,7 +1,10 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.component.quiz
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.vitantonio.nagauzzi.sansuukids.model.Question
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -54,6 +58,25 @@ internal fun AnswerArea(
                 onSubmitClick()
             }
         )
+    }
+}
+
+@Composable
+private fun AnswerCheckDialog(
+    checkingAnswer: Boolean,
+    currentQuestion: Question,
+    currentInput: Int?,
+    onDismiss: () -> Unit
+) {
+    if (checkingAnswer && currentQuestion is Question.Math && currentInput != null) {
+        Dialog(onDismissRequest = onDismiss) {
+            Card(
+                modifier = Modifier.clickable { onDismiss() },
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                AnswerCheck(question = currentQuestion, answer = currentInput)
+            }
+        }
     }
 }
 

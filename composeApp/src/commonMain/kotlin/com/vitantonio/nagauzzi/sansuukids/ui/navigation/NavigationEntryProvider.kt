@@ -125,7 +125,7 @@ internal fun navigationEntryProvider(
                             level = key.level,
                             score = viewModel.earnedScore,
                             medal = viewModel.earnedMedal,
-                            questions = quizState.totalQuestions,
+                            questions = quizState.quiz.questions,
                             userAnswers = quizState.userAnswers
                         )
                     )

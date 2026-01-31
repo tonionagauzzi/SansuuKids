@@ -33,14 +33,14 @@ internal class QuizViewModel(
     val earnedScore: Int
         get() = calculateScore(
             correctCount = currentQuizState.correctCount,
-            totalCount = currentQuizState.totalQuestions.size
+            totalCount = currentQuizState.quiz.questions.size
         )
 
     val earnedMedal: Medal
         get() = awardMedal(
             isQuizComplete = currentQuizState.isQuizComplete,
             correctCount = currentQuizState.correctCount,
-            totalCount = currentQuizState.totalQuestions.size
+            totalCount = currentQuizState.quiz.questions.size
         )
 
     fun appendDigit(digit: Int) {

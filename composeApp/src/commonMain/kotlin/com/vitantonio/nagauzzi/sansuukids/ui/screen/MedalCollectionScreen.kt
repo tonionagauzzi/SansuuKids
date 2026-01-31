@@ -3,16 +3,14 @@ package com.vitantonio.nagauzzi.sansuukids.ui.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,30 +37,37 @@ internal fun MedalCollectionScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit
 ) {
-    Column(
-        modifier = modifier.safeContentPadding(),
-        verticalArrangement = Arrangement.Top
+    BoxWithConstraints(
+        modifier = modifier
+            .safeContentPadding()
+            .fillMaxSize()
     ) {
-        AppHeader(
-            title = stringResource(Res.string.medal_collection_title),
-            isMultiLine = true,
-            onBackClick = onBackClick,
-            modifier = Modifier.testTag("medal_collection_title")
-        )
+        val isLandscape = maxWidth > maxHeight
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Spacer(modifier = Modifier.height(24.dp))
-
-            MedalGrid(
-                medalDisplays = medalDisplays,
-                modifier = Modifier.padding(16.dp).testTag("medal_grid")
+            AppHeader(
+                title = stringResource(Res.string.medal_collection_title),
+                isMultiLine = !isLandscape,
+                onBackClick = onBackClick,
+                modifier = Modifier.testTag("medal_collection_title")
             )
+
+            Box(
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                MedalGrid(
+                    medalDisplays = medalDisplays,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .testTag("medal_grid")
+                )
+            }
         }
     }
 }

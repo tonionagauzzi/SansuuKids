@@ -26,18 +26,12 @@ internal data class QuizState(
         get() = quiz.questions.getOrElse(currentQuestionIndex) { Question.None }
 
     /**
-     * クイズに含まれる全問題のリスト。
-     */
-    val totalQuestions: List<Question>
-        get() = quiz.questions
-
-    /**
      * クイズの進捗率（0.0〜1.0）。
      * 問題が存在しない場合は完了扱いとして1.0を返す。
      */
     val progress: Float
         get() {
-            val totalQuestionsCount = totalQuestions.size
+            val totalQuestionsCount = quiz.questions.size
             return if (totalQuestionsCount == 0) {
                 1.0f
             } else {
@@ -69,7 +63,7 @@ internal data class QuizState(
      * 全問題に回答済みの場合にtrueを返す。
      */
     val isQuizComplete: Boolean
-        get() = userAnswers.size == totalQuestions.size
+        get() = userAnswers.size == quiz.questions.size
 
     /**
      * 回答済みの問題数。

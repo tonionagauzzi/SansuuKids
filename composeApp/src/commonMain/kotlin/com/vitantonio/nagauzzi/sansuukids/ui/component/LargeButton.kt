@@ -18,7 +18,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun LargeButton(
+internal fun LargeButton(
     text: String,
     textStyle: TextStyle,
     onClick: () -> Unit,

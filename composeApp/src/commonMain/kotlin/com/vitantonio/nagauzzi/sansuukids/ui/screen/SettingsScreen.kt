@@ -2,30 +2,25 @@ package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
+import com.vitantonio.nagauzzi.sansuukids.ui.component.setting.SettingsContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.settings
-import sansuukids.composeapp.generated.resources.settings_hint_display
-import sansuukids.composeapp.generated.resources.settings_per_question_check
 
 @Composable
 fun SettingsScreen(
@@ -36,87 +31,35 @@ fun SettingsScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
+    BoxWithConstraints(
         modifier = modifier
             .safeContentPadding()
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+            .fillMaxSize()
     ) {
-        AppHeader(
-            title = stringResource(Res.string.settings),
-            isMultiLine = false,
-            modifier = Modifier
-                .fillMaxWidth()
-                .testTag("settings_title"),
-            onBackClick = onBackClick
-        )
+        val isLandscape = maxWidth > maxHeight
 
-        Spacer(Modifier.size(16.dp))
-
-        // Settings content
-        SettingsContent(
-            perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
-            hintDisplayEnabled = hintDisplayEnabled,
-            onPerQuestionAnswerCheckChanged = onPerQuestionAnswerCheckChanged,
-            onHintDisplayChanged = onHintDisplayChanged,
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-}
-
-@Composable
-private fun SettingsContent(
-    perQuestionAnswerCheckEnabled: Boolean,
-    hintDisplayEnabled: Boolean,
-    onPerQuestionAnswerCheckChanged: (Boolean) -> Unit,
-    onHintDisplayChanged: (Boolean) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-    ) {
-        // Per-question answer check setting
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
         ) {
-            Text(
-                text = stringResource(Res.string.settings_per_question_check),
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.weight(1f)
+            AppHeader(
+                title = stringResource(Res.string.settings),
+                isMultiLine = !isLandscape,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("settings_title"),
+                onBackClick = onBackClick
             )
 
-            Switch(
-                checked = perQuestionAnswerCheckEnabled,
-                onCheckedChange = { enabled ->
-                    onPerQuestionAnswerCheckChanged(enabled)
-                },
-                modifier = Modifier.testTag("per_question_check_switch")
-            )
-        }
-
-        // Hint display setting (Easy mode only)
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = stringResource(Res.string.settings_hint_display),
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.weight(1f)
-            )
-
-            Switch(
-                checked = hintDisplayEnabled,
-                onCheckedChange = { enabled ->
-                    onHintDisplayChanged(enabled)
-                },
-                modifier = Modifier.testTag("hint_display_switch")
+            // Settings content
+            SettingsContent(
+                perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
+                hintDisplayEnabled = hintDisplayEnabled,
+                onPerQuestionAnswerCheckChanged = onPerQuestionAnswerCheckChanged,
+                onHintDisplayChanged = onHintDisplayChanged,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .weight(1f)
             )
         }
     }

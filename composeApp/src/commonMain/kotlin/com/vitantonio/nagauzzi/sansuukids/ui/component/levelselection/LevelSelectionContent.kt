@@ -20,7 +20,7 @@ import sansuukids.composeapp.generated.resources.level_easy
 import sansuukids.composeapp.generated.resources.level_normal
 
 @Composable
-internal fun LevelSelector(
+internal fun LevelSelectionContent(
     onEasyClick: () -> Unit,
     onNormalClick: () -> Unit,
     onDifficultClick: () -> Unit,
@@ -73,7 +73,7 @@ internal fun LevelSelector(
 @Composable
 private fun LevelSelectorPreview() {
     SansuuKidsTheme {
-        LevelSelector(
+        LevelSelectionContent(
             onEasyClick = {},
             onNormalClick = {},
             onDifficultClick = {}

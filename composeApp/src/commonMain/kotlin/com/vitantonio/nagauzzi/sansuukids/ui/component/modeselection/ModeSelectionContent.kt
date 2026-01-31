@@ -34,7 +34,7 @@ private data class ModeButtonConfig(
 )
 
 @Composable
-internal fun ModeSelector(
+internal fun ModeSelectionContent(
     isLandscape: Boolean,
     onAdditionClick: () -> Unit,
     onSubtractionClick: () -> Unit,
@@ -130,7 +130,7 @@ internal fun ModeSelector(
 @Composable
 private fun ModeSelectorLandscapePreview() {
     SansuuKidsTheme {
-        ModeSelector(
+        ModeSelectionContent(
             isLandscape = true,
             onAdditionClick = {},
             onSubtractionClick = {},
@@ -146,7 +146,7 @@ private fun ModeSelectorLandscapePreview() {
 @Composable
 private fun ModeSelectorPortraitPreview() {
     SansuuKidsTheme {
-        ModeSelector(
+        ModeSelectionContent(
             isLandscape = false,
             onAdditionClick = {},
             onSubtractionClick = {},

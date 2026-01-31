@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
-import com.vitantonio.nagauzzi.sansuukids.ui.component.levelselection.LevelSelector
+import com.vitantonio.nagauzzi.sansuukids.ui.component.levelselection.LevelSelectionContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -44,7 +44,7 @@ fun LevelSelectionScreen(
         ) {
             AppHeader(
                 title = stringResource(Res.string.level_selection_title),
-                isMultiLine = true,
+                isMultiLine = !isLandscape,
                 modifier = Modifier
                     .fillMaxWidth()
                     .testTag("level_selection_title"),
@@ -57,7 +57,7 @@ fun LevelSelectionScreen(
                     .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
-                LevelSelector(
+                LevelSelectionContent(
                     onEasyClick = onEasyClick,
                     onNormalClick = onNormalClick,
                     onDifficultClick = onDifficultClick,
