@@ -28,8 +28,6 @@ import sansuukids.composeapp.generated.resources.answer_check_previous
 @Composable
 internal fun AnswerCheckContent(
     isLandscape: Boolean,
-    currentIndex: Int,
-    totalQuestions: Int,
     currentQuestion: Question.Math,
     currentUserAnswer: UserAnswer,
     isFirstQuestion: Boolean,

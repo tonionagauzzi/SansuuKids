@@ -50,7 +50,7 @@ internal fun AnswerCheckScreen(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             ProgressHeader(
-                currentQuestionIndex = currentIndex + 1,
+                currentQuestionIndex = currentIndex + 1, // 表示は1から始まる
                 totalQuestionsSize = questions.size,
                 progress = (currentIndex + 1) / questions.size.toFloat(),
                 onBackClick = onBackClick
@@ -58,8 +58,6 @@ internal fun AnswerCheckScreen(
 
             AnswerCheckContent(
                 isLandscape = isLandscape,
-                currentIndex = currentIndex,
-                totalQuestions = questions.size,
                 currentQuestion = questions.getOrNull(currentIndex) as? Question.Math
                     ?: return@BoxWithConstraints,
                 currentUserAnswer = currentUserAnswer,
