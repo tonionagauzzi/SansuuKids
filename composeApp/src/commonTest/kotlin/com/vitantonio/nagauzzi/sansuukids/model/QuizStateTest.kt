@@ -149,19 +149,6 @@ class QuizStateTest {
     }
 
     @Test
-    fun totalQuestionsはクイズの全問題を返す() {
-        // Given: テスト用クイズ
-        val quiz = createTestQuiz()
-
-        // When: QuizStateを初期化する
-        val state = QuizState(quiz)
-
-        // Then: totalQuestionsがクイズの全問題と一致する
-        assertEquals(quiz.questions, state.totalQuestions)
-        assertEquals(quizSize, state.totalQuestions.size)
-    }
-
-    @Test
     fun currentQuestionは回答済み問題数から次の問題を返す() {
         // Given: テスト用クイズ
         val quiz = createTestQuiz()

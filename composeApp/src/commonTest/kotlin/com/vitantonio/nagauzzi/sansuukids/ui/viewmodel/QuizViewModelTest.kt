@@ -34,9 +34,9 @@ class QuizViewModelTest {
         val viewModelMultiplicationDifficult = QuizViewModel(Mode.MULTIPLICATION, Level.DIFFICULT)
 
         // Then: それぞれ正常に初期化される
-        assertEquals(10, viewModelAdditionEasy.quizState.value.totalQuestions.size)
-        assertEquals(10, viewModelSubtractionNormal.quizState.value.totalQuestions.size)
-        assertEquals(10, viewModelMultiplicationDifficult.quizState.value.totalQuestions.size)
+        assertEquals(10, viewModelAdditionEasy.quizState.value.quiz.questions.size)
+        assertEquals(10, viewModelSubtractionNormal.quizState.value.quiz.questions.size)
+        assertEquals(10, viewModelMultiplicationDifficult.quizState.value.quiz.questions.size)
     }
 
     @Test
@@ -180,7 +180,7 @@ class QuizViewModelTest {
     fun 全問回答するとisQuizCompleteがtrueになる() {
         // Given: ViewModelを初期化する
         val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
-        val quizSize = viewModel.quizState.value.totalQuestions.size
+        val quizSize = viewModel.quizState.value.quiz.questions.size
 
         // When: 全問全て回答する
         repeat(quizSize) {
@@ -219,7 +219,7 @@ class QuizViewModelTest {
     fun earnedScoreとearnedMedalは正答率に応じた得点とメダルを返す() {
         // Given: ViewModelを初期化する
         val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
-        val quizSize = viewModel.quizState.value.totalQuestions.size
+        val quizSize = viewModel.quizState.value.quiz.questions.size
 
         // When: 全問正解する
         repeat(quizSize) {
