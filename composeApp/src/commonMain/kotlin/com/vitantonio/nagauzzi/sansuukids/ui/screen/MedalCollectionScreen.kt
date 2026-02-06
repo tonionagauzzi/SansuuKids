@@ -2,6 +2,7 @@ package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -14,18 +15,24 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
+import com.vitantonio.nagauzzi.sansuukids.model.MedalCount
 import com.vitantonio.nagauzzi.sansuukids.model.MedalDisplay
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.emojiRes
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
 import com.vitantonio.nagauzzi.sansuukids.ui.component.GridCell
+import com.vitantonio.nagauzzi.sansuukids.ui.component.medal.MedalDetailDialog
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -38,6 +45,8 @@ internal fun MedalCollectionScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit
 ) {
+    var selectedDisplay by remember { mutableStateOf<MedalDisplay?>(null) }
+
     BoxWithConstraints(
         modifier = modifier
             .safeContentPadding()
@@ -58,6 +67,7 @@ internal fun MedalCollectionScreen(
 
             MedalGrid(
                 medalDisplays = medalDisplays,
+                onMedalClick = { display -> selectedDisplay = display },
                 modifier = Modifier
                     .padding(16.dp)
                     .testTag("medal_grid")
@@ -65,11 +75,19 @@ internal fun MedalCollectionScreen(
             )
         }
     }
+
+    selectedDisplay?.let { display ->
+        MedalDetailDialog(
+            medalDisplay = display,
+            onDismiss = { selectedDisplay = null }
+        )
+    }
 }
 
 @Composable
 private fun MedalGrid(
     medalDisplays: List<MedalDisplay>,
+    onMedalClick: (MedalDisplay) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val modes =
@@ -120,15 +138,21 @@ private fun MedalGrid(
                 )
                 // Medal cells
                 levels.forEach { level ->
-                    val medal = medalDisplays.firstOrNull {
+                    val display = medalDisplays.firstOrNull {
                         it.mode == mode && it.level == level
-                    }?.medal ?: Medal.Nothing
+                    }
+                    val medal = display?.medal ?: Medal.Nothing
+                    val cellModifier = Modifier
+                        .weight(1f)
+                        .testTag("grid_cell_${mode.name.lowercase()}_${level.name.lowercase()}")
                     GridCell(
                         text = stringResource(medal.emojiRes),
                         isHeader = false,
-                        modifier = Modifier
-                            .weight(1f)
-                            .testTag("grid_cell_${mode.name.lowercase()}_${level.name.lowercase()}")
+                        modifier = if (medal != Medal.Nothing && display != null) {
+                            cellModifier.clickable { onMedalClick(display) }
+                        } else {
+                            cellModifier
+                        }
                     )
                 }
             }
@@ -145,13 +169,13 @@ private fun MedalCollectionScreenPreview() {
     SansuuKidsTheme {
         MedalCollectionScreen(
             medalDisplays = listOf(
-                MedalDisplay(Mode.ADDITION, Level.EASY, Medal.Gold),
-                MedalDisplay(Mode.ADDITION, Level.NORMAL, Medal.Silver),
-                MedalDisplay(Mode.ADDITION, Level.DIFFICULT, Medal.Bronze),
-                MedalDisplay(Mode.SUBTRACTION, Level.EASY, Medal.Silver),
-                MedalDisplay(Mode.SUBTRACTION, Level.NORMAL, Medal.Bronze),
-                MedalDisplay(Mode.MULTIPLICATION, Level.EASY, Medal.Bronze),
-                MedalDisplay(Mode.ALL, Level.DIFFICULT, Medal.Gold)
+                MedalDisplay(Mode.ADDITION, Level.EASY, Medal.Gold, MedalCount(gold = 3, silver = 1)),
+                MedalDisplay(Mode.ADDITION, Level.NORMAL, Medal.Silver, MedalCount(silver = 2, bronze = 1)),
+                MedalDisplay(Mode.ADDITION, Level.DIFFICULT, Medal.Bronze, MedalCount(bronze = 1)),
+                MedalDisplay(Mode.SUBTRACTION, Level.EASY, Medal.Silver, MedalCount(silver = 1, star = 2)),
+                MedalDisplay(Mode.SUBTRACTION, Level.NORMAL, Medal.Bronze, MedalCount(bronze = 1)),
+                MedalDisplay(Mode.MULTIPLICATION, Level.EASY, Medal.Bronze, MedalCount(bronze = 2)),
+                MedalDisplay(Mode.ALL, Level.DIFFICULT, Medal.Gold, MedalCount(gold = 1))
             ),
             onBackClick = {},
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
