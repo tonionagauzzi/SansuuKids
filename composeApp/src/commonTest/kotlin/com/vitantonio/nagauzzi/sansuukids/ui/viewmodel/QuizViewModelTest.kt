@@ -19,7 +19,7 @@ class QuizViewModelTest {
         // Given: ADDITIONモードのEASYレベル
 
         // When: ViewModelを初期化する
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
 
         // Then: QuizStateが作成され、最初の問題が表示される
         assertEquals(0, viewModel.quizState.value.currentQuestionIndex)
@@ -29,9 +29,9 @@ class QuizViewModelTest {
     @Test
     fun 異なるモードとレベルでViewModelを作成できる() {
         // Given/When: 異なるモードとレベルの組み合わせでViewModelを作成する
-        val viewModelAdditionEasy = QuizViewModel(Mode.ADDITION, Level.EASY)
-        val viewModelSubtractionNormal = QuizViewModel(Mode.SUBTRACTION, Level.NORMAL)
-        val viewModelMultiplicationDifficult = QuizViewModel(Mode.MULTIPLICATION, Level.DIFFICULT)
+        val viewModelAdditionEasy = QuizViewModel(Mode.Addition, Level.Easy)
+        val viewModelSubtractionNormal = QuizViewModel(Mode.Subtraction, Level.Normal)
+        val viewModelMultiplicationDifficult = QuizViewModel(Mode.Multiplication, Level.Difficult)
 
         // Then: それぞれ正常に初期化される
         assertEquals(10, viewModelAdditionEasy.quizState.value.quiz.questions.size)
@@ -42,7 +42,7 @@ class QuizViewModelTest {
     @Test
     fun appendDigitで数字を入力できる() {
         // Given: ViewModelを初期化する
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
 
         // When: 数字を入力する
         viewModel.appendDigit(5)
@@ -54,7 +54,7 @@ class QuizViewModelTest {
     @Test
     fun appendDigitで負の数値を入力すると例外がスローされる() {
         // Given: ViewModelを初期化する
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
 
         // When & Then: -1を入力しようとすると例外がスローされる
         assertFailsWith<IllegalArgumentException> {
@@ -65,7 +65,7 @@ class QuizViewModelTest {
     @Test
     fun appendDigitで10以上の数値を一度に入力すると例外がスローされる() {
         // Given: ViewModelを初期化する
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
 
         // When & Then: 10を入力しようとすると例外がスローされる
         assertFailsWith<IllegalArgumentException> {
@@ -76,7 +76,7 @@ class QuizViewModelTest {
     @Test
     fun appendDigitで複数桁の数字を入力できる() {
         // Given: DIFFICULTレベルのViewModelを作成する（最大入力桁数が大きい）
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.DIFFICULT)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Difficult)
 
         // When: 複数の数字を入力する
         viewModel.appendDigit(1)
@@ -90,7 +90,7 @@ class QuizViewModelTest {
     @Test
     fun deleteLastDigitで最後の数字を削除できる() {
         // Given: NORMALレベルのViewModelを作成して数字を入力
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.NORMAL)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Normal)
         viewModel.appendDigit(1)
         viewModel.appendDigit(2)
 
@@ -104,7 +104,7 @@ class QuizViewModelTest {
     @Test
     fun deleteLastDigitで何も入力していない場合は何も起こらない() {
         // Given: 何も入力していないViewModel
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
 
         // When: 削除を試みる
         viewModel.deleteLastDigit()
@@ -116,7 +116,7 @@ class QuizViewModelTest {
     @Test
     fun submitAnswerで正解判定が行われる_正解の場合() {
         // Given: ViewModelを初期化する
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
         val currentMathQuestion = viewModel.quizState.value.currentQuestion as Math
         val correctAnswer = currentMathQuestion.correctAnswer
 
@@ -134,7 +134,7 @@ class QuizViewModelTest {
     @Test
     fun submitAnswerで正解判定が行われる_不正解の場合() {
         // Given: ViewModelを初期化する
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
         val currentMathQuestion = viewModel.quizState.value.currentQuestion as Math
         val correctAnswer = currentMathQuestion.correctAnswer
         val wrongAnswer = correctAnswer + 1 // 確実に不正解になる値
@@ -153,7 +153,7 @@ class QuizViewModelTest {
     @Test
     fun submitAnswerで次の問題に進む() {
         // Given: ViewModelを初期化する
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
 
         // When: 回答を提出する
         viewModel.appendDigit(1)
@@ -166,7 +166,7 @@ class QuizViewModelTest {
     @Test
     fun submitAnswer後に入力がクリアされる() {
         // Given: 入力があるViewModel
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
         viewModel.appendDigit(2)
 
         // When: 回答を提出する
@@ -179,7 +179,7 @@ class QuizViewModelTest {
     @Test
     fun 全問回答するとisQuizCompleteがtrueになる() {
         // Given: ViewModelを初期化する
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
         val quizSize = viewModel.quizState.value.quiz.questions.size
 
         // When: 全問全て回答する
@@ -196,7 +196,7 @@ class QuizViewModelTest {
     @Test
     fun 決定ボタンの有効状態は入力に応じて変化する() {
         // Given: ViewModelを初期化する
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
 
         // When: 初期状態
         // Then: 入力が空なので無効
@@ -218,7 +218,7 @@ class QuizViewModelTest {
     @Test
     fun earnedScoreとearnedMedalは正答率に応じた得点とメダルを返す() {
         // Given: ViewModelを初期化する
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
         val quizSize = viewModel.quizState.value.quiz.questions.size
 
         // When: 全問正解する
@@ -239,7 +239,7 @@ class QuizViewModelTest {
     @Test
     fun cancelLastAnswerで回答を取り消し再度回答できる() {
         // Given: 3つ回答済みのViewModel
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
         repeat(3) {
             viewModel.appendDigit(1)
             viewModel.submitAnswer()
@@ -265,7 +265,7 @@ class QuizViewModelTest {
     @Test
     fun cancelLastAnswerで回答が空の場合は何も起こらない() {
         // Given: 回答が空のViewModel
-        val viewModel = QuizViewModel(Mode.ADDITION, Level.EASY)
+        val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
 
         // When: cancelLastAnswerを呼ぶ
         viewModel.cancelLastAnswer()

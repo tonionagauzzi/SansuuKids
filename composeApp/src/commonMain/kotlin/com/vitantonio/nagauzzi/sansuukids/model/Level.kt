@@ -9,14 +9,14 @@ import sansuukids.composeapp.generated.resources.level_normal
 
 @Serializable
 internal enum class Level {
-    EASY,
-    NORMAL,
-    DIFFICULT
+    Easy,
+    Normal,
+    Difficult
 }
 
 internal val Level.labelRes: StringResource
     get() = when (this) {
-        Level.EASY -> Res.string.level_easy
-        Level.NORMAL -> Res.string.level_normal
-        Level.DIFFICULT -> Res.string.level_difficult
+        Level.Easy -> Res.string.level_easy
+        Level.Normal -> Res.string.level_normal
+        Level.Difficult -> Res.string.level_difficult
     }

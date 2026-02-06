@@ -24,10 +24,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Level
+import com.vitantonio.nagauzzi.sansuukids.model.Level.Difficult
+import com.vitantonio.nagauzzi.sansuukids.model.Level.Easy
+import com.vitantonio.nagauzzi.sansuukids.model.Level.Normal
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
-import com.vitantonio.nagauzzi.sansuukids.model.MedalCount
-import com.vitantonio.nagauzzi.sansuukids.model.MedalDisplay
+import com.vitantonio.nagauzzi.sansuukids.model.Medal.Gold
+import com.vitantonio.nagauzzi.sansuukids.model.Medal.Silver
+import com.vitantonio.nagauzzi.sansuukids.model.Medal.Bronze
+import com.vitantonio.nagauzzi.sansuukids.model.Medal.Star
+import com.vitantonio.nagauzzi.sansuukids.model.Medal.Nothing
+import com.vitantonio.nagauzzi.sansuukids.model.MedalCounter
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.Mode.Addition
+import com.vitantonio.nagauzzi.sansuukids.model.Mode.All
+import com.vitantonio.nagauzzi.sansuukids.model.Mode.Division
+import com.vitantonio.nagauzzi.sansuukids.model.Mode.Multiplication
+import com.vitantonio.nagauzzi.sansuukids.model.Mode.Subtraction
 import com.vitantonio.nagauzzi.sansuukids.model.emojiRes
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
@@ -41,11 +53,11 @@ import sansuukids.composeapp.generated.resources.medal_collection_title
 
 @Composable
 internal fun MedalCollectionScreen(
-    medalDisplays: List<MedalDisplay>,
+    medalCounters: List<MedalCounter>,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit
 ) {
-    var selectedDisplay by remember { mutableStateOf<MedalDisplay?>(null) }
+    var selectedDisplay by remember { mutableStateOf<MedalCounter?>(null) }
 
     BoxWithConstraints(
         modifier = modifier
@@ -66,7 +78,7 @@ internal fun MedalCollectionScreen(
             )
 
             MedalGrid(
-                medalDisplays = medalDisplays,
+                medalCounters = medalCounters,
                 onMedalClick = { display -> selectedDisplay = display },
                 modifier = Modifier
                     .padding(16.dp)
@@ -78,7 +90,7 @@ internal fun MedalCollectionScreen(
 
     selectedDisplay?.let { display ->
         MedalDetailDialog(
-            medalDisplay = display,
+            medalCounter = display,
             onDismiss = { selectedDisplay = null }
         )
     }
@@ -86,18 +98,17 @@ internal fun MedalCollectionScreen(
 
 @Composable
 private fun MedalGrid(
-    medalDisplays: List<MedalDisplay>,
-    onMedalClick: (MedalDisplay) -> Unit,
+    medalCounters: List<MedalCounter>,
+    onMedalClick: (MedalCounter) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val modes =
-        listOf(Mode.ADDITION, Mode.SUBTRACTION, Mode.MULTIPLICATION, Mode.DIVISION, Mode.ALL)
-    val levels = listOf(Level.EASY, Level.NORMAL, Level.DIFFICULT)
+    val modes = listOf(Addition, Subtraction, Multiplication, Division, All)
+    val levels = listOf(Easy, Normal, Difficult)
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .border(1.dp, MaterialTheme.colorScheme.outline)
+            .border(width = 1.dp, color = MaterialTheme.colorScheme.outline)
     ) {
         // Header row
         Row(
@@ -138,27 +149,33 @@ private fun MedalGrid(
                 )
                 // Medal cells
                 levels.forEach { level ->
-                    val display = medalDisplays.firstOrNull {
-                        it.mode == mode && it.level == level
-                    }
-                    val medal = display?.medal ?: Medal.Nothing
-                    val cellModifier = Modifier
-                        .weight(1f)
-                        .testTag("grid_cell_${mode.name.lowercase()}_${level.name.lowercase()}")
+                    val medalCounter = medalCounters.get(mode, level)
                     GridCell(
-                        text = stringResource(medal.emojiRes),
+                        text = stringResource(medalCounter.bestMedal.emojiRes),
                         isHeader = false,
-                        modifier = if (medal != Medal.Nothing && display != null) {
-                            cellModifier.clickable { onMedalClick(display) }
-                        } else {
-                            cellModifier
-                        }
+                        modifier = Modifier
+                            .weight(1f)
+                            .testTag("grid_cell_${mode.name.lowercase()}_${level.name.lowercase()}")
+                            .clickable {
+                                if (medalCounter.bestMedal != Nothing) {
+                                    onMedalClick(medalCounter)
+                                }
+                            }
                     )
                 }
             }
         }
     }
 }
+
+private fun List<MedalCounter>.get(mode: Mode, level: Level): MedalCounter {
+    return firstOrNull { it.mode == mode && it.level == level }
+        ?: MedalCounter(mode = mode, level = level, gold = 0, silver = 0, bronze = 0, star = 0)
+}
+
+private val MedalCounter.bestMedal: Medal
+    get() = if (gold >= 1) Gold else if (silver >= 1) Silver else if (bronze >= 1) Bronze
+    else if (star >= 1) Star else Nothing
 
 @Preview(widthDp = 360, heightDp = 640) // 縦画面
 @Preview(widthDp = 640, heightDp = 360) // 横画面
@@ -168,14 +185,39 @@ private fun MedalGrid(
 private fun MedalCollectionScreenPreview() {
     SansuuKidsTheme {
         MedalCollectionScreen(
-            medalDisplays = listOf(
-                MedalDisplay(Mode.ADDITION, Level.EASY, Medal.Gold, MedalCount(gold = 3, silver = 1)),
-                MedalDisplay(Mode.ADDITION, Level.NORMAL, Medal.Silver, MedalCount(silver = 2, bronze = 1)),
-                MedalDisplay(Mode.ADDITION, Level.DIFFICULT, Medal.Bronze, MedalCount(bronze = 1)),
-                MedalDisplay(Mode.SUBTRACTION, Level.EASY, Medal.Silver, MedalCount(silver = 1, star = 2)),
-                MedalDisplay(Mode.SUBTRACTION, Level.NORMAL, Medal.Bronze, MedalCount(bronze = 1)),
-                MedalDisplay(Mode.MULTIPLICATION, Level.EASY, Medal.Bronze, MedalCount(bronze = 2)),
-                MedalDisplay(Mode.ALL, Level.DIFFICULT, Medal.Gold, MedalCount(gold = 1))
+            medalCounters = listOf(
+                MedalCounter(
+                    mode = Addition,
+                    level = Easy,
+                    gold = 15,
+                    silver = 11,
+                    bronze = 3,
+                    star = 0
+                ),
+                MedalCounter(
+                    mode = Addition,
+                    level = Normal,
+                    gold = 0,
+                    silver = 1,
+                    bronze = 2,
+                    star = 4
+                ),
+                MedalCounter(
+                    mode = Addition,
+                    level = Difficult,
+                    gold = 0,
+                    silver = 0,
+                    bronze = 0,
+                    star = 1
+                ),
+                MedalCounter(
+                    mode = Subtraction,
+                    level = Easy,
+                    gold = 5,
+                    silver = 3,
+                    bronze = 0,
+                    star = 0
+                )
             ),
             onBackClick = {},
             modifier = Modifier.background(MaterialTheme.colorScheme.background)

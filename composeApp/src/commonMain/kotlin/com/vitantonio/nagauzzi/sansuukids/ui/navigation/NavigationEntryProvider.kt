@@ -9,7 +9,6 @@ import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepository
 import com.vitantonio.nagauzzi.sansuukids.data.SettingRepository
 import com.vitantonio.nagauzzi.sansuukids.model.Level
-import com.vitantonio.nagauzzi.sansuukids.model.MedalDisplay
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.AnswerCheckRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
@@ -47,9 +46,9 @@ internal fun navigationEntryProvider(
         }
 
         MedalCollectionRoute -> NavEntry(key) {
-            val medalDisplays by medalRepository.medalDisplays.collectAsStateWithLifecycle(emptyList())
+            val medalDisplays by medalRepository.medalCounters.collectAsStateWithLifecycle(emptyList())
             MedalCollectionScreen(
-                medalDisplays = medalDisplays,
+                medalCounters = medalDisplays,
                 onBackClick = { navigationState.navigateBack() }
             )
         }
@@ -79,24 +78,24 @@ internal fun navigationEntryProvider(
 
         ModeSelectionRoute -> NavEntry(key) {
             ModeSelectionScreen(
-                onAdditionClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.ADDITION)) },
-                onSubtractionClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.SUBTRACTION)) },
-                onMultiplicationClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.MULTIPLICATION)) },
-                onDivisionClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.DIVISION)) },
-                onAllClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.ALL)) },
+                onAdditionClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.Addition)) },
+                onSubtractionClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.Subtraction)) },
+                onMultiplicationClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.Multiplication)) },
+                onDivisionClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.Division)) },
+                onAllClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.All)) },
                 onBackClick = { navigationState.navigateBack() }
             )
         }
 
         is LevelSelectionRoute -> NavEntry(key) {
             LevelSelectionScreen(
-                onEasyClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.EASY)) },
-                onNormalClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.NORMAL)) },
+                onEasyClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.Easy)) },
+                onNormalClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.Normal)) },
                 onDifficultClick = {
                     navigationState.navigateTo(
                         QuizRoute(
                             key.mode,
-                            Level.DIFFICULT
+                            Level.Difficult
                         )
                     )
                 },
@@ -112,12 +111,10 @@ internal fun navigationEntryProvider(
 
             LaunchedEffect(quizState.isQuizComplete) {
                 if (quizState.isQuizComplete) {
-                    medalRepository.save(
-                        MedalDisplay(
-                            mode = key.mode,
-                            level = key.level,
-                            medal = viewModel.earnedMedal
-                        )
+                    medalRepository.add(
+                        mode = key.mode,
+                        level = key.level,
+                        medal = viewModel.earnedMedal
                     )
                     navigationState.navigateTo(
                         ResultRoute(
@@ -140,7 +137,7 @@ internal fun navigationEntryProvider(
             QuizScreen(
                 quizState = quizState,
                 perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
-                hintDisplayEnabled = hintDisplayEnabled && key.level == Level.EASY,
+                hintDisplayEnabled = hintDisplayEnabled && key.level == Level.Easy,
                 onDigitClick = { digit -> viewModel.appendDigit(digit) },
                 onDeleteClick = { viewModel.deleteLastDigit() },
                 onSubmitClick = { viewModel.submitAnswer() },

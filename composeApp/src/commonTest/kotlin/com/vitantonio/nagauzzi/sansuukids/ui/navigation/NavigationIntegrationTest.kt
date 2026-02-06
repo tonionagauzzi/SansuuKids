@@ -245,7 +245,7 @@ class NavigationIntegrationTest {
         // Then: レベル選択画面に遷移し、モードがADDITIONである
         assertEquals(3, navigationState.entries.size)
         val lastRoute = navigationState.entries.last() as LevelSelectionRoute
-        assertEquals(Mode.ADDITION, lastRoute.mode)
+        assertEquals(Mode.Addition, lastRoute.mode)
         onNodeWithTag("easy_button").assertIsDisplayed()
     }
 
@@ -255,7 +255,7 @@ class NavigationIntegrationTest {
         val backStack = mutableStateListOf(
             HomeRoute,
             ModeSelectionRoute,
-            LevelSelectionRoute(Mode.ADDITION)
+            LevelSelectionRoute(Mode.Addition)
         )
         val navigationState = NavigationState(backStack)
 

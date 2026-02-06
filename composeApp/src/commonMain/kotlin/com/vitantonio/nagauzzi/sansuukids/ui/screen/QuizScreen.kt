@@ -82,8 +82,8 @@ private fun QuizScreenPreview() {
                         Question.Math.Subtraction(10, 4),
                         Question.Math.Multiplication(2, 6)
                     ),
-                    mode = Mode.ADDITION,
-                    level = Level.EASY
+                    mode = Mode.Addition,
+                    level = Level.Easy
                 )
             ),
             perQuestionAnswerCheckEnabled = true,

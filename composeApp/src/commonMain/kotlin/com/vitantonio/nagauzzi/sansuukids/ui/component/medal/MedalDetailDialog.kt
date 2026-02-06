@@ -17,8 +17,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
-import com.vitantonio.nagauzzi.sansuukids.model.MedalDisplay
+import com.vitantonio.nagauzzi.sansuukids.model.MedalCounter
 import com.vitantonio.nagauzzi.sansuukids.model.emojiRes
+import com.vitantonio.nagauzzi.sansuukids.model.getCount
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
 import org.jetbrains.compose.resources.stringResource
 import sansuukids.composeapp.generated.resources.Res
@@ -27,7 +28,7 @@ import sansuukids.composeapp.generated.resources.medal_detail_title
 
 @Composable
 internal fun MedalDetailDialog(
-    medalDisplay: MedalDisplay,
+    medalCounter: MedalCounter,
     onDismiss: () -> Unit
 ) {
     Dialog(onDismissRequest = onDismiss) {
@@ -45,8 +46,8 @@ internal fun MedalDetailDialog(
                 Text(
                     text = stringResource(
                         Res.string.medal_detail_title,
-                        stringResource(medalDisplay.mode.labelRes),
-                        stringResource(medalDisplay.level.labelRes)
+                        stringResource(medalCounter.mode.labelRes),
+                        stringResource(medalCounter.level.labelRes)
                     ),
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.testTag("medal_detail_title")
@@ -58,7 +59,7 @@ internal fun MedalDetailDialog(
                 ) {
                     val medals = listOf(Medal.Gold, Medal.Silver, Medal.Bronze, Medal.Star)
                     medals.forEach { medal ->
-                        val count = medalDisplay.counts.getCountForMedal(medal)
+                        val count = medalCounter.getCount(medal)
                         MedalCountItem(
                             emoji = stringResource(medal.emojiRes),
                             count = count,

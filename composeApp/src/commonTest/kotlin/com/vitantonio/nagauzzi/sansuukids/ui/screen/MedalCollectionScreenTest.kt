@@ -7,8 +7,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
-import com.vitantonio.nagauzzi.sansuukids.model.MedalCount
-import com.vitantonio.nagauzzi.sansuukids.model.MedalDisplay
+import com.vitantonio.nagauzzi.sansuukids.model.MedalCounter
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import kotlin.test.Test
@@ -23,7 +22,7 @@ class MedalCollectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 MedalCollectionScreen(
-                    medalDisplays = emptyList(),
+                    medalCounters = emptyList(),
                     onBackClick = {}
                 )
             }
@@ -45,7 +44,7 @@ class MedalCollectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 MedalCollectionScreen(
-                    medalDisplays = emptyList(),
+                    medalCounters = emptyList(),
                     onBackClick = { clicked = true }
                 )
             }
@@ -64,12 +63,14 @@ class MedalCollectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 MedalCollectionScreen(
-                    medalDisplays = listOf(
-                        MedalDisplay(
-                            Mode.ADDITION,
-                            Level.EASY,
-                            Medal.Gold,
-                            MedalCount(gold = 2, silver = 1)
+                    medalCounters = listOf(
+                        MedalCounter(
+                            mode = Mode.Addition,
+                            level = Level.Easy,
+                            gold = 2,
+                            silver = 1,
+                            bronze = 0,
+                            star = 0
                         )
                     ),
                     onBackClick = {}
@@ -95,7 +96,7 @@ class MedalCollectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 MedalCollectionScreen(
-                    medalDisplays = emptyList(),
+                    medalCounters = emptyList(),
                     onBackClick = {}
                 )
             }

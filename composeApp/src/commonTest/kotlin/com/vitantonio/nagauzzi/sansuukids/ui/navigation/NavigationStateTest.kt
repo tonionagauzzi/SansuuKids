@@ -133,7 +133,7 @@ class NavigationStateTest {
         val backStack = mutableStateListOf(
             TestRouteA,
             TestRouteB,
-            QuizRoute(Mode.ADDITION, Level.EASY)
+            QuizRoute(Mode.Addition, Level.Easy)
         )
         val originalState = NavigationState(backStack)
         val saver = NavigationState.saver()
@@ -149,8 +149,8 @@ class NavigationStateTest {
         assertEquals(TestRouteA, restoredState.entries[0])
         assertEquals(TestRouteB, restoredState.entries[1])
         val quizRoute = restoredState.entries[2] as QuizRoute
-        assertEquals(Mode.ADDITION, quizRoute.mode)
-        assertEquals(Level.EASY, quizRoute.level)
+        assertEquals(Mode.Addition, quizRoute.mode)
+        assertEquals(Level.Easy, quizRoute.level)
     }
 
     @Test
