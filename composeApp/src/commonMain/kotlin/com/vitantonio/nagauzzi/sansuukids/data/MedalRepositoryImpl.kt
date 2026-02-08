@@ -57,7 +57,10 @@ private fun getMedalCountPreferencesKey(
     level: Level,
     medal: Medal
 ): Preferences.Key<Int> {
-    return intPreferencesKey("count_${mode.name}_${level.name}_${medal.name}")
+    val modeName = mode.name.lowercase()
+    val levelName = level.name.lowercase()
+    val medalName = medal.name.lowercase()
+    return intPreferencesKey("count_${modeName}_${levelName}_${medalName}")
 }
 
 private fun Preferences.getMedalCounter(mode: Mode, level: Level): MedalCounter {
