@@ -27,13 +27,9 @@ import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Level.Difficult
 import com.vitantonio.nagauzzi.sansuukids.model.Level.Easy
 import com.vitantonio.nagauzzi.sansuukids.model.Level.Normal
-import com.vitantonio.nagauzzi.sansuukids.model.Medal
-import com.vitantonio.nagauzzi.sansuukids.model.Medal.Gold
-import com.vitantonio.nagauzzi.sansuukids.model.Medal.Silver
-import com.vitantonio.nagauzzi.sansuukids.model.Medal.Bronze
-import com.vitantonio.nagauzzi.sansuukids.model.Medal.Star
 import com.vitantonio.nagauzzi.sansuukids.model.Medal.Nothing
 import com.vitantonio.nagauzzi.sansuukids.model.MedalCounter
+import com.vitantonio.nagauzzi.sansuukids.model.bestMedal
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.Mode.Addition
 import com.vitantonio.nagauzzi.sansuukids.model.Mode.All
@@ -57,7 +53,7 @@ internal fun MedalCollectionScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit
 ) {
-    var selectedDisplay by remember { mutableStateOf<MedalCounter?>(null) }
+    var selectedCounter by remember { mutableStateOf<MedalCounter?>(null) }
 
     BoxWithConstraints(
         modifier = modifier
@@ -79,7 +75,7 @@ internal fun MedalCollectionScreen(
 
             MedalGrid(
                 medalCounters = medalCounters,
-                onMedalClick = { display -> selectedDisplay = display },
+                onMedalClick = { counter -> selectedCounter = counter },
                 modifier = Modifier
                     .padding(16.dp)
                     .testTag("medal_grid")
@@ -88,10 +84,10 @@ internal fun MedalCollectionScreen(
         }
     }
 
-    selectedDisplay?.let { display ->
+    selectedCounter?.let { counter ->
         MedalDetailDialog(
-            medalCounter = display,
-            onDismiss = { selectedDisplay = null }
+            medalCounter = counter,
+            onDismiss = { selectedCounter = null }
         )
     }
 }
@@ -170,12 +166,8 @@ private fun MedalGrid(
 
 private fun List<MedalCounter>.get(mode: Mode, level: Level): MedalCounter {
     return firstOrNull { it.mode == mode && it.level == level }
-        ?: MedalCounter(mode = mode, level = level, gold = 0, silver = 0, bronze = 0, star = 0)
+        ?: MedalCounter(mode = mode, level = level)
 }
-
-private val MedalCounter.bestMedal: Medal
-    get() = if (gold >= 1) Gold else if (silver >= 1) Silver else if (bronze >= 1) Bronze
-    else if (star >= 1) Star else Nothing
 
 @Preview(widthDp = 360, heightDp = 640) // 縦画面
 @Preview(widthDp = 640, heightDp = 360) // 横画面
