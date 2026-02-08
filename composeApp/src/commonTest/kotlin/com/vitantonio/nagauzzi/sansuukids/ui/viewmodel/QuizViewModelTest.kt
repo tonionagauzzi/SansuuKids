@@ -16,7 +16,7 @@ class QuizViewModelTest {
 
     @Test
     fun ViewModelを初期化するとQuizStateが作成される() {
-        // Given: ADDITIONモードのEASYレベル
+        // Given: 足し算モードの簡単レベル
 
         // When: ViewModelを初期化する
         val viewModel = QuizViewModel(Mode.Addition, Level.Easy)
@@ -75,7 +75,7 @@ class QuizViewModelTest {
 
     @Test
     fun appendDigitで複数桁の数字を入力できる() {
-        // Given: DIFFICULTレベルのViewModelを作成する（最大入力桁数が大きい）
+        // Given: 難しいレベルのViewModelを作成する（最大入力桁数が大きい）
         val viewModel = QuizViewModel(Mode.Addition, Level.Difficult)
 
         // When: 複数の数字を入力する
@@ -89,7 +89,7 @@ class QuizViewModelTest {
 
     @Test
     fun deleteLastDigitで最後の数字を削除できる() {
-        // Given: NORMALレベルのViewModelを作成して数字を入力
+        // Given: 普通レベルのViewModelを作成して数字を入力
         val viewModel = QuizViewModel(Mode.Addition, Level.Normal)
         viewModel.appendDigit(1)
         viewModel.appendDigit(2)

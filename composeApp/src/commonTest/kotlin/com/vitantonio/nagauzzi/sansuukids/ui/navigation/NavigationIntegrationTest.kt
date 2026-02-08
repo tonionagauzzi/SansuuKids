@@ -242,7 +242,7 @@ class NavigationIntegrationTest {
         // When: たしざんボタンをクリックする
         onNodeWithTag("addition_button").performClick()
 
-        // Then: レベル選択画面に遷移し、モードがADDITIONである
+        // Then: レベル選択画面に遷移し、モードが足し算である
         assertEquals(3, navigationState.entries.size)
         val lastRoute = navigationState.entries.last() as LevelSelectionRoute
         assertEquals(Mode.Addition, lastRoute.mode)
