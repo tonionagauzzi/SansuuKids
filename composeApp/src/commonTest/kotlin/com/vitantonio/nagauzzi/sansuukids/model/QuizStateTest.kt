@@ -17,7 +17,7 @@ class QuizStateTest {
                 rightOperand = 1
             )
         }
-        return Quiz(questions, Mode.ADDITION, Level.EASY)
+        return Quiz(questions, Mode.Addition, Level.Easy)
     }
 
     @Test
@@ -169,7 +169,7 @@ class QuizStateTest {
     @Test
     fun 問題が存在しない場合currentQuestionはNoneを返す() {
         // Given: 問題が存在しないクイズ
-        val quiz = Quiz(emptyList(), Mode.ADDITION, Level.EASY)
+        val quiz = Quiz(emptyList(), Mode.Addition, Level.Easy)
 
         // When: QuizStateを初期化する
         val state = QuizState(quiz)

@@ -24,14 +24,14 @@ import kotlin.test.assertTrue
 class QuizScreenTest {
     private val quizSize = 3
 
-    private fun createTestQuiz(level: Level = Level.EASY): Quiz {
+    private fun createTestQuiz(level: Level = Level.Easy): Quiz {
         val questions = (1..quizSize).map { index ->
             Addition(
                 leftOperand = index,
                 rightOperand = 1
             )
         }
-        return Quiz(questions, Mode.ADDITION, level)
+        return Quiz(questions, Mode.Addition, level)
     }
 
     @Test
@@ -289,7 +289,7 @@ class QuizScreenTest {
     @Test
     fun ヒント有効の場合ヒントエリアが表示される() = runComposeUiTest {
         // Given: かんたんモードでヒント有効のクイズ画面を表示
-        val quizState = QuizState(createTestQuiz(Level.EASY))
+        val quizState = QuizState(createTestQuiz(Level.Easy))
         setContent {
             SansuuKidsTheme {
                 QuizScreen(
@@ -311,7 +311,7 @@ class QuizScreenTest {
     @Test
     fun ヒント無効の場合ヒントエリアが表示されない() = runComposeUiTest {
         // Given: かんたんモードでヒント無効のクイズ画面を表示
-        val quizState = QuizState(createTestQuiz(Level.EASY))
+        val quizState = QuizState(createTestQuiz(Level.Easy))
         setContent {
             SansuuKidsTheme {
                 QuizScreen(

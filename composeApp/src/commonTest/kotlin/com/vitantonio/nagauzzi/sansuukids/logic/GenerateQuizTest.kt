@@ -15,8 +15,8 @@ class GenerateQuizTest {
     @Test
     fun 指定したモードとレベルのクイズを生成する() {
         // Given: 任意のモードとレベルを指定する
-        val mode = Mode.ADDITION
-        val level = Level.EASY
+        val mode = Mode.Addition
+        val level = Level.Easy
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -28,10 +28,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun ADDITIONモードでは全問が足し算である() {
-        // Given: ADDITIONモードを指定する
-        val mode = Mode.ADDITION
-        val level = Level.EASY
+    fun 足し算モードでは全問が足し算である() {
+        // Given: 足し算モードを指定する
+        val mode = Mode.Addition
+        val level = Level.Easy
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -42,10 +42,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun SUBTRACTIONモードで生成された問題の答えは0以上である() {
-        // Given: SUBTRACTIONモードを指定する
-        val mode = Mode.SUBTRACTION
-        val level = Level.NORMAL
+    fun 引き算モードで生成された問題の答えは0以上である() {
+        // Given: 引き算モードを指定する
+        val mode = Mode.Subtraction
+        val level = Level.Normal
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -56,10 +56,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun DIVISIONモードで生成された問題は割り切れる() {
-        // Given: DIVISIONモードを指定する
-        val mode = Mode.DIVISION
-        val level = Level.NORMAL
+    fun 割り算モードで生成された問題は割り切れる() {
+        // Given: 割り算モードを指定する
+        val mode = Mode.Division
+        val level = Level.Normal
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -74,10 +74,10 @@ class GenerateQuizTest {
 
     // 足し算のレベル別テスト
     @Test
-    fun 足し算のEASYレベルでは1から5の数が生成される() {
-        // Given: EASYレベルとADDITIONモードを指定する
-        val mode = Mode.ADDITION
-        val level = Level.EASY
+    fun 足し算の簡単レベルでは1から5の数が生成される() {
+        // Given: 足し算モードと簡単レベルを指定する
+        val mode = Mode.Addition
+        val level = Level.Easy
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -92,10 +92,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 足し算のNORMALレベルでは11から50の数が生成される() {
-        // Given: NORMALレベルとADDITIONモードを指定する
-        val mode = Mode.ADDITION
-        val level = Level.NORMAL
+    fun 足し算の普通レベルでは11から50の数が生成される() {
+        // Given: 足し算モードと普通レベルを指定する
+        val mode = Mode.Addition
+        val level = Level.Normal
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -110,10 +110,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 足し算のDIFFICULTレベルでは101から9999の数が生成される() {
-        // Given: DIFFICULTレベルとADDITIONモードを指定する
-        val mode = Mode.ADDITION
-        val level = Level.DIFFICULT
+    fun 足し算の難しいレベルでは101から9999の数が生成される() {
+        // Given: 足し算モードと難しいレベルを指定する
+        val mode = Mode.Addition
+        val level = Level.Difficult
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -129,10 +129,10 @@ class GenerateQuizTest {
 
     // 引き算のレベル別テスト
     @Test
-    fun 引き算のEASYレベルでは1から9の数が生成される() {
-        // Given: EASYレベルとSUBTRACTIONモードを指定する
-        val mode = Mode.SUBTRACTION
-        val level = Level.EASY
+    fun 引き算の簡単レベルでは1から9の数が生成される() {
+        // Given: 引き算モードと簡単レベルを指定する
+        val mode = Mode.Subtraction
+        val level = Level.Easy
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -147,10 +147,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 引き算のNORMALレベルでは11から99の数が生成される() {
-        // Given: NORMALレベルとSUBTRACTIONモードを指定する
-        val mode = Mode.SUBTRACTION
-        val level = Level.NORMAL
+    fun 引き算の普通レベルでは11から99の数が生成される() {
+        // Given: 引き算モードと普通レベルを指定する
+        val mode = Mode.Subtraction
+        val level = Level.Normal
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -165,10 +165,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 引き算のDIFFICULTレベルでは101から9999の数が生成される() {
-        // Given: DIFFICULTレベルとSUBTRACTIONモードを指定する
-        val mode = Mode.SUBTRACTION
-        val level = Level.DIFFICULT
+    fun 引き算の難しいレベルでは101から9999の数が生成される() {
+        // Given: 引き算モードと難しいレベルを指定する
+        val mode = Mode.Subtraction
+        val level = Level.Difficult
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -184,10 +184,10 @@ class GenerateQuizTest {
 
     // 掛け算のレベル別テスト
     @Test
-    fun 掛け算のEASYレベルでは1から9の数が生成される() {
-        // Given: EASYレベルとMULTIPLICATIONモードを指定する
-        val mode = Mode.MULTIPLICATION
-        val level = Level.EASY
+    fun 掛け算の簡単レベルでは1から9の数が生成される() {
+        // Given: 掛け算モードと簡単レベルを指定する
+        val mode = Mode.Multiplication
+        val level = Level.Easy
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -202,10 +202,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 掛け算のNORMALレベルでは6から19の数が生成される() {
-        // Given: NORMALレベルとMULTIPLICATIONモードを指定する
-        val mode = Mode.MULTIPLICATION
-        val level = Level.NORMAL
+    fun 掛け算の普通レベルでは6から19の数が生成される() {
+        // Given: 掛け算モードと普通レベルを指定する
+        val mode = Mode.Multiplication
+        val level = Level.Normal
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -220,10 +220,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 掛け算のDIFFICULTレベルでは11から99の数が生成される() {
-        // Given: DIFFICULTレベルとMULTIPLICATIONモードを指定する
-        val mode = Mode.MULTIPLICATION
-        val level = Level.DIFFICULT
+    fun 掛け算の難しいレベルでは11から99の数が生成される() {
+        // Given: 掛け算モードと難しいレベルを指定する
+        val mode = Mode.Multiplication
+        val level = Level.Difficult
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -239,10 +239,10 @@ class GenerateQuizTest {
 
     // 割り算のレベル別テスト
     @Test
-    fun 割り算のEASYレベルでは1から9の数が生成される() {
-        // Given: EASYレベルとDIVISIONモードを指定する
-        val mode = Mode.DIVISION
-        val level = Level.EASY
+    fun 割り算の簡単レベルでは1から9の数が生成される() {
+        // Given: 割り算モードと簡単レベルを指定する
+        val mode = Mode.Division
+        val level = Level.Easy
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -257,10 +257,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 割り算のNORMALレベルでは6から19の数が生成される() {
-        // Given: NORMALレベルとDIVISIONモードを指定する
-        val mode = Mode.DIVISION
-        val level = Level.NORMAL
+    fun 割り算の普通レベルでは6から19の数が生成される() {
+        // Given: 割り算モードと普通レベルを指定する
+        val mode = Mode.Division
+        val level = Level.Normal
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -275,10 +275,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 割り算のDIFFICULTレベルでは11から99の数が生成される() {
-        // Given: DIFFICULTレベルとDIVISIONモードを指定する
-        val mode = Mode.DIVISION
-        val level = Level.DIFFICULT
+    fun 割り算の難しいレベルでは11から99の数が生成される() {
+        // Given: 割り算モードと難しいレベルを指定する
+        val mode = Mode.Division
+        val level = Level.Difficult
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -293,10 +293,10 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun ALLモードでは4種類の演算子が生成される可能性がある() {
-        // Given: ALLモードを指定する
-        val mode = Mode.ALL
-        val level = Level.EASY
+    fun すべてモードでは4種類の演算子が生成される可能性がある() {
+        // Given: すべてモードを指定する
+        val mode = Mode.All
+        val level = Level.Easy
         val generateQuiz = GenerateQuiz()
 
         // When: 10回クイズを生成して（合計100問）、演算子を収集する（1回分10問では不十分な場合があるため）
@@ -316,9 +316,9 @@ class GenerateQuizTest {
 
     @Test
     fun 足し算の正解は左右のオペランドの和である() {
-        // Given: ADDITIONモードを指定する
-        val mode = Mode.ADDITION
-        val level = Level.EASY
+        // Given: 足し算モードを指定する
+        val mode = Mode.Addition
+        val level = Level.Easy
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -333,9 +333,9 @@ class GenerateQuizTest {
 
     @Test
     fun 引き算の正解は左から右を引いた値である() {
-        // Given: SUBTRACTIONモードを指定する
-        val mode = Mode.SUBTRACTION
-        val level = Level.EASY
+        // Given: 引き算モードを指定する
+        val mode = Mode.Subtraction
+        val level = Level.Easy
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -350,9 +350,9 @@ class GenerateQuizTest {
 
     @Test
     fun 掛け算の正解は左右のオペランドの積である() {
-        // Given: MULTIPLICATIONモードを指定する
-        val mode = Mode.MULTIPLICATION
-        val level = Level.EASY
+        // Given: 掛け算モードを指定する
+        val mode = Mode.Multiplication
+        val level = Level.Easy
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -367,9 +367,9 @@ class GenerateQuizTest {
 
     @Test
     fun 割り算の正解は左を右で割った値である() {
-        // Given: DIVISIONモードを指定する
-        val mode = Mode.DIVISION
-        val level = Level.EASY
+        // Given: 割り算モードを指定する
+        val mode = Mode.Division
+        val level = Level.Easy
         val generateQuiz = GenerateQuiz()
 
         // When: クイズを生成する
@@ -384,8 +384,8 @@ class GenerateQuizTest {
     @Test
     fun 生成されたクイズに同一問題の重複がない() {
         // Given: 全モードとレベルの組み合わせ
-        val modes = listOf(Mode.ADDITION, Mode.SUBTRACTION, Mode.MULTIPLICATION, Mode.DIVISION, Mode.ALL)
-        val levels = listOf(Level.EASY, Level.NORMAL, Level.DIFFICULT)
+        val modes = listOf(Mode.Addition, Mode.Subtraction, Mode.Multiplication, Mode.Division, Mode.All)
+        val levels = listOf(Level.Easy, Level.Normal, Level.Difficult)
         val generateQuiz = GenerateQuiz()
 
         // When/Then: 各組み合わせでクイズを生成し、重複がないことを確認

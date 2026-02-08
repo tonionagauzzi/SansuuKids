@@ -47,16 +47,16 @@ internal class GenerateQuiz(private val totalQuestions: Int = QUIZ_SIZE) {
  */
 private fun generateQuestion(mode: Mode, level: Level, random: Random): Question {
     return when (mode) {
-        Mode.ADDITION -> generateAddition(level, random)
-        Mode.SUBTRACTION -> generateSubtraction(level, random)
-        Mode.MULTIPLICATION -> generateMultiplication(level, random)
-        Mode.DIVISION -> generateDivision(level, random)
-        Mode.ALL -> {
+        Mode.Addition -> generateAddition(level, random)
+        Mode.Subtraction -> generateSubtraction(level, random)
+        Mode.Multiplication -> generateMultiplication(level, random)
+        Mode.Division -> generateDivision(level, random)
+        Mode.All -> {
             val randomMode = listOf(
-                Mode.ADDITION,
-                Mode.SUBTRACTION,
-                Mode.MULTIPLICATION,
-                Mode.DIVISION
+                Mode.Addition,
+                Mode.Subtraction,
+                Mode.Multiplication,
+                Mode.Division
             ).random(random)
             generateQuestion(randomMode, level, random)
         }
@@ -138,9 +138,9 @@ private fun generateDivision(level: Level, random: Random): Division {
  * @return 最小値と最大値のペア
  */
 private fun getAdditionRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
-    Level.EASY -> 1 to 5
-    Level.NORMAL -> 11 to 50
-    Level.DIFFICULT -> 101 to 9999
+    Level.Easy -> 1 to 5
+    Level.Normal -> 11 to 50
+    Level.Difficult -> 101 to 9999
 }
 
 /**
@@ -154,9 +154,9 @@ private fun getAdditionRangeForLevel(level: Level): Pair<Int, Int> = when (level
  * @return 最小値と最大値のペア
  */
 private fun getSubtractionRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
-    Level.EASY -> 1 to 9
-    Level.NORMAL -> 11 to 99
-    Level.DIFFICULT -> 101 to 9999
+    Level.Easy -> 1 to 9
+    Level.Normal -> 11 to 99
+    Level.Difficult -> 101 to 9999
 }
 
 /**
@@ -172,7 +172,7 @@ private fun getSubtractionRangeForLevel(level: Level): Pair<Int, Int> = when (le
  * @return 最小値と最大値のペア
  */
 private fun getMultiplicationRangeForLevel(level: Level): Pair<Int, Int> = when (level) {
-    Level.EASY -> 1 to 9
-    Level.NORMAL -> 6 to 19
-    Level.DIFFICULT -> 11 to 99
+    Level.Easy -> 1 to 9
+    Level.Normal -> 6 to 19
+    Level.Difficult -> 11 to 99
 }

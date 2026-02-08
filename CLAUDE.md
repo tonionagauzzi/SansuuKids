@@ -22,26 +22,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Build Android APK
 ./gradlew :composeApp:assembleDebug
 
-# Install on Android emulator/device
-./gradlew :composeApp:installDebug
-
 # Build iOS framework (simulator, requires macOS)
 ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64
 
-# Open iOS project in Xcode
-open iosApp/iosApp.xcodeproj
-
-# Run all tests
-./gradlew allTests
-
-# Run commonTest (use desktop target)
+# Run test (use desktop target)
 ./gradlew :composeApp:desktopTest
-
-# Run shared module tests only
-./gradlew :shared:test
-
-# Run a single test class
-./gradlew :shared:test --tests "ClassName"
 ```
 
 ## Project Structure
@@ -67,3 +52,11 @@ iosApp/       # iOS-specific entry point and Xcode project
   - **Then**: Assert the expected outcomes
 - Use clear section comments or variable names to separate the three phases
 - Each test should clearly show what is being tested and why
+
+## Agent Team
+
+For the development of this app, an agent team is formed with the following roles:
+
+- **UX**: Reviews and provides suggestions from a user experience and UI design perspective
+- **Technical Architecture**: Reviews and provides suggestions from a technical design and architecture perspective
+- **Devil's Opinion**: Critically challenges proposals and designs by identifying potential issues and risks
