@@ -27,3 +27,8 @@ internal fun MedalCounter.getCount(medal: Medal): Int {
         Medal.Nothing -> 0
     }
 }
+
+internal fun List<MedalCounter>.findOrDefault(mode: Mode, level: Level): MedalCounter {
+    return firstOrNull { it.mode == mode && it.level == level }
+        ?: MedalCounter(mode = mode, level = level)
+}

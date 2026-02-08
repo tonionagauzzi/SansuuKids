@@ -23,14 +23,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Level.Difficult
 import com.vitantonio.nagauzzi.sansuukids.model.Level.Easy
 import com.vitantonio.nagauzzi.sansuukids.model.Level.Normal
 import com.vitantonio.nagauzzi.sansuukids.model.Medal.Nothing
 import com.vitantonio.nagauzzi.sansuukids.model.MedalCounter
 import com.vitantonio.nagauzzi.sansuukids.model.bestMedal
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.findOrDefault
 import com.vitantonio.nagauzzi.sansuukids.model.Mode.Addition
 import com.vitantonio.nagauzzi.sansuukids.model.Mode.All
 import com.vitantonio.nagauzzi.sansuukids.model.Mode.Division
@@ -145,7 +144,7 @@ private fun MedalGrid(
                 )
                 // Medal cells
                 levels.forEach { level ->
-                    val medalCounter = medalCounters.get(mode, level)
+                    val medalCounter = medalCounters.findOrDefault(mode, level)
                     GridCell(
                         text = stringResource(medalCounter.bestMedal.emojiRes),
                         isHeader = false,
@@ -162,11 +161,6 @@ private fun MedalGrid(
             }
         }
     }
-}
-
-private fun List<MedalCounter>.get(mode: Mode, level: Level): MedalCounter {
-    return firstOrNull { it.mode == mode && it.level == level }
-        ?: MedalCounter(mode = mode, level = level)
 }
 
 @Preview(widthDp = 360, heightDp = 640) // 縦画面
