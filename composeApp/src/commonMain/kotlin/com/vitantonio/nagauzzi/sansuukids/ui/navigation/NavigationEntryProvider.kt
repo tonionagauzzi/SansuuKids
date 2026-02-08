@@ -46,9 +46,9 @@ internal fun navigationEntryProvider(
         }
 
         MedalCollectionRoute -> NavEntry(key) {
-            val medalDisplays by medalRepository.medalCounters.collectAsStateWithLifecycle(emptyList())
+            val medalCounters by medalRepository.medalCounters.collectAsStateWithLifecycle(emptyList())
             MedalCollectionScreen(
-                medalCounters = medalDisplays,
+                medalCounters = medalCounters,
                 onBackClick = { navigationState.navigateBack() }
             )
         }
