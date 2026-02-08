@@ -1,7 +1,11 @@
 package com.vitantonio.nagauzzi.sansuukids.data
 
 import com.vitantonio.nagauzzi.sansuukids.model.Level
+import com.vitantonio.nagauzzi.sansuukids.model.Medal
+import com.vitantonio.nagauzzi.sansuukids.model.Medal.Bronze
 import com.vitantonio.nagauzzi.sansuukids.model.Medal.Gold
+import com.vitantonio.nagauzzi.sansuukids.model.Medal.Star
+import com.vitantonio.nagauzzi.sansuukids.model.Medal.Silver
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -14,28 +18,62 @@ class MedalRepositoryTest {
         // Given: 空のリポジトリ
         val repository = MedalRepositoryImpl(FakePreferencesDataStore())
 
-        // When: 金メダルを獲得する
+        // When: 同じmode×levelに異なるメダルを追加する（金メダルは2回追加する）
         repository.add(mode = Mode.Addition, level = Level.Easy, medal = Gold)
+        repository.add(mode = Mode.Addition, level = Level.Easy, medal = Gold)
+        repository.add(mode = Mode.Addition, level = Level.Easy, medal = Silver)
+        repository.add(mode = Mode.Addition, level = Level.Easy, medal = Bronze)
+        repository.add(mode = Mode.Addition, level = Level.Easy, medal = Star)
 
-        // Then: 金メダルの回数が1になる
-        val counter1 = repository.medalCounters.first().first {
+        // Then: 金メダルのカウントは2に、他のメダルのカウントは1になる
+        val counter = repository.medalCounters.first().first {
             it.mode == Mode.Addition && it.level == Level.Easy
         }
-        assertEquals(1, counter1.gold)
-        assertEquals(0, counter1.silver)
-        assertEquals(0, counter1.bronze)
-        assertEquals(0, counter1.star)
+        assertEquals(2, counter.gold)
+        assertEquals(1, counter.silver)
+        assertEquals(1, counter.bronze)
+        assertEquals(1, counter.star)
+    }
 
-        // When: 金メダルをもう1回獲得する
-        repository.add(mode = Mode.Addition, level = Level.Easy, medal = Gold)
+    @Test
+    fun メダルなしは加算されない() = runTest {
+        // Given: 空のリポジトリ
+        val repository = MedalRepositoryImpl(FakePreferencesDataStore())
 
-        // Then: 金メダルの回数が2になる
-        val counter2 = repository.medalCounters.first().first {
+        // When: Medal.Nothingを追加する
+        repository.add(mode = Mode.Addition, level = Level.Easy, medal = Medal.Nothing)
+
+        // Then: すべてのメダルのカウントが0のまま
+        val counter = repository.medalCounters.first().first {
             it.mode == Mode.Addition && it.level == Level.Easy
         }
-        assertEquals(2, counter2.gold)
-        assertEquals(0, counter2.silver)
-        assertEquals(0, counter2.bronze)
-        assertEquals(0, counter2.star)
+        assertEquals(0, counter.gold)
+        assertEquals(0, counter.silver)
+        assertEquals(0, counter.bronze)
+        assertEquals(0, counter.star)
+    }
+
+    @Test
+    fun 異なるモードレベルのカウントは独立している() = runTest {
+        // Given: 空のリポジトリ
+        val repository = MedalRepositoryImpl(FakePreferencesDataStore())
+
+        // When: Addition×Easyに金メダルを追加する
+        repository.add(mode = Mode.Addition, level = Level.Easy, medal = Gold)
+
+        // Then: Addition×Easyの金メダルが1になり、他の組み合わせは影響を受けない
+        val counters = repository.medalCounters.first()
+        val additionEasy = counters.first {
+            it.mode == Mode.Addition && it.level == Level.Easy
+        }
+        assertEquals(1, additionEasy.gold)
+        val additionNormal = counters.first {
+            it.mode == Mode.Addition && it.level == Level.Normal
+        }
+        assertEquals(0, additionNormal.gold)
+        val subtractionEasy = counters.first {
+            it.mode == Mode.Subtraction && it.level == Level.Easy
+        }
+        assertEquals(0, subtractionEasy.gold)
     }
 }
