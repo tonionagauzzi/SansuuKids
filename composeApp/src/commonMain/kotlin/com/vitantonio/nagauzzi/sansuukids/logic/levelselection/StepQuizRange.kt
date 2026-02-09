@@ -1,8 +1,8 @@
 package com.vitantonio.nagauzzi.sansuukids.logic.levelselection
 
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
-import com.vitantonio.nagauzzi.sansuukids.model.getMaximumValue
-import com.vitantonio.nagauzzi.sansuukids.model.getMinimumValue
+import com.vitantonio.nagauzzi.sansuukids.model.getSliderMaxBound
+import com.vitantonio.nagauzzi.sansuukids.model.getSliderMinBound
 import kotlin.math.roundToInt
 
 private const val SLIDER_MIN = 1
@@ -16,8 +16,8 @@ private const val SLIDER_MIN = 1
  * @return スライダーで選択された新しい値をステップに丸めた新しい出題範囲
  */
 internal fun stepQuizRange(quizRange: QuizRange, newMin: Float, newMax: Float): QuizRange {
-    val minimumValue = quizRange.operationType.getMinimumValue(quizRange.level)
-    val maximumValue = quizRange.operationType.getMaximumValue(quizRange.level)
+    val minimumValue = quizRange.operationType.getSliderMinBound(quizRange.level)
+    val maximumValue = quizRange.operationType.getSliderMaxBound(quizRange.level)
     val roundedMinimum = roundToStep(newMin, minimumValue, maximumValue)
     val roundedMaximum = roundToStep(newMax, minimumValue, maximumValue)
 

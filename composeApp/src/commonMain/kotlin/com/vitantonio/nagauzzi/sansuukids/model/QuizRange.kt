@@ -23,8 +23,8 @@ internal sealed interface QuizRange {
         override val operationType: OperationType,
         override val level: Level
     ) : QuizRange {
-        override val min: Int get() = operationType.getDefaultMinimumValue(level)
-        override val max: Int get() = operationType.getDefaultMaximumValue(level)
+        override val min: Int get() = operationType.getDefaultQuizMin(level)
+        override val max: Int get() = operationType.getDefaultQuizMax(level)
     }
 
     /**

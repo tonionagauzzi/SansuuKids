@@ -24,12 +24,12 @@ internal enum class OperationType {
 }
 
 /**
- * 演算タイプに基づいて、難易度レベルごとの最小値を取得する。
+ * 演算タイプに基づいて、スライダーの下限値を取得する。
  *
  * @param level 難易度レベル
- * @return 最小値
+ * @return スライダー下限値
  */
-internal fun OperationType.getMinimumValue(level: Level) = when (this) {
+internal fun OperationType.getSliderMinBound(level: Level) = when (this) {
     OperationType.Addition, OperationType.Subtraction, OperationType.All -> when (level) {
         Level.Easy -> 1
         Level.Normal -> 10
@@ -44,12 +44,12 @@ internal fun OperationType.getMinimumValue(level: Level) = when (this) {
 }
 
 /**
- * 演算タイプに基づいて、難易度レベルごとのデフォルト最小値を取得する。
+ * 演算タイプに基づいて、デフォルト出題範囲の最小値を取得する。
  *
  * @param level 難易度レベル
- * @return デフォルト最小値
+ * @return デフォルト出題最小値
  */
-internal fun OperationType.getDefaultMinimumValue(level: Level) = when(this) {
+internal fun OperationType.getDefaultQuizMin(level: Level) = when(this) {
     OperationType.Addition, OperationType.Subtraction, OperationType.All -> when(level) {
         Level.Easy -> 1
         Level.Normal -> 10
@@ -63,12 +63,12 @@ internal fun OperationType.getDefaultMinimumValue(level: Level) = when(this) {
 }
 
 /**
- * 演算タイプに基づいて、難易度レベルごとのデフォルト最大値を取得する。
+ * 演算タイプに基づいて、デフォルト出題範囲の最大値を取得する。
  *
  * @param level 難易度レベル
- * @return デフォルト最大値
+ * @return デフォルト出題最大値
  */
-internal fun OperationType.getDefaultMaximumValue(level: Level) = when(this) {
+internal fun OperationType.getDefaultQuizMax(level: Level) = when(this) {
     OperationType.Addition, OperationType.Subtraction, OperationType.All -> when(level) {
         Level.Easy -> 9
         Level.Normal -> 100
@@ -82,12 +82,12 @@ internal fun OperationType.getDefaultMaximumValue(level: Level) = when(this) {
 }
 
 /**
- * 演算タイプに基づいて、難易度レベルごとの最大値を取得する。
+ * 演算タイプに基づいて、スライダーの上限値を取得する。
  *
  * @param level 難易度レベル
- * @return 最大値
+ * @return スライダー上限値
  */
-internal fun OperationType.getMaximumValue(level: Level) = when (this) {
+internal fun OperationType.getSliderMaxBound(level: Level) = when (this) {
     OperationType.Addition, OperationType.Subtraction, OperationType.All -> when (level) {
         Level.Easy -> 20
         Level.Normal -> 200

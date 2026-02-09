@@ -21,8 +21,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.logic.levelselection.stepQuizRange
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
-import com.vitantonio.nagauzzi.sansuukids.model.getMaximumValue
-import com.vitantonio.nagauzzi.sansuukids.model.getMinimumValue
+import com.vitantonio.nagauzzi.sansuukids.model.getSliderMaxBound
+import com.vitantonio.nagauzzi.sansuukids.model.getSliderMinBound
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
 import org.jetbrains.compose.resources.stringResource
 import sansuukids.composeapp.generated.resources.Res
@@ -91,8 +91,8 @@ private fun OperationRangeSlider(
             modifier = Modifier.testTag("difficulty_label_$tag")
         )
 
-        val minimumValue = quizRange.operationType.getMinimumValue(level = quizRange.level)
-        val maximumValue = quizRange.operationType.getMaximumValue(level = quizRange.level)
+        val minimumValue = quizRange.operationType.getSliderMinBound(level = quizRange.level)
+        val maximumValue = quizRange.operationType.getSliderMaxBound(level = quizRange.level)
         RangeSlider(
             value = quizRange.min.toFloat()..quizRange.max.toFloat(),
             onValueChange = { range ->
