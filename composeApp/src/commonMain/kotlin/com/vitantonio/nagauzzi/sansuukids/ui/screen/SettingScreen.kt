@@ -23,7 +23,7 @@ import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.setting
 
 @Composable
-fun SettingScreen(
+internal fun SettingScreen(
     perQuestionAnswerCheckEnabled: Boolean,
     hintDisplayEnabled: Boolean,
     onPerQuestionAnswerCheckChanged: (Boolean) -> Unit,
