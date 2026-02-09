@@ -83,7 +83,7 @@ private fun DifficultyAdjustmentScreenPreview() {
         DifficultyAdjustmentScreen(
             level = Level.Normal,
             operationType = OperationType.Addition,
-            quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
+            quizRange = QuizRange.Custom(OperationType.Addition, Level.Difficult, 1, 9999),
             onRangeChanged = { _, _, _ -> },
             onReset = {},
             onBackClick = {},

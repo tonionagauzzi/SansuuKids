@@ -101,7 +101,7 @@ private fun OperationRangeSlider(
         if (medalDisabled) {
             Text(
                 text = stringResource(Res.string.difficulty_medal_disabled),
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.testTag("difficulty_warning_$tag")
             )
