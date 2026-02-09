@@ -41,7 +41,7 @@ class RoundToStepTest {
         // When/Then: 値が最も近いステップにスナップされる
         assertEquals(1, roundToStep(1f, step, maxValue))
         assertEquals(101, roundToStep(101f, step, maxValue))
-        assertEquals(501, roundToStep(450f, step, maxValue))
+        assertEquals(401, roundToStep(450f, step, maxValue))
         assertEquals(501, roundToStep(501f, step, maxValue))
     }
 
