@@ -12,7 +12,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun HomeScreen(
+internal fun HomeScreen(
     onStartClick: () -> Unit,
     onMedalCollectionClick: () -> Unit,
     onSettingClick: () -> Unit,

@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.model.MedalCounter
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -28,9 +28,9 @@ internal class MedalRepositoryImpl(
     override val medalCounters: Flow<List<MedalCounter>>
         get() {
             return dataStore.data.map { preferences ->
-                Mode.entries.flatMap { mode ->
+                OperationType.entries.flatMap { operationType ->
                     Level.entries.map { level ->
-                        preferences.getMedalCounter(mode = mode, level = level)
+                        preferences.getMedalCounter(operationType = operationType, level = level)
                     }
                 }
             }
@@ -43,44 +43,48 @@ internal class MedalRepositoryImpl(
      * @param level プレイしたレベル
      * @param medal 獲得したメダル
      */
-    override suspend fun add(mode: Mode, level: Level, medal: Medal) {
+    override suspend fun add(operationType: OperationType, level: Level, medal: Medal) {
         dataStore.edit { preferences ->
             if (medal != Medal.Nothing) {
-                preferences.incrementMedalCount(mode = mode, level = level, medal = medal)
+                preferences.incrementMedalCount(
+                    operationType = operationType,
+                    level = level,
+                    medal = medal
+                )
             }
         }
     }
 }
 
 private fun getMedalCountPreferencesKey(
-    mode: Mode,
+    operationType: OperationType,
     level: Level,
     medal: Medal
 ): Preferences.Key<Int> {
-    val modeName = mode.name.lowercase()
+    val modeName = operationType.name.lowercase()
     val levelName = level.name.lowercase()
     val medalName = medal.name.lowercase()
     return intPreferencesKey("count_${modeName}_${levelName}_${medalName}")
 }
 
-private fun Preferences.getMedalCounter(mode: Mode, level: Level): MedalCounter {
+private fun Preferences.getMedalCounter(operationType: OperationType, level: Level): MedalCounter {
     return MedalCounter(
-        mode = mode,
+        operationType = operationType,
         level = level,
-        gold = this[getMedalCountPreferencesKey(mode, level, Medal.Gold)] ?: 0,
-        silver = this[getMedalCountPreferencesKey(mode, level, Medal.Silver)] ?: 0,
-        bronze = this[getMedalCountPreferencesKey(mode, level, Medal.Bronze)] ?: 0,
-        star = this[getMedalCountPreferencesKey(mode, level, Medal.Star)] ?: 0
+        gold = this[getMedalCountPreferencesKey(operationType, level, Medal.Gold)] ?: 0,
+        silver = this[getMedalCountPreferencesKey(operationType, level, Medal.Silver)] ?: 0,
+        bronze = this[getMedalCountPreferencesKey(operationType, level, Medal.Bronze)] ?: 0,
+        star = this[getMedalCountPreferencesKey(operationType, level, Medal.Star)] ?: 0
     )
 }
 
 private fun MutablePreferences.incrementMedalCount(
-    mode: Mode,
+    operationType: OperationType,
     level: Level,
     medal: Medal
 ) {
     val key = getMedalCountPreferencesKey(
-        mode = mode,
+        operationType = operationType,
         level = level,
         medal = medal
     )

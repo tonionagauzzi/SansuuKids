@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.logic
 
+import com.vitantonio.nagauzzi.sansuukids.logic.quiz.AwardMedal
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import kotlin.test.Test
 import kotlin.test.assertEquals

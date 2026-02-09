@@ -10,7 +10,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import com.vitantonio.nagauzzi.sansuukids.model.Level
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
 import com.vitantonio.nagauzzi.sansuukids.model.Quiz
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
@@ -31,7 +31,7 @@ class QuizScreenTest {
                 rightOperand = 1
             )
         }
-        return Quiz(questions, Mode.Addition, level)
+        return Quiz(questions, OperationType.Addition, level)
     }
 
     @Test

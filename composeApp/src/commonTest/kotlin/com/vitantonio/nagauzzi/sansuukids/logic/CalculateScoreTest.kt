@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.logic
 
+import com.vitantonio.nagauzzi.sansuukids.logic.quiz.CalculateScore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

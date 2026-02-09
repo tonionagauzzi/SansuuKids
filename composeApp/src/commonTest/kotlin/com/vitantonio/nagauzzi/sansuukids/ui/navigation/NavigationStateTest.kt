@@ -3,9 +3,10 @@ package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.SaverScope
 import com.vitantonio.nagauzzi.sansuukids.model.Level
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
+import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute as TestRouteA
-import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute as TestRouteB
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.OperationTypeSelectionRoute as TestRouteB
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import kotlin.test.Test
@@ -130,10 +131,13 @@ class NavigationStateTest {
     @Test
     fun NavigationStateを保存して復元できる() {
         // Given: 複数のルートを持つNavigationStateを作成する
+        val operationType = OperationType.Addition
+        val level = Level.Easy
+        val quizRange = QuizRange.Default(operationType, level)
         val backStack = mutableStateListOf(
             TestRouteA,
             TestRouteB,
-            QuizRoute(Mode.Addition, Level.Easy)
+            QuizRoute(quizRange)
         )
         val originalState = NavigationState(backStack)
         val saver = NavigationState.saver()
@@ -149,8 +153,8 @@ class NavigationStateTest {
         assertEquals(TestRouteA, restoredState.entries[0])
         assertEquals(TestRouteB, restoredState.entries[1])
         val quizRoute = restoredState.entries[2] as QuizRoute
-        assertEquals(Mode.Addition, quizRoute.mode)
-        assertEquals(Level.Easy, quizRoute.level)
+        assertEquals(OperationType.Addition, quizRoute.quizRange.operationType)
+        assertEquals(Level.Easy, quizRoute.quizRange.level)
     }
 
     @Test

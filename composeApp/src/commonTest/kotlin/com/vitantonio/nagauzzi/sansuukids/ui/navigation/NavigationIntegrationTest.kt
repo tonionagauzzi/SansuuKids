@@ -13,12 +13,13 @@ import androidx.navigation3.ui.NavDisplay
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepositoryProvider
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.fake.FakeDifficultyRepository
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.fake.FakeSettingRepository
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.MedalCollectionRoute
-import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.OperationTypeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SettingRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
@@ -29,6 +30,7 @@ import kotlin.test.assertEquals
 class NavigationIntegrationTest {
     private val medalRepository = MedalRepositoryProvider.medalRepository
     private val settingRepository = FakeSettingRepository()
+    private val difficultyRepository = FakeDifficultyRepository()
 
     @Test
     fun ホーム画面が初期画面として表示される() = runComposeUiTest {
@@ -50,7 +52,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -87,7 +90,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -99,7 +103,7 @@ class NavigationIntegrationTest {
 
         // Then: モード選択画面に遷移する
         assertEquals(2, navigationState.entries.size)
-        assertEquals(ModeSelectionRoute, navigationState.entries.last())
+        assertEquals(OperationTypeSelectionRoute, navigationState.entries.last())
         onNodeWithTag("addition_button").assertIsDisplayed()
     }
 
@@ -123,7 +127,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -140,7 +145,7 @@ class NavigationIntegrationTest {
     @Test
     fun モード選択画面で戻ると前のホーム画面に戻る() = runComposeUiTest {
         // Given: モード選択画面を表示する
-        val backStack = mutableStateListOf(HomeRoute, ModeSelectionRoute)
+        val backStack = mutableStateListOf(HomeRoute, OperationTypeSelectionRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {
@@ -157,7 +162,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -194,7 +200,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -215,7 +222,7 @@ class NavigationIntegrationTest {
     @Test
     fun モード選択画面でたしざんを押すとレベル選択画面に遷移する() = runComposeUiTest {
         // Given: モード選択画面を表示する
-        val backStack = mutableStateListOf(HomeRoute, ModeSelectionRoute)
+        val backStack = mutableStateListOf(HomeRoute, OperationTypeSelectionRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {
@@ -232,7 +239,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -245,7 +253,7 @@ class NavigationIntegrationTest {
         // Then: レベル選択画面に遷移し、モードが足し算である
         assertEquals(3, navigationState.entries.size)
         val lastRoute = navigationState.entries.last() as LevelSelectionRoute
-        assertEquals(Mode.Addition, lastRoute.mode)
+        assertEquals(OperationType.Addition, lastRoute.operationType)
         onNodeWithTag("easy_button").assertIsDisplayed()
     }
 
@@ -254,8 +262,8 @@ class NavigationIntegrationTest {
         // Given: レベル選択画面を表示する
         val backStack = mutableStateListOf(
             HomeRoute,
-            ModeSelectionRoute,
-            LevelSelectionRoute(Mode.Addition)
+            OperationTypeSelectionRoute,
+            LevelSelectionRoute(OperationType.Addition)
         )
         val navigationState = NavigationState(backStack)
 
@@ -273,7 +281,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -286,7 +295,7 @@ class NavigationIntegrationTest {
 
         // Then: モード選択画面に戻る
         assertEquals(2, navigationState.entries.size)
-        assertEquals(ModeSelectionRoute, navigationState.entries.last())
+        assertEquals(OperationTypeSelectionRoute, navigationState.entries.last())
         onNodeWithTag("addition_button").assertIsDisplayed()
     }
 
@@ -310,7 +319,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -346,7 +356,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -383,7 +394,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -419,7 +431,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -457,7 +470,8 @@ class NavigationIntegrationTest {
                                 key = key,
                                 navigationState = navigationState,
                                 medalRepository = medalRepository,
-                                settingRepository = settingRepository
+                                settingRepository = settingRepository,
+                                difficultyRepository = difficultyRepository
                             )
                         }
                     )
@@ -513,7 +527,8 @@ class NavigationIntegrationTest {
                                 key = key,
                                 navigationState = navigationState,
                                 medalRepository = medalRepository,
-                                settingRepository = settingRepository
+                                settingRepository = settingRepository,
+                                difficultyRepository = difficultyRepository
                             )
                         }
                     )

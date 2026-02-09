@@ -9,7 +9,7 @@ import kotlin.test.Test
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalTestApi::class)
-class ModeSelectionScreenTest {
+class OperationTypeSelectionScreenTest {
 
     @Test
     fun たしざんボタンを押すとonAdditionClickが呼ばれる() = runComposeUiTest {
@@ -17,7 +17,7 @@ class ModeSelectionScreenTest {
         var clicked = false
         setContent {
             SansuuKidsTheme {
-                ModeSelectionScreen(
+                OperationTypeSelectionScreen(
                     onAdditionClick = { clicked = true },
                     onSubtractionClick = {},
                     onMultiplicationClick = {},
@@ -41,7 +41,7 @@ class ModeSelectionScreenTest {
         var clicked = false
         setContent {
             SansuuKidsTheme {
-                ModeSelectionScreen(
+                OperationTypeSelectionScreen(
                     onAdditionClick = {},
                     onSubtractionClick = { clicked = true },
                     onMultiplicationClick = {},
@@ -65,7 +65,7 @@ class ModeSelectionScreenTest {
         var clicked = false
         setContent {
             SansuuKidsTheme {
-                ModeSelectionScreen(
+                OperationTypeSelectionScreen(
                     onAdditionClick = {},
                     onSubtractionClick = {},
                     onMultiplicationClick = { clicked = true },
@@ -89,7 +89,7 @@ class ModeSelectionScreenTest {
         var clicked = false
         setContent {
             SansuuKidsTheme {
-                ModeSelectionScreen(
+                OperationTypeSelectionScreen(
                     onAdditionClick = {},
                     onSubtractionClick = {},
                     onMultiplicationClick = {},
@@ -113,7 +113,7 @@ class ModeSelectionScreenTest {
         var clicked = false
         setContent {
             SansuuKidsTheme {
-                ModeSelectionScreen(
+                OperationTypeSelectionScreen(
                     onAdditionClick = {},
                     onSubtractionClick = {},
                     onMultiplicationClick = {},

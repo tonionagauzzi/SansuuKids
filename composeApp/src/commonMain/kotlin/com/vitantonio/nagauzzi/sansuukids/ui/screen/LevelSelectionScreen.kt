@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
 import com.vitantonio.nagauzzi.sansuukids.ui.component.levelselection.LevelSelectionContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
@@ -24,10 +25,10 @@ import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.level_selection_title
 
 @Composable
-fun LevelSelectionScreen(
-    onEasyClick: () -> Unit,
-    onNormalClick: () -> Unit,
-    onDifficultClick: () -> Unit,
+internal fun LevelSelectionScreen(
+    isEnabledSetting: Boolean,
+    onClick: (Level) -> Unit,
+    onSettingClick: (Level) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -58,11 +59,19 @@ fun LevelSelectionScreen(
                 contentAlignment = Alignment.Center
             ) {
                 LevelSelectionContent(
-                    onEasyClick = onEasyClick,
-                    onNormalClick = onNormalClick,
-                    onDifficultClick = onDifficultClick,
+                    isEnabledSetting = isEnabledSetting,
+                    onEasyClick = {
+                        onClick(Level.Easy)
+                    },
+                    onNormalClick = {
+                        onClick(Level.Normal)
+                    },
+                    onDifficultClick = {
+                        onClick(Level.Difficult)
+                    },
+                    onSettingClick = onSettingClick,
                     modifier = if (isLandscape) {
-                        Modifier.fillMaxWidth(0.3f)
+                        Modifier.fillMaxWidth(0.4f)
                     } else {
                         Modifier.fillMaxWidth()
                     }
@@ -80,9 +89,9 @@ fun LevelSelectionScreen(
 private fun LevelSelectionScreenPreview() {
     SansuuKidsTheme {
         LevelSelectionScreen(
-            onEasyClick = {},
-            onNormalClick = {},
-            onDifficultClick = {},
+            isEnabledSetting = true,
+            onClick = {},
+            onSettingClick = {},
             onBackClick = {},
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )

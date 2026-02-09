@@ -46,7 +46,7 @@ internal fun MedalDetailDialog(
                 Text(
                     text = stringResource(
                         Res.string.medal_detail_title,
-                        stringResource(medalCounter.mode.labelRes),
+                        stringResource(medalCounter.operationType.labelRes),
                         stringResource(medalCounter.level.labelRes)
                     ),
                     style = MaterialTheme.typography.titleMedium,

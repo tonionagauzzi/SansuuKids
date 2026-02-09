@@ -14,20 +14,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.vitantonio.nagauzzi.sansuukids.model.Level
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
+import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
+import com.vitantonio.nagauzzi.sansuukids.model.labelRes
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
-import com.vitantonio.nagauzzi.sansuukids.ui.component.setting.SettingContent
+import com.vitantonio.nagauzzi.sansuukids.ui.component.levelselection.DifficultyAdjustmentContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
-import sansuukids.composeapp.generated.resources.setting
+import sansuukids.composeapp.generated.resources.difficulty_adjustment_title
+import sansuukids.composeapp.generated.resources.difficulty_reset
 
 @Composable
-internal fun SettingScreen(
-    perQuestionAnswerCheckEnabled: Boolean,
-    hintDisplayEnabled: Boolean,
-    onPerQuestionAnswerCheckChanged: (Boolean) -> Unit,
-    onHintDisplayChanged: (Boolean) -> Unit,
+internal fun DifficultyAdjustmentScreen(
+    quizRange: QuizRange,
+    onQuizRangeChanged: (newRange: QuizRange) -> Unit,
+    onReset: (OperationType) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -43,19 +47,22 @@ internal fun SettingScreen(
             verticalArrangement = Arrangement.Top
         ) {
             AppHeader(
-                title = stringResource(Res.string.setting),
+                title = stringResource(
+                    Res.string.difficulty_adjustment_title,
+                    stringResource(quizRange.level.labelRes)
+                ),
+                actionString = stringResource(Res.string.difficulty_reset),
                 isMultiLine = !isLandscape,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .testTag("settings_title"),
-                onBackClick = onBackClick
+                    .testTag("difficulty_adjustment_title"),
+                onBackClick = onBackClick,
+                onActionClick = { onReset(quizRange.operationType) }
             )
 
-            SettingContent(
-                perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
-                hintDisplayEnabled = hintDisplayEnabled,
-                onPerQuestionAnswerCheckChanged = onPerQuestionAnswerCheckChanged,
-                onHintDisplayChanged = onHintDisplayChanged,
+            DifficultyAdjustmentContent(
+                quizRange = quizRange,
+                onQuizRangeChanged = onQuizRangeChanged,
                 modifier = Modifier
                     .padding(16.dp)
                     .weight(1f)
@@ -66,32 +73,13 @@ internal fun SettingScreen(
 
 @Preview(widthDp = 360, heightDp = 640) // 縦画面
 @Preview(widthDp = 640, heightDp = 360) // 横画面
-@Preview(widthDp = 480, heightDp = 480) // 正方形画面
-@Preview(widthDp = 481, heightDp = 480) // 僅かに横画面
 @Composable
-private fun SettingScreenPreview() {
+private fun DifficultyAdjustmentScreenPreview() {
     SansuuKidsTheme {
-        SettingScreen(
-            perQuestionAnswerCheckEnabled = false,
-            hintDisplayEnabled = false,
-            onPerQuestionAnswerCheckChanged = {},
-            onHintDisplayChanged = {},
-            onBackClick = {},
-            modifier = Modifier.background(MaterialTheme.colorScheme.background)
-        )
-    }
-}
-
-@Preview(widthDp = 360, heightDp = 640) // 縦画面
-@Preview(widthDp = 640, heightDp = 360) // 横画面
-@Composable
-private fun SettingScreenPreviewEnabled() {
-    SansuuKidsTheme {
-        SettingScreen(
-            perQuestionAnswerCheckEnabled = true,
-            hintDisplayEnabled = true,
-            onPerQuestionAnswerCheckChanged = {},
-            onHintDisplayChanged = {},
+        DifficultyAdjustmentScreen(
+            quizRange = QuizRange.Custom(OperationType.Addition, Level.Difficult, 1, 9999),
+            onQuizRangeChanged = { _ -> },
+            onReset = {},
             onBackClick = {},
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )

@@ -49,4 +49,8 @@
     <string name="medal_collection_not_earned">ー</string>
     <string name="medal_detail_title">%1$s - %2$s</string>
     <string name="medal_detail_count">×%1$d</string>
+    <string name="difficulty_adjustment_title">せってい（%1$s）</string>
+    <string name="difficulty_range_label">%1$sは %2$d から %3$d まで</string>
+    <string name="difficulty_medal_disabled">もんだいが かんたんになったので メダルはもらえません</string>
+    <string name="difficulty_reset">リセット</string>
 </resources>

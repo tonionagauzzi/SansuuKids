@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class Quiz(
     val questions: List<Question>,
-    val mode: Mode,
+    val operationType: OperationType,
     val level: Level
 )

@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Level
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.Question
 import com.vitantonio.nagauzzi.sansuukids.model.Quiz
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
@@ -82,7 +82,7 @@ private fun QuizScreenPreview() {
                         Question.Math.Subtraction(10, 4),
                         Question.Math.Multiplication(2, 6)
                     ),
-                    mode = Mode.Addition,
+                    operationType = OperationType.Addition,
                     level = Level.Easy
                 )
             ),
