@@ -25,8 +25,8 @@ class MedalEligibilityTest {
 
     @Test
     fun カスタムminがデフォルトmin以上の場合はメダル獲得可能() {
-        // Given: カスタムminがデフォルトmin（1）以上
-        val quizRange = QuizRange.Custom(OperationType.Addition, Level.Easy, min = 2, max = 5)
+        // Given: カスタムminがデフォルトmin（1）以上、maxもデフォルトmax（9）以上
+        val quizRange = QuizRange.Custom(OperationType.Addition, Level.Easy, min = 2, max = 9)
 
         // When: メダル適格を判定する
         val result = medalEligibility(OperationType.Addition, Level.Easy, quizRange)
@@ -102,6 +102,30 @@ class MedalEligibilityTest {
 
         // When: メダル適格を判定する
         val result = medalEligibility(OperationType.All, Level.Easy, quizRange)
+
+        // Then: メダル獲得可能
+        assertTrue(result)
+    }
+
+    @Test
+    fun カスタムmaxがデフォルトmax未満の場合はメダル獲得不可() {
+        // Given: 足し算の簡単レベル（デフォルトmax=9）でカスタムmaxを8に下げる
+        val quizRange = QuizRange.Custom(OperationType.Addition, Level.Easy, min = 1, max = 8)
+
+        // When: メダル適格を判定する
+        val result = medalEligibility(OperationType.Addition, Level.Easy, quizRange)
+
+        // Then: メダル獲得不可
+        assertFalse(result)
+    }
+
+    @Test
+    fun カスタムmaxがデフォルトmax以上の場合はメダル獲得可能() {
+        // Given: 足し算の簡単レベル（デフォルトmax=9）でカスタムmaxを10に上げる
+        val quizRange = QuizRange.Custom(OperationType.Addition, Level.Easy, min = 1, max = 10)
+
+        // When: メダル適格を判定する
+        val result = medalEligibility(OperationType.Addition, Level.Easy, quizRange)
 
         // Then: メダル獲得可能
         assertTrue(result)

@@ -7,8 +7,8 @@ import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 /**
  * メダル獲得適格を判定するロジッククラス。
  *
- * カスタム設定でデフォルトより簡単（minが低い）にした場合、メダルは獲得不可とする。
- * maxを上げて難しくした場合は、メダル獲得可能。
+ * カスタム設定でデフォルトより簡単（minが低い、またはmaxが低い）にした場合、メダルは獲得不可とする。
+ * minやmaxを上げて難しくした場合は、メダル獲得可能。
  */
 internal class MedalEligibility {
     /**
@@ -21,6 +21,6 @@ internal class MedalEligibility {
      */
     operator fun invoke(operationType: OperationType, level: Level, quizRange: QuizRange): Boolean {
         val defaultRange = QuizRange.Default(operationType, level)
-        return quizRange.min >= defaultRange.min
+        return quizRange.min >= defaultRange.min && quizRange.max >= defaultRange.max
     }
 }
