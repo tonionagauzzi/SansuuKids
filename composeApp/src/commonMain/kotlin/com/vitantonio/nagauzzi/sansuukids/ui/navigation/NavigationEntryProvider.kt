@@ -12,10 +12,9 @@ import androidx.navigation3.runtime.NavEntry
 import com.vitantonio.nagauzzi.sansuukids.data.DifficultyRepository
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepository
 import com.vitantonio.nagauzzi.sansuukids.data.SettingRepository
-import com.vitantonio.nagauzzi.sansuukids.logic.MedalEligibility
 import com.vitantonio.nagauzzi.sansuukids.model.Level
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
-import com.vitantonio.nagauzzi.sansuukids.model.operationTypes
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
+import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.ui.component.levelselection.DifficultyAdjustmentDialog
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.AnswerCheckRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
@@ -35,6 +34,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.QuizScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ResultScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.SettingScreen
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 internal fun navigationEntryProvider(
@@ -86,11 +86,21 @@ internal fun navigationEntryProvider(
 
         ModeSelectionRoute -> NavEntry(key) {
             ModeSelectionScreen(
-                onAdditionClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.Addition)) },
-                onSubtractionClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.Subtraction)) },
-                onMultiplicationClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.Multiplication)) },
-                onDivisionClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.Division)) },
-                onAllClick = { navigationState.navigateTo(LevelSelectionRoute(Mode.All)) },
+                onAdditionClick = {
+                    navigationState.navigateTo(LevelSelectionRoute(OperationType.Addition))
+                },
+                onSubtractionClick = {
+                    navigationState.navigateTo(LevelSelectionRoute(OperationType.Subtraction))
+                },
+                onMultiplicationClick = {
+                    navigationState.navigateTo(LevelSelectionRoute(OperationType.Multiplication))
+                },
+                onDivisionClick = {
+                    navigationState.navigateTo(LevelSelectionRoute(OperationType.Division))
+                },
+                onAllClick = {
+                    navigationState.navigateTo(LevelSelectionRoute(OperationType.All))
+                },
                 onBackClick = { navigationState.navigateBack() }
             )
         }
@@ -100,13 +110,18 @@ internal fun navigationEntryProvider(
             var showDifficultyDialog by remember { mutableStateOf<Level?>(null) }
 
             showDifficultyDialog?.let { level ->
-                val customRanges by difficultyRepository.getCustomRanges(key.mode, level)
-                    .collectAsStateWithLifecycle(emptyList())
+                val quizRange by difficultyRepository.getCustomRange(key.operationType, level)
+                    .collectAsStateWithLifecycle(
+                        initialValue = QuizRange.Default(
+                            key.operationType,
+                            level
+                        )
+                    )
 
                 DifficultyAdjustmentDialog(
                     level = level,
-                    operationTypes = key.mode.operationTypes,
-                    customRanges = customRanges,
+                    operationType = key.operationType,
+                    quizRange = quizRange,
                     onRangeChanged = { operationType, min, max ->
                         scope.launch {
                             difficultyRepository.setCustomRange(operationType, level, min, max)
@@ -122,34 +137,31 @@ internal fun navigationEntryProvider(
             }
 
             LevelSelectionScreen(
-                onEasyClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.Easy)) },
-                onNormalClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.Normal)) },
-                onDifficultClick = {
-                    navigationState.navigateTo(
-                        QuizRoute(
-                            key.mode,
-                            Level.Difficult
+                onClick = { level ->
+                    scope.launch {
+                        navigationState.navigateTo(
+                            QuizRoute(
+                                operationType = key.operationType,
+                                level = level,
+                                quizRange = difficultyRepository
+                                    .getCustomRange(key.operationType, level)
+                                    .first()
+                            )
                         )
-                    )
+                    }
+
                 },
-                onSettingsClick = { level -> showDifficultyDialog = level },
+                onSettingClick = { level -> showDifficultyDialog = level },
                 onBackClick = { navigationState.navigateBack() }
             )
         }
 
         is QuizRoute -> NavEntry(key) {
-            val customRanges by difficultyRepository.getCustomRanges(key.mode, key.level)
-                .collectAsStateWithLifecycle(emptyList())
-            val medalEligible = remember(customRanges) {
-                MedalEligibility()(key.mode, key.level, customRanges)
-            }
-
             val viewModel = viewModel {
                 QuizViewModel(
-                    mode = key.mode,
+                    operationType = key.operationType,
                     level = key.level,
-                    customRanges = customRanges,
-                    medalEligible = medalEligible
+                    quizRange = key.quizRange,
                 )
             }
             val quizState by viewModel.quizState.collectAsStateWithLifecycle()
@@ -157,13 +169,13 @@ internal fun navigationEntryProvider(
             LaunchedEffect(quizState.isQuizComplete) {
                 if (quizState.isQuizComplete) {
                     medalRepository.add(
-                        mode = key.mode,
+                        operationType = key.operationType,
                         level = key.level,
                         medal = viewModel.earnedMedal
                     )
                     navigationState.navigateTo(
                         ResultRoute(
-                            mode = key.mode,
+                            operationType = key.operationType,
                             level = key.level,
                             score = viewModel.earnedScore,
                             medal = viewModel.earnedMedal,

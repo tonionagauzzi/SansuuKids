@@ -4,12 +4,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
-import com.vitantonio.nagauzzi.sansuukids.logic.GenerateQuiz
 import com.vitantonio.nagauzzi.sansuukids.model.Level
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
-import com.vitantonio.nagauzzi.sansuukids.model.operationTypes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -19,14 +16,12 @@ import kotlinx.coroutines.flow.map
 internal class DifficultyRepositoryImpl(
     private val dataStore: DataStore<Preferences> = DataStoreProvider.dataStore
 ) : DifficultyRepository {
-    override fun getCustomRanges(mode: Mode, level: Level): Flow<List<QuizRange>> {
+    override fun getCustomRange(operationType: OperationType, level: Level): Flow<QuizRange> {
         return dataStore.data.map { preferences ->
-            mode.operationTypes.map { operationType ->
-                val defaultRange = QuizRange.Default(operationType, level)
-                val min = preferences[minKey(operationType, level)] ?: defaultRange.min
-                val max = preferences[maxKey(operationType, level)] ?: defaultRange.max
-                QuizRange.Custom(operationType, level, min, max)
-            }
+            val defaultRange = QuizRange.Default(operationType, level)
+            val min = preferences[minKey(operationType, level)] ?: return@map defaultRange
+            val max = preferences[maxKey(operationType, level)] ?: return@map defaultRange
+            QuizRange.Custom(operationType, level, min, max)
         }
     }
 

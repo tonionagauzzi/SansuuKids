@@ -26,10 +26,8 @@ import sansuukids.composeapp.generated.resources.level_selection_title
 
 @Composable
 internal fun LevelSelectionScreen(
-    onEasyClick: () -> Unit,
-    onNormalClick: () -> Unit,
-    onDifficultClick: () -> Unit,
-    onSettingsClick: (Level) -> Unit,
+    onClick: (Level) -> Unit,
+    onSettingClick: (Level) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -60,10 +58,16 @@ internal fun LevelSelectionScreen(
                 contentAlignment = Alignment.Center
             ) {
                 LevelSelectionContent(
-                    onEasyClick = onEasyClick,
-                    onNormalClick = onNormalClick,
-                    onDifficultClick = onDifficultClick,
-                    onSettingsClick = onSettingsClick,
+                    onEasyClick = {
+                        onClick(Level.Easy)
+                    },
+                    onNormalClick = {
+                        onClick(Level.Normal)
+                    },
+                    onDifficultClick = {
+                        onClick(Level.Difficult)
+                    },
+                    onSettingClick = onSettingClick,
                     modifier = if (isLandscape) {
                         Modifier.fillMaxWidth(0.4f)
                     } else {
@@ -83,10 +87,8 @@ internal fun LevelSelectionScreen(
 private fun LevelSelectionScreenPreview() {
     SansuuKidsTheme {
         LevelSelectionScreen(
-            onEasyClick = {},
-            onNormalClick = {},
-            onDifficultClick = {},
-            onSettingsClick = {},
+            onClick = {},
+            onSettingClick = {},
             onBackClick = {},
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )

@@ -28,13 +28,9 @@ import com.vitantonio.nagauzzi.sansuukids.model.Level.Easy
 import com.vitantonio.nagauzzi.sansuukids.model.Level.Normal
 import com.vitantonio.nagauzzi.sansuukids.model.Medal.Nothing
 import com.vitantonio.nagauzzi.sansuukids.model.MedalCounter
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.bestMedal
 import com.vitantonio.nagauzzi.sansuukids.model.findOrDefault
-import com.vitantonio.nagauzzi.sansuukids.model.Mode.Addition
-import com.vitantonio.nagauzzi.sansuukids.model.Mode.All
-import com.vitantonio.nagauzzi.sansuukids.model.Mode.Division
-import com.vitantonio.nagauzzi.sansuukids.model.Mode.Multiplication
-import com.vitantonio.nagauzzi.sansuukids.model.Mode.Subtraction
 import com.vitantonio.nagauzzi.sansuukids.model.emojiRes
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
@@ -97,7 +93,13 @@ private fun MedalGrid(
     onMedalClick: (MedalCounter) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val modes = listOf(Addition, Subtraction, Multiplication, Division, All)
+    val operationTypes = listOf(
+        OperationType.Addition,
+        OperationType.Subtraction,
+        OperationType.Multiplication,
+        OperationType.Division,
+        OperationType.All
+    )
     val levels = listOf(Easy, Normal, Difficult)
 
     Column(
@@ -130,7 +132,7 @@ private fun MedalGrid(
         }
 
         // Mode rows
-        modes.forEach { mode ->
+        operationTypes.forEach { mode ->
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -173,7 +175,7 @@ private fun MedalCollectionScreenPreview() {
         MedalCollectionScreen(
             medalCounters = listOf(
                 MedalCounter(
-                    mode = Addition,
+                    operationType = OperationType.Addition,
                     level = Easy,
                     gold = 15,
                     silver = 11,
@@ -181,7 +183,7 @@ private fun MedalCollectionScreenPreview() {
                     star = 0
                 ),
                 MedalCounter(
-                    mode = Addition,
+                    operationType = OperationType.Addition,
                     level = Normal,
                     gold = 0,
                     silver = 1,
@@ -189,7 +191,7 @@ private fun MedalCollectionScreenPreview() {
                     star = 4
                 ),
                 MedalCounter(
-                    mode = Addition,
+                    operationType = OperationType.Addition,
                     level = Difficult,
                     gold = 0,
                     silver = 0,
@@ -197,7 +199,7 @@ private fun MedalCollectionScreenPreview() {
                     star = 1
                 ),
                 MedalCounter(
-                    mode = Subtraction,
+                    operationType = OperationType.Subtraction,
                     level = Easy,
                     gold = 5,
                     silver = 3,

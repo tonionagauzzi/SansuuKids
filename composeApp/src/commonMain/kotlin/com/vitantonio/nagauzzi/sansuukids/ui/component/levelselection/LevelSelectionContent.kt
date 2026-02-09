@@ -28,7 +28,7 @@ internal fun LevelSelectionContent(
     onEasyClick: () -> Unit,
     onNormalClick: () -> Unit,
     onDifficultClick: () -> Unit,
-    onSettingsClick: (Level) -> Unit,
+    onSettingClick: (Level) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -41,7 +41,7 @@ internal fun LevelSelectionContent(
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             text = stringResource(Res.string.level_easy),
             onClick = onEasyClick,
-            onSettingsClick = { onSettingsClick(Level.Easy) },
+            onSettingClick = { onSettingClick(Level.Easy) },
             buttonTestTag = "easy_button",
             settingsTestTag = "easy_settings_button"
         )
@@ -51,7 +51,7 @@ internal fun LevelSelectionContent(
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             text = stringResource(Res.string.level_normal),
             onClick = onNormalClick,
-            onSettingsClick = { onSettingsClick(Level.Normal) },
+            onSettingClick = { onSettingClick(Level.Normal) },
             buttonTestTag = "normal_button",
             settingsTestTag = "normal_settings_button"
         )
@@ -61,7 +61,7 @@ internal fun LevelSelectionContent(
             contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
             text = stringResource(Res.string.level_difficult),
             onClick = onDifficultClick,
-            onSettingsClick = { onSettingsClick(Level.Difficult) },
+            onSettingClick = { onSettingClick(Level.Difficult) },
             buttonTestTag = "difficult_button",
             settingsTestTag = "difficult_settings_button"
         )
@@ -74,7 +74,7 @@ private fun LevelButtonRow(
     contentColor: Color,
     text: String,
     onClick: () -> Unit,
-    onSettingsClick: () -> Unit,
+    onSettingClick: () -> Unit,
     buttonTestTag: String,
     settingsTestTag: String
 ) {
@@ -96,7 +96,7 @@ private fun LevelButtonRow(
         )
 
         IconButton(
-            onClick = onSettingsClick,
+            onClick = onSettingClick,
             modifier = Modifier
                 .size(48.dp)
                 .testTag(settingsTestTag)

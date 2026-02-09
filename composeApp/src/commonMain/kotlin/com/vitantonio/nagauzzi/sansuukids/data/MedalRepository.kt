@@ -3,7 +3,7 @@ package com.vitantonio.nagauzzi.sansuukids.data
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.model.MedalCounter
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -11,5 +11,5 @@ import kotlinx.coroutines.flow.Flow
  */
 internal interface MedalRepository {
     val medalCounters: Flow<List<MedalCounter>>
-    suspend fun add(mode: Mode, level: Level, medal: Medal)
+    suspend fun add(operationType: OperationType, level: Level, medal: Medal)
 }

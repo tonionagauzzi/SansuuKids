@@ -4,24 +4,23 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
+import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import kotlin.test.Test
-import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalTestApi::class)
 class LevelSelectionScreenTest {
 
     @Test
-    fun かんたんボタンを押すとonEasyClickが呼ばれる() = runComposeUiTest {
+    fun かんたんボタンを押すとonClickにEasyが渡される() = runComposeUiTest {
         // Given: レベル選択画面を表示し、クリック状態を追跡する
-        var clicked = false
+        var clickedLevel: Level? = null
         setContent {
             SansuuKidsTheme {
                 LevelSelectionScreen(
-                    onEasyClick = { clicked = true },
-                    onNormalClick = {},
-                    onDifficultClick = {},
-                    onSettingsClick = {},
+                    onClick = { clickedLevel = it },
+                    onSettingClick = {},
                     onBackClick = {}
                 )
             }
@@ -30,21 +29,19 @@ class LevelSelectionScreenTest {
         // When: かんたんボタンをクリックする
         onNodeWithTag("easy_button").performClick()
 
-        // Then: onEasyClickが呼ばれる
-        assertTrue(clicked)
+        // Then: onClickにEasyが渡される
+        assertEquals(Level.Easy, clickedLevel)
     }
 
     @Test
-    fun ふつうボタンを押すとonNormalClickが呼ばれる() = runComposeUiTest {
+    fun ふつうボタンを押すとonClickにNormalが渡される() = runComposeUiTest {
         // Given: レベル選択画面を表示し、クリック状態を追跡する
-        var clicked = false
+        var clickedLevel: Level? = null
         setContent {
             SansuuKidsTheme {
                 LevelSelectionScreen(
-                    onEasyClick = {},
-                    onNormalClick = { clicked = true },
-                    onDifficultClick = {},
-                    onSettingsClick = {},
+                    onClick = { clickedLevel = it },
+                    onSettingClick = {},
                     onBackClick = {}
                 )
             }
@@ -53,21 +50,19 @@ class LevelSelectionScreenTest {
         // When: ふつうボタンをクリックする
         onNodeWithTag("normal_button").performClick()
 
-        // Then: onNormalClickが呼ばれる
-        assertTrue(clicked)
+        // Then: onClickにNormalが渡される
+        assertEquals(Level.Normal, clickedLevel)
     }
 
     @Test
-    fun むずかしいボタンを押すとonDifficultClickが呼ばれる() = runComposeUiTest {
+    fun むずかしいボタンを押すとonClickにDifficultが渡される() = runComposeUiTest {
         // Given: レベル選択画面を表示し、クリック状態を追跡する
-        var clicked = false
+        var clickedLevel: Level? = null
         setContent {
             SansuuKidsTheme {
                 LevelSelectionScreen(
-                    onEasyClick = {},
-                    onNormalClick = {},
-                    onDifficultClick = { clicked = true },
-                    onSettingsClick = {},
+                    onClick = { clickedLevel = it },
+                    onSettingClick = {},
                     onBackClick = {}
                 )
             }
@@ -76,7 +71,7 @@ class LevelSelectionScreenTest {
         // When: むずかしいボタンをクリックする
         onNodeWithTag("difficult_button").performClick()
 
-        // Then: onDifficultClickが呼ばれる
-        assertTrue(clicked)
+        // Then: onClickにDifficultが渡される
+        assertEquals(Level.Difficult, clickedLevel)
     }
 }

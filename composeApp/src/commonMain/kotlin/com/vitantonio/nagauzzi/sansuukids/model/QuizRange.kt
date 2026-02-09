@@ -1,8 +1,11 @@
 package com.vitantonio.nagauzzi.sansuukids.model
 
+import kotlinx.serialization.Serializable
+
 /**
  * 出題範囲。
  */
+@Serializable
 internal sealed interface QuizRange {
     val operationType: OperationType
     val level: Level
@@ -15,13 +18,14 @@ internal sealed interface QuizRange {
      * @param operationType 演算タイプ
      * @param level 難易度レベル
      */
+    @Serializable
     data class Default(
         override val operationType: OperationType,
         override val level: Level
     ) : QuizRange {
         override val min: Int
             get() = when(operationType) {
-                OperationType.Addition, OperationType.Subtraction -> when(level) {
+                OperationType.Addition, OperationType.Subtraction, OperationType.All -> when(level) {
                     Level.Easy -> 1
                     Level.Normal -> 11
                     Level.Difficult -> 101
@@ -34,7 +38,7 @@ internal sealed interface QuizRange {
             }
         override val max: Int
             get() = when(operationType) {
-                OperationType.Addition, OperationType.Subtraction -> when(level) {
+                OperationType.Addition, OperationType.Subtraction, OperationType.All -> when(level) {
                     Level.Easy -> 9
                     Level.Normal -> 99
                     Level.Difficult -> 9999
@@ -55,6 +59,7 @@ internal sealed interface QuizRange {
      * @param min 最小値
      * @param max 最大値
      */
+    @Serializable
     data class Custom(
         override val operationType: OperationType,
         override val level: Level,

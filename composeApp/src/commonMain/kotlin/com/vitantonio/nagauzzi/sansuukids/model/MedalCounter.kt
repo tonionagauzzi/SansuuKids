@@ -1,7 +1,7 @@
 package com.vitantonio.nagauzzi.sansuukids.model
 
 internal data class MedalCounter(
-    val mode: Mode,
+    val operationType: OperationType,
     val level: Level,
     val gold: Int = 0,
     val silver: Int = 0,
@@ -28,7 +28,10 @@ internal fun MedalCounter.getCount(medal: Medal): Int {
     }
 }
 
-internal fun List<MedalCounter>.findOrDefault(mode: Mode, level: Level): MedalCounter {
-    return firstOrNull { it.mode == mode && it.level == level }
-        ?: MedalCounter(mode = mode, level = level)
+internal fun List<MedalCounter>.findOrDefault(
+    operationType: OperationType,
+    level: Level
+): MedalCounter {
+    return firstOrNull { it.operationType == operationType && it.level == level }
+        ?: MedalCounter(operationType = operationType, level = level)
 }

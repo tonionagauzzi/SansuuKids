@@ -1,9 +1,8 @@
 package com.vitantonio.nagauzzi.sansuukids.logic
 
 import com.vitantonio.nagauzzi.sansuukids.model.Level
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
-import com.vitantonio.nagauzzi.sansuukids.model.operationTypes
 
 /**
  * メダル獲得適格を判定するロジッククラス。
@@ -15,21 +14,13 @@ internal class MedalEligibility {
     /**
      * メダル獲得が可能かどうかを判定する。
      *
-     * @param mode 計算モード
+     * @param operationType 演算タイプ
      * @param level 難易度レベル
-     * @param customRanges カスタム出題範囲のリスト
+     * @param quizRange カスタム出題範囲
      * @return メダル獲得可能な場合true
      */
-    operator fun invoke(mode: Mode, level: Level, customRanges: List<QuizRange>): Boolean {
-        if (customRanges.isEmpty()) return true
-
-        return mode.operationTypes.all { operationType ->
-            val customRange = customRanges.find {
-                it.operationType == operationType && it.level == level
-            } ?: return@all true
-
-            val defaultRange = QuizRange.Default(operationType, level)
-            customRange.min >= defaultRange.min
-        }
+    operator fun invoke(operationType: OperationType, level: Level, quizRange: QuizRange): Boolean {
+        val defaultRange = QuizRange.Default(operationType, level)
+        return quizRange.min >= defaultRange.min
     }
 }

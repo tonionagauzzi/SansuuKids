@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.vitantonio.nagauzzi.sansuukids.logic.GenerateQuiz
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
@@ -35,11 +34,13 @@ import sansuukids.composeapp.generated.resources.difficulty_min_value
 import sansuukids.composeapp.generated.resources.difficulty_range_label
 import sansuukids.composeapp.generated.resources.difficulty_reset
 
+private const val SLIDER_MIN_VALUE = 1
+
 @Composable
 internal fun DifficultyAdjustmentDialog(
     level: Level,
-    operationTypes: List<OperationType>,
-    customRanges: List<QuizRange>,
+    operationType: OperationType,
+    quizRange: QuizRange,
     onRangeChanged: (OperationType, Int, Int) -> Unit,
     onReset: (OperationType) -> Unit,
     onDismiss: () -> Unit
@@ -67,29 +68,16 @@ internal fun DifficultyAdjustmentDialog(
                     style = MaterialTheme.typography.titleSmall
                 )
 
-                operationTypes.forEach { operationType ->
-                    val defaultRange = QuizRange.Default(operationType, level)
-                    val customRange = customRanges.find {
-                        it.operationType == operationType && it.level == level
-                    }
-                    val currentMin = customRange?.min ?: defaultRange.min
-                    val currentMax = customRange?.max ?: defaultRange.max
-                    val sliderMax = getSliderMax(operationType, level)
-                    val step = getSliderStep(operationType, level)
-                    val medalDisabled = currentMin < defaultRange.min
-
-                    OperationRangeSlider(
-                        operationType = operationType,
-                        currentMin = currentMin,
-                        currentMax = currentMax,
-                        sliderMin = 1,
-                        sliderMax = sliderMax,
-                        step = step,
-                        medalDisabled = medalDisabled,
-                        onRangeChanged = { min, max -> onRangeChanged(operationType, min, max) },
-                        onReset = { onReset(operationType) }
-                    )
-                }
+                OperationRangeSlider(
+                    operationType = operationType,
+                    currentMin = quizRange.min,
+                    currentMax = quizRange.max,
+                    sliderMax = getSliderMax(operationType, level),
+                    step = getSliderStep(operationType, level),
+                    medalDisabled = quizRange.min < QuizRange.Default(operationType, level).min,
+                    onRangeChanged = { min, max -> onRangeChanged(operationType, min, max) },
+                    onReset = { onReset(operationType) }
+                )
 
                 Button(
                     onClick = onDismiss,
@@ -107,7 +95,6 @@ private fun OperationRangeSlider(
     operationType: OperationType,
     currentMin: Int,
     currentMax: Int,
-    sliderMin: Int,
     sliderMax: Int,
     step: Int,
     medalDisabled: Boolean,
@@ -115,7 +102,7 @@ private fun OperationRangeSlider(
     onReset: () -> Unit
 ) {
     val tag = operationType.name.lowercase()
-    val steps = maxOf(0, ((sliderMax - sliderMin) / step) - 1)
+    val steps = maxOf(0, ((sliderMax - SLIDER_MIN_VALUE) / step) - 1)
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -133,13 +120,13 @@ private fun OperationRangeSlider(
         RangeSlider(
             value = currentMin.toFloat()..currentMax.toFloat(),
             onValueChange = { range ->
-                val newMin = roundToStep(range.start, step, sliderMin)
-                val newMax = roundToStep(range.endInclusive, step, sliderMin)
+                val newMin = roundToStep(range.start, step, SLIDER_MIN_VALUE)
+                val newMax = roundToStep(range.endInclusive, step, SLIDER_MIN_VALUE)
                 if (newMin <= newMax) {
                     onRangeChanged(newMin, newMax)
                 }
             },
-            valueRange = sliderMin.toFloat()..sliderMax.toFloat(),
+            valueRange = SLIDER_MIN_VALUE.toFloat()..sliderMax.toFloat(),
             steps = steps,
             modifier = Modifier
                 .fillMaxWidth()
@@ -200,16 +187,20 @@ private fun getSliderMax(operationType: OperationType, level: Level): Int =
             Level.Normal -> 100
             Level.Difficult -> 9999
         }
+
         OperationType.Subtraction -> when (level) {
             Level.Easy -> 20
             Level.Normal -> 200
             Level.Difficult -> 9999
         }
+
         OperationType.Multiplication, OperationType.Division -> when (level) {
             Level.Easy -> 20
             Level.Normal -> 50
             Level.Difficult -> 200
         }
+
+        OperationType.All -> 1 // 全ての難易度調整には未対応
     }
 
 /**
@@ -222,14 +213,18 @@ private fun getSliderStep(operationType: OperationType, level: Level): Int =
             Level.Normal -> 1
             Level.Difficult -> 10
         }
+
         OperationType.Subtraction -> when (level) {
             Level.Easy -> 1
             Level.Normal -> 1
             Level.Difficult -> 10
         }
+
         OperationType.Multiplication, OperationType.Division -> when (level) {
             Level.Easy -> 1
             Level.Normal -> 1
             Level.Difficult -> 1
         }
+
+        OperationType.All -> 1 // 全ての難易度調整には未対応
     }

@@ -2,10 +2,8 @@ package com.vitantonio.nagauzzi.sansuukids.ui.navigation.fake
 
 import com.vitantonio.nagauzzi.sansuukids.data.DifficultyRepository
 import com.vitantonio.nagauzzi.sansuukids.model.Level
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
-import com.vitantonio.nagauzzi.sansuukids.model.operationTypes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -13,17 +11,11 @@ import kotlinx.coroutines.flow.map
 internal class FakeDifficultyRepository : DifficultyRepository {
     private val customRanges = MutableStateFlow<List<QuizRange.Custom>>(emptyList())
 
-    override fun getCustomRanges(mode: Mode, level: Level): Flow<List<QuizRange>> {
+    override fun getCustomRange(operationType: OperationType, level: Level): Flow<QuizRange> {
         return customRanges.map { ranges ->
-            mode.operationTypes.map { operationType ->
-                ranges.find {
-                    it.operationType == operationType && it.level == level
-                } ?: QuizRange.Custom(
-                    operationType, level,
-                    QuizRange.Default(operationType, level).min,
-                    QuizRange.Default(operationType, level).max
-                )
-            }
+            ranges.find {
+                it.operationType == operationType && it.level == level
+            } ?: QuizRange.Default(operationType, level)
         }
     }
 

@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.vitantonio.nagauzzi.sansuukids.logic.AwardMedal
 import com.vitantonio.nagauzzi.sansuukids.logic.CalculateScore
 import com.vitantonio.nagauzzi.sansuukids.logic.GenerateQuiz
+import com.vitantonio.nagauzzi.sansuukids.logic.MedalEligibility
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
@@ -15,16 +16,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 internal class QuizViewModel(
-    mode: Mode,
-    level: Level,
-    customRanges: List<QuizRange> = emptyList(),
-    private val medalEligible: Boolean = true
+    private val operationType: OperationType,
+    private val level: Level,
+    private val quizRange: QuizRange
 ) : ViewModel() {
     private val generateQuiz = GenerateQuiz()
     private val calculateScore = CalculateScore()
     private val awardMedal = AwardMedal()
+    private val medalEligibility = MedalEligibility()
 
-    private val mutableQuizState = MutableStateFlow(QuizState(generateQuiz(mode, level, customRanges)))
+    private val mutableQuizState =
+        MutableStateFlow(QuizState(generateQuiz(operationType, level, quizRange)))
     val quizState: StateFlow<QuizState> = mutableQuizState
 
     private var currentQuizState: QuizState
@@ -40,13 +42,20 @@ internal class QuizViewModel(
         )
 
     val earnedMedal: Medal
-        get() {
-            if (!medalEligible) return Medal.Nothing
-            return awardMedal(
+        get() = if (
+            medalEligibility(
+                operationType = operationType,
+                level = level,
+                quizRange = quizRange
+            )
+        ) {
+            awardMedal(
                 isQuizComplete = currentQuizState.isQuizComplete,
                 correctCount = currentQuizState.correctCount,
                 totalCount = currentQuizState.quiz.questions.size
             )
+        } else {
+            Medal.Nothing
         }
 
     fun appendDigit(digit: Int) {

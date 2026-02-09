@@ -1,7 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.logic
 
 import com.vitantonio.nagauzzi.sansuukids.model.Level
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.Question
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
@@ -25,65 +24,54 @@ internal class GenerateQuiz(private val totalQuestions: Int = QUIZ_SIZE) {
     /**
      * 指定されたモードとレベルに基づいてクイズを生成する。
      *
-     * @param mode 計算モード（足し算、引き算、掛け算、割り算、または全て）
+     * @param operationType 計算モード（足し算、引き算、掛け算、割り算、または全て）
      * @param level 難易度レベル（かんたん、ふつう、むずかしい）
-     * @param customRanges カスタム出題範囲のリスト（空の場合はデフォルト範囲を使用）
+     * @param quizRange カスタム出題範囲（全ての場合）
      * @return 生成された10問のクイズ
      */
     operator fun invoke(
-        mode: Mode,
+        operationType: OperationType,
         level: Level,
-        customRanges: List<QuizRange> = emptyList()
+        quizRange: QuizRange
     ): Quiz {
         val random = Random
         val questions = mutableSetOf<Question>() // 問題の重複を避けるためSetを使用
         while (questions.size < totalQuestions) {
-            questions.add(generateQuestion(mode, level, random, customRanges))
+            questions.add(generateQuestion(operationType, level, random, quizRange))
         }
-        return Quiz(questions.toList(), mode, level)
+        return Quiz(questions.toList(), operationType, level)
     }
 }
 
 /**
- * モードとレベルに応じた問題を1問生成する。
+ * 演算タイプとレベルに応じた問題を1問生成する。
  *
- * @param mode 計算モード
+ * @param operationType 演算タイプ
  * @param level 難易度レベル
  * @param random 乱数生成器
- * @param customRanges カスタム出題範囲のリスト
+ * @param quizRange 出題範囲のリスト（演算タイプが全ての場合、決定した演算タイプと出題範囲のリストが噛み合わないことがあるので、デフォルトの出題範囲を強制適用する）
  * @return 生成された問題
  */
 private fun generateQuestion(
-    mode: Mode,
+    operationType: OperationType,
     level: Level,
     random: Random,
-    customRanges: List<QuizRange>
+    quizRange: QuizRange
 ): Question {
-    return when (mode) {
-        Mode.Addition -> generateAddition(
-            random,
-            customRanges.findRange(OperationType.Addition, level)
-        )
-        Mode.Subtraction -> generateSubtraction(
-            random,
-            customRanges.findRange(OperationType.Subtraction, level)
-        )
-        Mode.Multiplication -> generateMultiplication(
-            random,
-            customRanges.findRange(OperationType.Multiplication, level)
-        )
-        Mode.Division -> generateDivision(
-            random,
-            customRanges.findRange(OperationType.Division, level)
-        )
-        Mode.All -> {
+    return when (operationType) {
+        OperationType.Addition -> generateAddition(random, quizRange)
+        OperationType.Subtraction -> generateSubtraction(random, quizRange)
+        OperationType.Multiplication -> generateMultiplication(random, quizRange)
+        OperationType.Division -> generateDivision(random, quizRange)
+        OperationType.All -> {
             val randomMode = listOf(
-                Mode.Addition,
-                Mode.Subtraction,
-                Mode.Multiplication,
-                Mode.Division
+                OperationType.Addition,
+                OperationType.Subtraction,
+                OperationType.Multiplication,
+                OperationType.Division
             ).random(random)
-            generateQuestion(randomMode, level, random, customRanges)
+            val defaultRange = QuizRange.Default(randomMode, level)
+            generateQuestion(randomMode, level, random, defaultRange)
         }
     }
 }

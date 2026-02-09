@@ -13,7 +13,7 @@ import androidx.navigation3.ui.NavDisplay
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepositoryProvider
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.fake.FakeDifficultyRepository
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.fake.FakeSettingRepository
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
@@ -253,7 +253,7 @@ class NavigationIntegrationTest {
         // Then: レベル選択画面に遷移し、モードが足し算である
         assertEquals(3, navigationState.entries.size)
         val lastRoute = navigationState.entries.last() as LevelSelectionRoute
-        assertEquals(Mode.Addition, lastRoute.mode)
+        assertEquals(OperationType.Addition, lastRoute.operationType)
         onNodeWithTag("easy_button").assertIsDisplayed()
     }
 
@@ -263,7 +263,7 @@ class NavigationIntegrationTest {
         val backStack = mutableStateListOf(
             HomeRoute,
             ModeSelectionRoute,
-            LevelSelectionRoute(Mode.Addition)
+            LevelSelectionRoute(OperationType.Addition)
         )
         val navigationState = NavigationState(backStack)
 

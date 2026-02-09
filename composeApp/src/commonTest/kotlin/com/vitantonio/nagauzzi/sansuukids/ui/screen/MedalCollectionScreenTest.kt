@@ -8,7 +8,7 @@ import androidx.compose.ui.test.runComposeUiTest
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.model.MedalCounter
-import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -65,7 +65,7 @@ class MedalCollectionScreenTest {
                 MedalCollectionScreen(
                     medalCounters = listOf(
                         MedalCounter(
-                            mode = Mode.Addition,
+                            operationType = OperationType.Addition,
                             level = Level.Easy,
                             gold = 2,
                             silver = 1,
