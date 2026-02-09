@@ -38,7 +38,6 @@ internal fun DifficultyAdjustmentContent(
 ) {
     var draggingRange by remember { mutableStateOf<QuizRange?>(null) }
     val displayRange = draggingRange ?: quizRange
-    val defaultRange = QuizRange.Default(quizRange.operationType, quizRange.level)
 
     // 外部からの変更（リセット、永続化完了等）時にドラッグ状態をクリア
     LaunchedEffect(quizRange) {
