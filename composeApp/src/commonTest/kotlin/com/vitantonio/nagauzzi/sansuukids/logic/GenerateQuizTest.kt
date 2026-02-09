@@ -215,7 +215,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 掛け算の普通レベルでは6から19の数が生成される() {
+    fun 掛け算の普通レベルでは10から20の数が生成される() {
         // Given: 掛け算モードと普通レベルを指定する
         val operationType = OperationType.Multiplication
         val level = Level.Normal
@@ -225,11 +225,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(operationType, level, quizRange)
 
-        // Then: 全問の左右オペランドが6〜19である
+        // Then: 全問の左右オペランドが10〜20である
         assertTrue(quiz.questions.all { question ->
             question is Multiplication &&
-                    question.leftOperand in 6..19 &&
-                    question.rightOperand in 6..19
+                    question.leftOperand in 10..20 &&
+                    question.rightOperand in 10..20
         })
     }
 
@@ -273,7 +273,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 割り算の普通レベルでは6から19の数が生成される() {
+    fun 割り算の普通レベルでは10から20の数が生成される() {
         // Given: 割り算モードと普通レベルを指定する
         val operationType = OperationType.Division
         val level = Level.Normal
@@ -283,11 +283,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(operationType, level, quizRange)
 
-        // Then: 全問の除数と商が6〜19である
+        // Then: 全問の除数と商が10〜20である
         assertTrue(quiz.questions.all { question ->
             question is Division &&
-                    question.divisor in 6..19 &&
-                    question.correctAnswer in 6..19
+                    question.divisor in 10..20 &&
+                    question.correctAnswer in 10..20
         })
     }
 

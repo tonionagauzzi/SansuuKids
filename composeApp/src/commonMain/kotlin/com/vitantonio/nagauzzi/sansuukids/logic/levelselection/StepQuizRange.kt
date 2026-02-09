@@ -21,8 +21,8 @@ internal fun stepQuizRange(quizRange: QuizRange, newMin: Float, newMax: Float): 
     val roundedMinimum = roundToStep(newMin, minimumValue, maximumValue)
     val roundedMaximum = roundToStep(newMax, minimumValue, maximumValue)
 
-    // 最小値と最大値の差が10以上の場合にのみ変更を適用する（差が少なすぎると似たような問題しか出なくなるため）
-    return if (roundedMinimum + 10 <= roundedMaximum) {
+    // 最小値と最大値の差が5以上の場合にのみ変更を適用する（差が少なすぎると似たような問題しか出なくなるため）
+    return if (roundedMinimum + 5 <= roundedMaximum) {
         QuizRange.Custom(
             operationType = quizRange.operationType,
             level = quizRange.level,

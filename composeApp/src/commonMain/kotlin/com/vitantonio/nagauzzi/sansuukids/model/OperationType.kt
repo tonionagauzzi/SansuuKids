@@ -32,13 +32,13 @@ internal enum class OperationType {
 internal fun OperationType.getMinimumValue(level: Level) = when (this) {
     OperationType.Addition, OperationType.Subtraction, OperationType.All -> when (level) {
         Level.Easy -> 1
-        Level.Normal -> 1
+        Level.Normal -> 10
         Level.Difficult -> 100
     }
 
     OperationType.Multiplication, OperationType.Division -> when (level) {
         Level.Easy -> 1
-        Level.Normal -> 1
+        Level.Normal -> 5
         Level.Difficult -> 10
     }
 }
@@ -57,8 +57,8 @@ internal fun OperationType.getDefaultMinimumValue(level: Level) = when(this) {
     }
     OperationType.Multiplication, OperationType.Division -> when(level) {
         Level.Easy -> 1
-        Level.Normal -> 6
-        Level.Difficult -> 10
+        Level.Normal -> 10
+        Level.Difficult -> 20
     }
 }
 
@@ -71,12 +71,12 @@ internal fun OperationType.getDefaultMinimumValue(level: Level) = when(this) {
 internal fun OperationType.getDefaultMaximumValue(level: Level) = when(this) {
     OperationType.Addition, OperationType.Subtraction, OperationType.All -> when(level) {
         Level.Easy -> 9
-        Level.Normal -> 99
+        Level.Normal -> 100
         Level.Difficult -> 10000
     }
     OperationType.Multiplication, OperationType.Division -> when(level) {
         Level.Easy -> 9
-        Level.Normal -> 19
+        Level.Normal -> 20
         Level.Difficult -> 100
     }
 }
@@ -96,7 +96,7 @@ internal fun OperationType.getMaximumValue(level: Level) = when (this) {
 
     OperationType.Multiplication, OperationType.Division -> when (level) {
         Level.Easy -> 20
-        Level.Normal -> 100
+        Level.Normal -> 50
         Level.Difficult -> 200
     }
 }

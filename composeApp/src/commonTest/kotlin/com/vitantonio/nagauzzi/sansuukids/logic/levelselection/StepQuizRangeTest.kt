@@ -17,7 +17,7 @@ class StepQuizRangeTest {
         assertEquals(1, stepQuizRange(quizRange, 1f, 20f).min)
         assertEquals(5, stepQuizRange(quizRange, 5f, 20f).min)
         assertEquals(10, stepQuizRange(quizRange, 10f, 20f).min)
-        assertEquals(19, stepQuizRange(quizRange, 19f, 20f).min)
+        assertEquals(15, stepQuizRange(quizRange, 15f, 20f).min)
     }
 
     @Test
