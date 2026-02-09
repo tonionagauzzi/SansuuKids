@@ -21,8 +21,6 @@ class DifficultyAdjustmentScreenTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentScreen(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
                     onQuizRangeChanged = {},
                     onReset = {},
@@ -44,8 +42,6 @@ class DifficultyAdjustmentScreenTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentScreen(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
                     onQuizRangeChanged = {},
                     onReset = {},
@@ -67,8 +63,6 @@ class DifficultyAdjustmentScreenTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentScreen(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
                     onQuizRangeChanged = {},
                     onReset = {},
@@ -89,8 +83,6 @@ class DifficultyAdjustmentScreenTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentScreen(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
                     onQuizRangeChanged = {},
                     onReset = {},
@@ -111,8 +103,6 @@ class DifficultyAdjustmentScreenTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentScreen(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
                     onQuizRangeChanged = {},
                     onReset = {},
@@ -133,8 +123,6 @@ class DifficultyAdjustmentScreenTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentScreen(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = QuizRange.Custom(
                         operationType = OperationType.Addition,
                         level = Level.Normal,
@@ -160,8 +148,6 @@ class DifficultyAdjustmentScreenTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentScreen(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = QuizRange.Custom(
                         operationType = OperationType.Addition,
                         level = Level.Normal,
@@ -187,8 +173,6 @@ class DifficultyAdjustmentScreenTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentScreen(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = QuizRange.Custom(
                         operationType = OperationType.Addition,
                         level = Level.Normal,

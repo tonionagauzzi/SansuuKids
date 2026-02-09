@@ -20,8 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.logic.levelselection.stepQuizRange
-import com.vitantonio.nagauzzi.sansuukids.model.Level
-import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.model.getMaximumValue
 import com.vitantonio.nagauzzi.sansuukids.model.getMinimumValue
@@ -33,14 +31,13 @@ import sansuukids.composeapp.generated.resources.difficulty_range_label
 
 @Composable
 internal fun DifficultyAdjustmentContent(
-    level: Level,
-    operationType: OperationType,
     quizRange: QuizRange,
     onQuizRangeChanged: (newRange: QuizRange) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var draggingRange by remember { mutableStateOf<QuizRange?>(null) }
     val displayRange = draggingRange ?: quizRange
+    val defaultRange = QuizRange.Default(quizRange.operationType, quizRange.level)
 
     // 外部からの変更（リセット、永続化完了等）時にドラッグ状態をクリア
     LaunchedEffect(quizRange) {
@@ -56,8 +53,8 @@ internal fun DifficultyAdjustmentContent(
     ) {
         OperationRangeSlider(
             quizRange = displayRange,
-            medalDisabled = displayRange.min < QuizRange.Default(operationType, level).min ||
-                    displayRange.max < QuizRange.Default(operationType, level).max,
+            medalDisabled = displayRange.min < defaultRange.min ||
+                    displayRange.max < defaultRange.max,
             onQuizRangeChanging = { newRange -> draggingRange = newRange },
             onQuizRangeChangeFinished = {
                 draggingRange?.let { onQuizRangeChanged(it) }

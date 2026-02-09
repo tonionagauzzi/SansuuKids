@@ -99,7 +99,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 足し算の普通レベルでは10から99の数が生成される() {
+    fun 足し算の普通レベルでは10から100の数が生成される() {
         // Given: 足し算モードと普通レベルを指定する
         val operationType = OperationType.Addition
         val level = Level.Normal
@@ -109,11 +109,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(operationType, level, quizRange)
 
-        // Then: 全問の左右オペランドが10〜99である
+        // Then: 全問の左右オペランドが10〜100である
         assertTrue(quiz.questions.all { question ->
             question is Addition &&
-                    question.leftOperand in 10..99 &&
-                    question.rightOperand in 10..99
+                    question.leftOperand in 10..100 &&
+                    question.rightOperand in 10..100
         })
     }
 
@@ -157,7 +157,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 引き算の普通レベルでは10から99の数が生成される() {
+    fun 引き算の普通レベルでは10から100の数が生成される() {
         // Given: 引き算モードと普通レベルを指定する
         val operationType = OperationType.Subtraction
         val level = Level.Normal
@@ -167,11 +167,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(operationType, level, quizRange)
 
-        // Then: 全問の左右オペランドが10〜99である
+        // Then: 全問の左右オペランドが10〜100である
         assertTrue(quiz.questions.all { question ->
             question is Subtraction &&
-                    question.leftOperand in 10..99 &&
-                    question.rightOperand in 10..99
+                    question.leftOperand in 10..100 &&
+                    question.rightOperand in 10..100
         })
     }
 

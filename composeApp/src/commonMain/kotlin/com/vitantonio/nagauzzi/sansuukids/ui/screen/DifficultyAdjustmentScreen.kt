@@ -29,8 +29,6 @@ import sansuukids.composeapp.generated.resources.difficulty_reset
 
 @Composable
 internal fun DifficultyAdjustmentScreen(
-    level: Level,
-    operationType: OperationType,
     quizRange: QuizRange,
     onQuizRangeChanged: (newRange: QuizRange) -> Unit,
     onReset: (OperationType) -> Unit,
@@ -51,7 +49,7 @@ internal fun DifficultyAdjustmentScreen(
             AppHeader(
                 title = stringResource(
                     Res.string.difficulty_adjustment_title,
-                    stringResource(level.labelRes)
+                    stringResource(quizRange.level.labelRes)
                 ),
                 actionString = stringResource(Res.string.difficulty_reset),
                 isMultiLine = !isLandscape,
@@ -59,12 +57,10 @@ internal fun DifficultyAdjustmentScreen(
                     .fillMaxWidth()
                     .testTag("difficulty_adjustment_title"),
                 onBackClick = onBackClick,
-                onActionClick = { onReset(operationType) }
+                onActionClick = { onReset(quizRange.operationType) }
             )
 
             DifficultyAdjustmentContent(
-                level = level,
-                operationType = operationType,
                 quizRange = quizRange,
                 onQuizRangeChanged = onQuizRangeChanged,
                 modifier = Modifier
@@ -81,8 +77,6 @@ internal fun DifficultyAdjustmentScreen(
 private fun DifficultyAdjustmentScreenPreview() {
     SansuuKidsTheme {
         DifficultyAdjustmentScreen(
-            level = Level.Normal,
-            operationType = OperationType.Addition,
             quizRange = QuizRange.Custom(OperationType.Addition, Level.Difficult, 1, 9999),
             onQuizRangeChanged = { _ -> },
             onReset = {},

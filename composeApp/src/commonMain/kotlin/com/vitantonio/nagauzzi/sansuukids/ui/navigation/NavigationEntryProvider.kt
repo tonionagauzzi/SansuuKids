@@ -112,11 +112,10 @@ internal fun navigationEntryProvider(
                     scope.launch {
                         navigationState.navigateTo(
                             QuizRoute(
-                                operationType = key.operationType,
-                                level = level,
-                                quizRange = difficultyRepository
-                                    .getQuizRange(key.operationType, level)
-                                    .first()
+                                quizRange = difficultyRepository.getQuizRange(
+                                    operationType = key.operationType,
+                                    level = level
+                                ).first()
                             )
                         )
                     }
@@ -135,14 +134,12 @@ internal fun navigationEntryProvider(
 
         is DifficultyAdjustmentRoute -> NavEntry(key) {
             val scope = rememberCoroutineScope()
-            val quizRange by difficultyRepository.getQuizRange(key.operationType, key.level)
-                .collectAsStateWithLifecycle(
-                    initialValue = QuizRange.Default(key.operationType, key.level)
-                )
+            val operationType = key.operationType
+            val level = key.level
+            val quizRange by difficultyRepository.getQuizRange(operationType, level)
+                .collectAsStateWithLifecycle(initialValue = QuizRange.Default(operationType, level))
 
             DifficultyAdjustmentScreen(
-                level = key.level,
-                operationType = key.operationType,
                 quizRange = quizRange,
                 onQuizRangeChanged = { newRange ->
                     scope.launch {
@@ -151,7 +148,7 @@ internal fun navigationEntryProvider(
                 },
                 onReset = { operationType ->
                     scope.launch {
-                        difficultyRepository.resetToDefault(operationType, key.level)
+                        difficultyRepository.resetToDefault(operationType, level)
                     }
                 },
                 onBackClick = { navigationState.navigateBack() }
@@ -159,26 +156,22 @@ internal fun navigationEntryProvider(
         }
 
         is QuizRoute -> NavEntry(key) {
-            val viewModel = viewModel {
-                QuizViewModel(
-                    operationType = key.operationType,
-                    level = key.level,
-                    quizRange = key.quizRange,
-                )
-            }
+            val viewModel = viewModel { QuizViewModel(quizRange = key.quizRange) }
+            val operationType = key.quizRange.operationType
+            val level = key.quizRange.level
             val quizState by viewModel.quizState.collectAsStateWithLifecycle()
 
             LaunchedEffect(quizState.isQuizComplete) {
                 if (quizState.isQuizComplete) {
                     medalRepository.add(
-                        operationType = key.operationType,
-                        level = key.level,
+                        operationType = operationType,
+                        level = level,
                         medal = viewModel.earnedMedal
                     )
                     navigationState.navigateTo(
                         ResultRoute(
-                            operationType = key.operationType,
-                            level = key.level,
+                            operationType = operationType,
+                            level = level,
                             score = viewModel.earnedScore,
                             medal = viewModel.earnedMedal,
                             questions = quizState.quiz.questions,
@@ -196,7 +189,7 @@ internal fun navigationEntryProvider(
             QuizScreen(
                 quizState = quizState,
                 perQuestionAnswerCheckEnabled = perQuestionAnswerCheckEnabled,
-                hintDisplayEnabled = hintDisplayEnabled && key.level == Level.Easy,
+                hintDisplayEnabled = hintDisplayEnabled && level == Level.Easy,
                 onDigitClick = { digit -> viewModel.appendDigit(digit) },
                 onDeleteClick = { viewModel.deleteLastDigit() },
                 onSubmitClick = { viewModel.submitAnswer() },

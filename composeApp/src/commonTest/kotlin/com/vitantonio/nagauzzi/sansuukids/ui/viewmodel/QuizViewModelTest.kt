@@ -19,8 +19,7 @@ class QuizViewModelTest {
         operationType: OperationType = OperationType.Addition,
         level: Level = Level.Easy
     ): QuizViewModel {
-        val quizRange = QuizRange.Default(operationType, level)
-        return QuizViewModel(operationType, level, quizRange)
+        return QuizViewModel(QuizRange.Default(operationType, level))
     }
 
     @Test

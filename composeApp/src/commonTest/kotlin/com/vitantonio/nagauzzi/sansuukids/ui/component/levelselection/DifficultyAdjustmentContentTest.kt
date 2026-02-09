@@ -27,8 +27,6 @@ internal class DifficultyAdjustmentContentTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentContent(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
                     onQuizRangeChanged = { callCount++ }
                 )
@@ -50,8 +48,6 @@ internal class DifficultyAdjustmentContentTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentContent(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = quizRange,
                     onQuizRangeChanged = { callCount++ }
                 )
@@ -77,8 +73,6 @@ internal class DifficultyAdjustmentContentTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentContent(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = quizRange,
                     onQuizRangeChanged = {}
                 )
@@ -103,8 +97,6 @@ internal class DifficultyAdjustmentContentTest {
         setContent {
             SansuuKidsTheme {
                 DifficultyAdjustmentContent(
-                    level = Level.Normal,
-                    operationType = OperationType.Addition,
                     quizRange = quizRange,
                     onQuizRangeChanged = {}
                 )

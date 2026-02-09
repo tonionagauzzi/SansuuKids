@@ -5,9 +5,7 @@ import com.vitantonio.nagauzzi.sansuukids.logic.quiz.AwardMedal
 import com.vitantonio.nagauzzi.sansuukids.logic.quiz.CalculateScore
 import com.vitantonio.nagauzzi.sansuukids.logic.quiz.GenerateQuiz
 import com.vitantonio.nagauzzi.sansuukids.logic.quiz.MedalEligibility
-import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
-import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
@@ -16,14 +14,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 internal class QuizViewModel(
-    private val operationType: OperationType,
-    private val level: Level,
     private val quizRange: QuizRange
 ) : ViewModel() {
     private val generateQuiz = GenerateQuiz()
     private val calculateScore = CalculateScore()
     private val awardMedal = AwardMedal()
     private val medalEligibility = MedalEligibility()
+
+    private val operationType get() = quizRange.operationType
+    private val level get() = quizRange.level
 
     private val mutableQuizState =
         MutableStateFlow(QuizState(generateQuiz(operationType, level, quizRange)))
