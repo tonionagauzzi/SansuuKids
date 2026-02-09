@@ -1,4 +1,4 @@
-package com.vitantonio.nagauzzi.sansuukids.ui.component.modeselection
+package com.vitantonio.nagauzzi.sansuukids.ui.component.operationtypeselection
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,7 +31,7 @@ private data class ModeButtonConfig(
 )
 
 @Composable
-internal fun ModeSelectionContent(
+internal fun OperationTypeSelectionContent(
     isLandscape: Boolean,
     onAdditionClick: () -> Unit,
     onSubtractionClick: () -> Unit,

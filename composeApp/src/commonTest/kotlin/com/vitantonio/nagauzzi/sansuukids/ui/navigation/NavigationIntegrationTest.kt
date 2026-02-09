@@ -19,7 +19,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.navigation.fake.FakeSettingReposito
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.MedalCollectionRoute
-import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.OperationTypeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SettingRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
@@ -103,7 +103,7 @@ class NavigationIntegrationTest {
 
         // Then: モード選択画面に遷移する
         assertEquals(2, navigationState.entries.size)
-        assertEquals(ModeSelectionRoute, navigationState.entries.last())
+        assertEquals(OperationTypeSelectionRoute, navigationState.entries.last())
         onNodeWithTag("addition_button").assertIsDisplayed()
     }
 
@@ -145,7 +145,7 @@ class NavigationIntegrationTest {
     @Test
     fun モード選択画面で戻ると前のホーム画面に戻る() = runComposeUiTest {
         // Given: モード選択画面を表示する
-        val backStack = mutableStateListOf(HomeRoute, ModeSelectionRoute)
+        val backStack = mutableStateListOf(HomeRoute, OperationTypeSelectionRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {
@@ -222,7 +222,7 @@ class NavigationIntegrationTest {
     @Test
     fun モード選択画面でたしざんを押すとレベル選択画面に遷移する() = runComposeUiTest {
         // Given: モード選択画面を表示する
-        val backStack = mutableStateListOf(HomeRoute, ModeSelectionRoute)
+        val backStack = mutableStateListOf(HomeRoute, OperationTypeSelectionRoute)
         val navigationState = NavigationState(backStack)
 
         setContent {
@@ -262,7 +262,7 @@ class NavigationIntegrationTest {
         // Given: レベル選択画面を表示する
         val backStack = mutableStateListOf(
             HomeRoute,
-            ModeSelectionRoute,
+            OperationTypeSelectionRoute,
             LevelSelectionRoute(OperationType.Addition)
         )
         val navigationState = NavigationState(backStack)
@@ -295,7 +295,7 @@ class NavigationIntegrationTest {
 
         // Then: モード選択画面に戻る
         assertEquals(2, navigationState.entries.size)
-        assertEquals(ModeSelectionRoute, navigationState.entries.last())
+        assertEquals(OperationTypeSelectionRoute, navigationState.entries.last())
         onNodeWithTag("addition_button").assertIsDisplayed()
     }
 

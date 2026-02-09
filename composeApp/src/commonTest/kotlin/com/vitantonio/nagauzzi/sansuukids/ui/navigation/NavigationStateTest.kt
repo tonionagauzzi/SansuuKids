@@ -6,7 +6,7 @@ import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute as TestRouteA
-import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute as TestRouteB
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.OperationTypeSelectionRoute as TestRouteB
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import kotlin.test.Test

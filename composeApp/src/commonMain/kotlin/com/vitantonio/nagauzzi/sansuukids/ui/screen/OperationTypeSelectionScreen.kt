@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
-import com.vitantonio.nagauzzi.sansuukids.ui.component.modeselection.ModeSelectionContent
+import com.vitantonio.nagauzzi.sansuukids.ui.component.operationtypeselection.OperationTypeSelectionContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -24,7 +24,7 @@ import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.mode_selection_title
 
 @Composable
-fun ModeSelectionScreen(
+fun OperationTypeSelectionScreen(
     onAdditionClick: () -> Unit,
     onSubtractionClick: () -> Unit,
     onMultiplicationClick: () -> Unit,
@@ -59,7 +59,7 @@ fun ModeSelectionScreen(
                     .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
-                ModeSelectionContent(
+                OperationTypeSelectionContent(
                     isLandscape = isLandscape,
                     onAdditionClick = onAdditionClick,
                     onSubtractionClick = onSubtractionClick,
@@ -77,9 +77,9 @@ fun ModeSelectionScreen(
 @Preview(widthDp = 480, heightDp = 480) // 正方形画面
 @Preview(widthDp = 481, heightDp = 480) // 僅かに横画面
 @Composable
-private fun ModeSelectionScreenPreview() {
+private fun OperationTypeSelectionScreenPreview() {
     SansuuKidsTheme {
-        ModeSelectionScreen(
+        OperationTypeSelectionScreen(
             onAdditionClick = {},
             onSubtractionClick = {},
             onMultiplicationClick = {},

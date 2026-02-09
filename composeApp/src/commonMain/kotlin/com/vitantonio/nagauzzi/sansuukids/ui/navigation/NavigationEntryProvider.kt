@@ -17,7 +17,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.DifficultyAdjustment
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.MedalCollectionRoute
-import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ModeSelectionRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.OperationTypeSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ResultRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
@@ -28,7 +28,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.screen.DifficultyAdjustmentScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.HomeScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.LevelSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.MedalCollectionScreen
-import com.vitantonio.nagauzzi.sansuukids.ui.screen.ModeSelectionScreen
+import com.vitantonio.nagauzzi.sansuukids.ui.screen.OperationTypeSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.QuizScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.ResultScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.SettingScreen
@@ -45,7 +45,7 @@ internal fun navigationEntryProvider(
     return when (key) {
         HomeRoute -> NavEntry(key) {
             HomeScreen(
-                onStartClick = { navigationState.navigateTo(ModeSelectionRoute) },
+                onStartClick = { navigationState.navigateTo(OperationTypeSelectionRoute) },
                 onMedalCollectionClick = { navigationState.navigateTo(MedalCollectionRoute) },
                 onSettingClick = { navigationState.navigateTo(SettingRoute) }
             )
@@ -82,8 +82,8 @@ internal fun navigationEntryProvider(
             )
         }
 
-        ModeSelectionRoute -> NavEntry(key) {
-            ModeSelectionScreen(
+        OperationTypeSelectionRoute -> NavEntry(key) {
+            OperationTypeSelectionScreen(
                 onAdditionClick = {
                     navigationState.navigateTo(LevelSelectionRoute(OperationType.Addition))
                 },
@@ -224,7 +224,7 @@ internal fun navigationEntryProvider(
                 },
                 onRetryClick = {
                     navigationState.popToHome()
-                    navigationState.navigateTo(ModeSelectionRoute)
+                    navigationState.navigateTo(OperationTypeSelectionRoute)
                 },
                 onHomeClick = {
                     navigationState.popToHome()
