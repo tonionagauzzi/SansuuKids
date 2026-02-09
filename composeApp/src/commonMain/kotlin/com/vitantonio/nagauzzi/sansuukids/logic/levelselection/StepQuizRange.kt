@@ -20,15 +20,17 @@ internal fun stepQuizRange(quizRange: QuizRange, newMin: Float, newMax: Float): 
     val maximumValue = quizRange.operationType.getMaximumValue(quizRange.level)
     val roundedMinimum = roundToStep(newMin, minimumValue, maximumValue)
     val roundedMaximum = roundToStep(newMax, minimumValue, maximumValue)
-    if (roundedMinimum < roundedMaximum) {
-        return QuizRange.Custom(
+
+    // 最小値と最大値の差が10以上の場合にのみ変更を適用する（差が少なすぎると似たような問題しか出なくなるため）
+    return if (roundedMinimum + 10 <= roundedMaximum) {
+        QuizRange.Custom(
             operationType = quizRange.operationType,
             level = quizRange.level,
             min = roundedMinimum,
             max = roundedMaximum
         )
     } else {
-        return quizRange
+        quizRange
     }
 }
 
