@@ -2,15 +2,10 @@ package com.vitantonio.nagauzzi.sansuukids.ui.component.levelselection
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.Text
@@ -19,74 +14,41 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
 import org.jetbrains.compose.resources.stringResource
 import sansuukids.composeapp.generated.resources.Res
-import sansuukids.composeapp.generated.resources.difficulty_adjustment_title
-import sansuukids.composeapp.generated.resources.difficulty_close
-import sansuukids.composeapp.generated.resources.difficulty_max_value
 import sansuukids.composeapp.generated.resources.difficulty_medal_disabled
-import sansuukids.composeapp.generated.resources.difficulty_min_value
 import sansuukids.composeapp.generated.resources.difficulty_range_label
-import sansuukids.composeapp.generated.resources.difficulty_reset
 
 private const val SLIDER_MIN_VALUE = 1
 
 @Composable
-internal fun DifficultyAdjustmentDialog(
+internal fun DifficultyAdjustmentContent(
     level: Level,
     operationType: OperationType,
     quizRange: QuizRange,
     onRangeChanged: (OperationType, Int, Int) -> Unit,
-    onReset: (OperationType) -> Unit,
-    onDismiss: () -> Unit
+    modifier: Modifier = Modifier
 ) {
-    Dialog(onDismissRequest = onDismiss) {
-        Card(
-            modifier = Modifier.testTag("difficulty_dialog"),
-            shape = RoundedCornerShape(16.dp),
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(24.dp)
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Text(
-                    text = stringResource(Res.string.difficulty_adjustment_title),
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.testTag("difficulty_dialog_title")
-                )
-
-                Text(
-                    text = stringResource(level.labelRes),
-                    style = MaterialTheme.typography.titleSmall
-                )
-
-                OperationRangeSlider(
-                    operationType = operationType,
-                    currentMin = quizRange.min,
-                    currentMax = quizRange.max,
-                    sliderMax = getSliderMax(operationType, level),
-                    step = getSliderStep(operationType, level),
-                    medalDisabled = quizRange.min < QuizRange.Default(operationType, level).min,
-                    onRangeChanged = { min, max -> onRangeChanged(operationType, min, max) },
-                    onReset = { onReset(operationType) }
-                )
-
-                Button(
-                    onClick = onDismiss,
-                    modifier = Modifier.testTag("difficulty_close_button")
-                ) {
-                    Text(text = stringResource(Res.string.difficulty_close))
-                }
-            }
-        }
+    Column(
+        modifier = modifier
+            .padding(24.dp)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        OperationRangeSlider(
+            operationType = operationType,
+            currentMin = quizRange.min,
+            currentMax = quizRange.max,
+            sliderMax = getSliderMax(operationType, level),
+            step = getSliderStep(operationType, level),
+            medalDisabled = quizRange.min < QuizRange.Default(operationType, level).min,
+            onRangeChanged = { min, max -> onRangeChanged(operationType, min, max) }
+        )
     }
 }
 
@@ -98,8 +60,7 @@ private fun OperationRangeSlider(
     sliderMax: Int,
     step: Int,
     medalDisabled: Boolean,
-    onRangeChanged: (Int, Int) -> Unit,
-    onReset: () -> Unit
+    onRangeChanged: (Int, Int) -> Unit
 ) {
     val tag = operationType.name.lowercase()
     val steps = maxOf(0, ((sliderMax - SLIDER_MIN_VALUE) / step) - 1)
@@ -111,17 +72,19 @@ private fun OperationRangeSlider(
         Text(
             text = stringResource(
                 Res.string.difficulty_range_label,
-                stringResource(operationType.labelRes)
+                stringResource(operationType.labelRes),
+                currentMin,
+                currentMax
             ),
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.testTag("difficulty_label_$tag")
         )
 
         RangeSlider(
             value = currentMin.toFloat()..currentMax.toFloat(),
             onValueChange = { range ->
-                val newMin = roundToStep(range.start, step, SLIDER_MIN_VALUE)
-                val newMax = roundToStep(range.endInclusive, step, SLIDER_MIN_VALUE)
+                val newMin = roundToStep(range.start, step)
+                val newMax = roundToStep(range.endInclusive, step)
                 if (newMin <= newMax) {
                     onRangeChanged(newMin, newMax)
                 }
@@ -133,22 +96,6 @@ private fun OperationRangeSlider(
                 .testTag("difficulty_slider_$tag")
         )
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = stringResource(Res.string.difficulty_min_value, currentMin),
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.testTag("difficulty_min_$tag")
-            )
-            Text(
-                text = stringResource(Res.string.difficulty_max_value, currentMax),
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.testTag("difficulty_max_$tag")
-            )
-        }
-
         if (medalDisabled) {
             Text(
                 text = stringResource(Res.string.difficulty_medal_disabled),
@@ -157,24 +104,13 @@ private fun OperationRangeSlider(
                 modifier = Modifier.testTag("difficulty_warning_$tag")
             )
         }
-
-        Button(
-            onClick = onReset,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-            ),
-            modifier = Modifier.testTag("difficulty_reset_$tag")
-        ) {
-            Text(text = stringResource(Res.string.difficulty_reset))
-        }
     }
 }
 
-private fun roundToStep(value: Float, step: Int, min: Int): Int {
-    val offset = value - min
-    val rounded = (offset / step).toInt() * step + min
-    return rounded.coerceAtLeast(min)
+private fun roundToStep(value: Float, step: Int): Int {
+    val offset = value - SLIDER_MIN_VALUE
+    val rounded = (offset / step).toInt() * step + SLIDER_MIN_VALUE
+    return rounded.coerceAtLeast(SLIDER_MIN_VALUE)
 }
 
 /**

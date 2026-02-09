@@ -1,7 +1,9 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,28 +30,52 @@ import sansuukids.composeapp.generated.resources.quiz_back
 @Composable
 internal fun AppHeader(
     title: String,
+    actionString: String = "",
     isMultiLine: Boolean,
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onActionClick: () -> Unit = {}
 ) {
     Column(modifier = modifier) {
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
-            Button(
-                onClick = onBackClick,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
-                    contentColor = MaterialTheme.colorScheme.onErrorContainer
-                ),
-                modifier = Modifier
-                    .height(64.dp)
-                    .testTag("back_button"),
-                shape = RoundedCornerShape(12.dp),
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    painter = painterResource(Res.drawable.arrow_back),
-                    contentDescription = stringResource(Res.string.quiz_back),
-                    modifier = Modifier.size(32.dp)
-                )
+                Button(
+                    onClick = onBackClick,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                        contentColor = MaterialTheme.colorScheme.onErrorContainer
+                    ),
+                    modifier = Modifier
+                        .height(64.dp)
+                        .testTag("back_button"),
+                    shape = RoundedCornerShape(12.dp),
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.arrow_back),
+                        contentDescription = stringResource(Res.string.quiz_back),
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+
+                if (!actionString.isEmpty()) {
+                    Button(
+                        onClick = onActionClick,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                        ),
+                        modifier = Modifier
+                            .height(48.dp)
+                            .testTag("action_button"),
+                        shape = RoundedCornerShape(12.dp),
+                    ) {
+                        Text(text = actionString)
+                    }
+                }
             }
 
             if (!isMultiLine) {

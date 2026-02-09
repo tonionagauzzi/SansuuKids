@@ -2,10 +2,7 @@ package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
@@ -15,8 +12,8 @@ import com.vitantonio.nagauzzi.sansuukids.data.SettingRepository
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
-import com.vitantonio.nagauzzi.sansuukids.ui.component.levelselection.DifficultyAdjustmentDialog
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.AnswerCheckRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.DifficultyAdjustmentRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.MedalCollectionRoute
@@ -27,6 +24,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SettingRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.viewmodel.QuizViewModel
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.AnswerCheckScreen
+import com.vitantonio.nagauzzi.sansuukids.ui.screen.DifficultyAdjustmentScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.HomeScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.LevelSelectionScreen
 import com.vitantonio.nagauzzi.sansuukids.ui.screen.MedalCollectionScreen
@@ -107,34 +105,6 @@ internal fun navigationEntryProvider(
 
         is LevelSelectionRoute -> NavEntry(key) {
             val scope = rememberCoroutineScope()
-            var showDifficultyDialog by remember { mutableStateOf<Level?>(null) }
-
-            showDifficultyDialog?.let { level ->
-                val quizRange by difficultyRepository.getCustomRange(key.operationType, level)
-                    .collectAsStateWithLifecycle(
-                        initialValue = QuizRange.Default(
-                            key.operationType,
-                            level
-                        )
-                    )
-
-                DifficultyAdjustmentDialog(
-                    level = level,
-                    operationType = key.operationType,
-                    quizRange = quizRange,
-                    onRangeChanged = { operationType, min, max ->
-                        scope.launch {
-                            difficultyRepository.setCustomRange(operationType, level, min, max)
-                        }
-                    },
-                    onReset = { operationType ->
-                        scope.launch {
-                            difficultyRepository.resetToDefault(operationType, level)
-                        }
-                    },
-                    onDismiss = { showDifficultyDialog = null }
-                )
-            }
 
             LevelSelectionScreen(
                 onClick = { level ->
@@ -149,9 +119,40 @@ internal fun navigationEntryProvider(
                             )
                         )
                     }
-
                 },
-                onSettingClick = { level -> showDifficultyDialog = level },
+                onSettingClick = { level ->
+                    navigationState.navigateTo(
+                        DifficultyAdjustmentRoute(
+                            operationType = key.operationType,
+                            level = level
+                        )
+                    )
+                },
+                onBackClick = { navigationState.navigateBack() }
+            )
+        }
+
+        is DifficultyAdjustmentRoute -> NavEntry(key) {
+            val scope = rememberCoroutineScope()
+            val quizRange by difficultyRepository.getCustomRange(key.operationType, key.level)
+                .collectAsStateWithLifecycle(
+                    initialValue = QuizRange.Default(key.operationType, key.level)
+                )
+
+            DifficultyAdjustmentScreen(
+                level = key.level,
+                operationType = key.operationType,
+                quizRange = quizRange,
+                onRangeChanged = { operationType, min, max ->
+                    scope.launch {
+                        difficultyRepository.setCustomRange(operationType, key.level, min, max)
+                    }
+                },
+                onReset = { operationType ->
+                    scope.launch {
+                        difficultyRepository.resetToDefault(operationType, key.level)
+                    }
+                },
                 onBackClick = { navigationState.navigateBack() }
             )
         }
