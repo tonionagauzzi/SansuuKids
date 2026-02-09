@@ -26,6 +26,7 @@ import sansuukids.composeapp.generated.resources.level_selection_title
 
 @Composable
 internal fun LevelSelectionScreen(
+    isEnabledSetting: Boolean,
     onClick: (Level) -> Unit,
     onSettingClick: (Level) -> Unit,
     onBackClick: () -> Unit,
@@ -58,6 +59,7 @@ internal fun LevelSelectionScreen(
                 contentAlignment = Alignment.Center
             ) {
                 LevelSelectionContent(
+                    isEnabledSetting = isEnabledSetting,
                     onEasyClick = {
                         onClick(Level.Easy)
                     },
@@ -87,6 +89,7 @@ internal fun LevelSelectionScreen(
 private fun LevelSelectionScreenPreview() {
     SansuuKidsTheme {
         LevelSelectionScreen(
+            isEnabledSetting = true,
             onClick = {},
             onSettingClick = {},
             onBackClick = {},

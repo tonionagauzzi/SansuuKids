@@ -107,6 +107,7 @@ internal fun navigationEntryProvider(
             val scope = rememberCoroutineScope()
 
             LevelSelectionScreen(
+                isEnabledSetting = key.operationType != OperationType.All,
                 onClick = { level ->
                     scope.launch {
                         navigationState.navigateTo(

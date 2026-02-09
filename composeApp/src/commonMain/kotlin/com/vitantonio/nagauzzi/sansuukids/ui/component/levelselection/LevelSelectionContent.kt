@@ -28,6 +28,7 @@ import sansuukids.composeapp.generated.resources.settings
 
 @Composable
 internal fun LevelSelectionContent(
+    isEnabledSetting: Boolean,
     onEasyClick: () -> Unit,
     onNormalClick: () -> Unit,
     onDifficultClick: () -> Unit,
@@ -43,6 +44,7 @@ internal fun LevelSelectionContent(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             text = stringResource(Res.string.level_easy),
+            isEnabledSetting = isEnabledSetting,
             onClick = onEasyClick,
             onSettingClick = { onSettingClick(Level.Easy) },
             buttonTestTag = "easy_button",
@@ -53,6 +55,7 @@ internal fun LevelSelectionContent(
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             text = stringResource(Res.string.level_normal),
+            isEnabledSetting = isEnabledSetting,
             onClick = onNormalClick,
             onSettingClick = { onSettingClick(Level.Normal) },
             buttonTestTag = "normal_button",
@@ -63,6 +66,7 @@ internal fun LevelSelectionContent(
             containerColor = MaterialTheme.colorScheme.tertiaryContainer,
             contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
             text = stringResource(Res.string.level_difficult),
+            isEnabledSetting = isEnabledSetting,
             onClick = onDifficultClick,
             onSettingClick = { onSettingClick(Level.Difficult) },
             buttonTestTag = "difficult_button",
@@ -76,6 +80,7 @@ private fun LevelButtonRow(
     containerColor: Color,
     contentColor: Color,
     text: String,
+    isEnabledSetting: Boolean,
     onClick: () -> Unit,
     onSettingClick: () -> Unit,
     buttonTestTag: String,
@@ -98,16 +103,18 @@ private fun LevelButtonRow(
                 .testTag(buttonTestTag)
         )
 
-        IconButton(
-            onClick = onSettingClick,
-            modifier = Modifier.testTag(settingsTestTag)
-        ) {
-            Icon(
-                painter = painterResource(Res.drawable.settings),
-                contentDescription = stringResource(Res.string.setting),
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(48.dp)
-            )
+        if (isEnabledSetting) {
+            IconButton(
+                onClick = onSettingClick,
+                modifier = Modifier.testTag(settingsTestTag)
+            ) {
+                Icon(
+                    painter = painterResource(Res.drawable.settings),
+                    contentDescription = stringResource(Res.string.setting),
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(48.dp)
+                )
+            }
         }
     }
 }
