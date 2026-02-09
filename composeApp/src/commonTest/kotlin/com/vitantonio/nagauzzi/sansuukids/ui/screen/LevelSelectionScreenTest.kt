@@ -34,6 +34,27 @@ class LevelSelectionScreenTest {
     }
 
     @Test
+    fun かんたんの設定アイコンを押すとonSettingClickにEasyが渡される() = runComposeUiTest {
+        // Given: レベル選択画面を表示し、クリック状態を追跡する
+        var clickedLevel: Level? = null
+        setContent {
+            SansuuKidsTheme {
+                LevelSelectionScreen(
+                    onClick = {},
+                    onSettingClick = { clickedLevel = it },
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // When: かんたんの設定アイコンをクリックする
+        onNodeWithTag("easy_setting_button").performClick()
+
+        // Then: onSettingClickにEasyが渡される
+        assertEquals(Level.Easy, clickedLevel)
+    }
+
+    @Test
     fun ふつうボタンを押すとonClickにNormalが渡される() = runComposeUiTest {
         // Given: レベル選択画面を表示し、クリック状態を追跡する
         var clickedLevel: Level? = null
@@ -55,6 +76,27 @@ class LevelSelectionScreenTest {
     }
 
     @Test
+    fun ふつうの設定アイコンを押すとonSettingClickにNormalが渡される() = runComposeUiTest {
+        // Given: レベル選択画面を表示し、クリック状態を追跡する
+        var clickedLevel: Level? = null
+        setContent {
+            SansuuKidsTheme {
+                LevelSelectionScreen(
+                    onClick = {},
+                    onSettingClick = { clickedLevel = it },
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // When: ふつうの設定アイコンをクリックする
+        onNodeWithTag("normal_setting_button").performClick()
+
+        // Then: onSettingClickにNormalが渡される
+        assertEquals(Level.Normal, clickedLevel)
+    }
+
+    @Test
     fun むずかしいボタンを押すとonClickにDifficultが渡される() = runComposeUiTest {
         // Given: レベル選択画面を表示し、クリック状態を追跡する
         var clickedLevel: Level? = null
@@ -72,6 +114,27 @@ class LevelSelectionScreenTest {
         onNodeWithTag("difficult_button").performClick()
 
         // Then: onClickにDifficultが渡される
+        assertEquals(Level.Difficult, clickedLevel)
+    }
+
+    @Test
+    fun むずかしい設定アイコンを押すとonSettingClickにDifficultが渡される() = runComposeUiTest {
+        // Given: レベル選択画面を表示し、クリック状態を追跡する
+        var clickedLevel: Level? = null
+        setContent {
+            SansuuKidsTheme {
+                LevelSelectionScreen(
+                    onClick = {},
+                    onSettingClick = { clickedLevel = it },
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // When: むずかしい設定アイコンをクリックする
+        onNodeWithTag("difficult_setting_button").performClick()
+
+        // Then: onSettingClickにDifficultが渡される
         assertEquals(Level.Difficult, clickedLevel)
     }
 }

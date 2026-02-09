@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,11 +17,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.ui.component.LargeButton
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.level_difficult
 import sansuukids.composeapp.generated.resources.level_easy
 import sansuukids.composeapp.generated.resources.level_normal
+import sansuukids.composeapp.generated.resources.setting
+import sansuukids.composeapp.generated.resources.settings
 
 @Composable
 internal fun LevelSelectionContent(
@@ -43,7 +46,7 @@ internal fun LevelSelectionContent(
             onClick = onEasyClick,
             onSettingClick = { onSettingClick(Level.Easy) },
             buttonTestTag = "easy_button",
-            settingsTestTag = "easy_settings_button"
+            settingsTestTag = "easy_setting_button"
         )
 
         LevelButtonRow(
@@ -53,7 +56,7 @@ internal fun LevelSelectionContent(
             onClick = onNormalClick,
             onSettingClick = { onSettingClick(Level.Normal) },
             buttonTestTag = "normal_button",
-            settingsTestTag = "normal_settings_button"
+            settingsTestTag = "normal_setting_button"
         )
 
         LevelButtonRow(
@@ -63,7 +66,7 @@ internal fun LevelSelectionContent(
             onClick = onDifficultClick,
             onSettingClick = { onSettingClick(Level.Difficult) },
             buttonTestTag = "difficult_button",
-            settingsTestTag = "difficult_settings_button"
+            settingsTestTag = "difficult_setting_button"
         )
     }
 }
@@ -97,13 +100,13 @@ private fun LevelButtonRow(
 
         IconButton(
             onClick = onSettingClick,
-            modifier = Modifier
-                .size(48.dp)
-                .testTag(settingsTestTag)
+            modifier = Modifier.testTag(settingsTestTag)
         ) {
-            Text(
-                text = "\u2699\uFE0F",
-                style = MaterialTheme.typography.headlineSmall
+            Icon(
+                painter = painterResource(Res.drawable.settings),
+                contentDescription = stringResource(Res.string.setting),
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(48.dp)
             )
         }
     }
