@@ -10,6 +10,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -34,6 +39,14 @@ internal fun DifficultyAdjustmentContent(
     onQuizRangeChanged: (newRange: QuizRange) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var draggingRange by remember { mutableStateOf<QuizRange?>(null) }
+    val displayRange = draggingRange ?: quizRange
+
+    // 外部からの変更（リセット、永続化完了等）時にドラッグ状態をクリア
+    LaunchedEffect(quizRange) {
+        draggingRange = null
+    }
+
     Column(
         modifier = modifier
             .padding(24.dp)
@@ -42,10 +55,13 @@ internal fun DifficultyAdjustmentContent(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         OperationRangeSlider(
-            quizRange = quizRange,
-            medalDisabled = quizRange.min < QuizRange.Default(operationType, level).min ||
-                    quizRange.max < QuizRange.Default(operationType, level).max,
-            onQuizRangeChanged = { newRange -> onQuizRangeChanged(newRange) }
+            quizRange = displayRange,
+            medalDisabled = displayRange.min < QuizRange.Default(operationType, level).min ||
+                    displayRange.max < QuizRange.Default(operationType, level).max,
+            onQuizRangeChanging = { newRange -> draggingRange = newRange },
+            onQuizRangeChangeFinished = {
+                draggingRange?.let { onQuizRangeChanged(it) }
+            }
         )
     }
 }
@@ -54,7 +70,8 @@ internal fun DifficultyAdjustmentContent(
 private fun OperationRangeSlider(
     quizRange: QuizRange,
     medalDisabled: Boolean,
-    onQuizRangeChanged: (newRange: QuizRange) -> Unit
+    onQuizRangeChanging: (newRange: QuizRange) -> Unit,
+    onQuizRangeChangeFinished: () -> Unit
 ) {
     val tag = quizRange.operationType.name.lowercase()
 
@@ -79,7 +96,7 @@ private fun OperationRangeSlider(
             value = quizRange.min.toFloat()..quizRange.max.toFloat(),
             onValueChange = { range ->
                 // スライダーが表示中の値をプログラム的な値に補正して新しい最小値および最大値とする
-                onQuizRangeChanged(
+                onQuizRangeChanging(
                     stepQuizRange(
                         quizRange = quizRange,
                         newMin = range.start,
@@ -87,6 +104,7 @@ private fun OperationRangeSlider(
                     )
                 )
             },
+            onValueChangeFinished = onQuizRangeChangeFinished,
             valueRange = 1f..maximumValue.toFloat(),
             steps = maxOf(0, (maximumValue / minimumValue) - 1),
             modifier = Modifier
