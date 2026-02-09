@@ -1,4 +1,4 @@
-package com.vitantonio.nagauzzi.sansuukids.logic
+package com.vitantonio.nagauzzi.sansuukids.logic.quiz
 
 /**
  * 獲得したスコアを計算するロジック。

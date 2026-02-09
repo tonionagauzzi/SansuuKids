@@ -115,7 +115,7 @@ internal fun navigationEntryProvider(
                                 operationType = key.operationType,
                                 level = level,
                                 quizRange = difficultyRepository
-                                    .getCustomRange(key.operationType, level)
+                                    .getQuizRange(key.operationType, level)
                                     .first()
                             )
                         )
@@ -135,7 +135,7 @@ internal fun navigationEntryProvider(
 
         is DifficultyAdjustmentRoute -> NavEntry(key) {
             val scope = rememberCoroutineScope()
-            val quizRange by difficultyRepository.getCustomRange(key.operationType, key.level)
+            val quizRange by difficultyRepository.getQuizRange(key.operationType, key.level)
                 .collectAsStateWithLifecycle(
                     initialValue = QuizRange.Default(key.operationType, key.level)
                 )
@@ -144,9 +144,9 @@ internal fun navigationEntryProvider(
                 level = key.level,
                 operationType = key.operationType,
                 quizRange = quizRange,
-                onRangeChanged = { operationType, min, max ->
+                onQuizRangeChanged = { newRange ->
                     scope.launch {
-                        difficultyRepository.setCustomRange(operationType, key.level, min, max)
+                        difficultyRepository.set(newRange)
                     }
                 },
                 onReset = { operationType ->

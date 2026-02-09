@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.logic
 
+import com.vitantonio.nagauzzi.sansuukids.logic.quiz.GenerateQuiz
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
@@ -98,7 +99,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 足し算の普通レベルでは11から99の数が生成される() {
+    fun 足し算の普通レベルでは10から99の数が生成される() {
         // Given: 足し算モードと普通レベルを指定する
         val operationType = OperationType.Addition
         val level = Level.Normal
@@ -108,16 +109,16 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(operationType, level, quizRange)
 
-        // Then: 全問の左右オペランドが11〜99である
+        // Then: 全問の左右オペランドが10〜99である
         assertTrue(quiz.questions.all { question ->
             question is Addition &&
-                    question.leftOperand in 11..99 &&
-                    question.rightOperand in 11..99
+                    question.leftOperand in 10..99 &&
+                    question.rightOperand in 10..99
         })
     }
 
     @Test
-    fun 足し算の難しいレベルでは101から9999の数が生成される() {
+    fun 足し算の難しいレベルでは100から10000の数が生成される() {
         // Given: 足し算モードと難しいレベルを指定する
         val operationType = OperationType.Addition
         val level = Level.Difficult
@@ -127,11 +128,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(operationType, level, quizRange)
 
-        // Then: 全問の左右オペランドが101〜9999である
+        // Then: 全問の左右オペランドが100〜10000である
         assertTrue(quiz.questions.all { question ->
             question is Addition &&
-                    question.leftOperand in 101..9999 &&
-                    question.rightOperand in 101..9999
+                    question.leftOperand in 100..10000 &&
+                    question.rightOperand in 100..10000
         })
     }
 
@@ -156,7 +157,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 引き算の普通レベルでは11から99の数が生成される() {
+    fun 引き算の普通レベルでは10から99の数が生成される() {
         // Given: 引き算モードと普通レベルを指定する
         val operationType = OperationType.Subtraction
         val level = Level.Normal
@@ -166,16 +167,16 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(operationType, level, quizRange)
 
-        // Then: 全問の左右オペランドが11〜99である
+        // Then: 全問の左右オペランドが10〜99である
         assertTrue(quiz.questions.all { question ->
             question is Subtraction &&
-                    question.leftOperand in 11..99 &&
-                    question.rightOperand in 11..99
+                    question.leftOperand in 10..99 &&
+                    question.rightOperand in 10..99
         })
     }
 
     @Test
-    fun 引き算の難しいレベルでは101から9999の数が生成される() {
+    fun 引き算の難しいレベルでは100から10000の数が生成される() {
         // Given: 引き算モードと難しいレベルを指定する
         val operationType = OperationType.Subtraction
         val level = Level.Difficult
@@ -185,11 +186,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(operationType, level, quizRange)
 
-        // Then: 全問の左右オペランドが101〜9999である
+        // Then: 全問の左右オペランドが100〜10000である
         assertTrue(quiz.questions.all { question ->
             question is Subtraction &&
-                    question.leftOperand in 101..9999 &&
-                    question.rightOperand in 101..9999
+                    question.leftOperand in 100..10000 &&
+                    question.rightOperand in 100..10000
         })
     }
 
@@ -233,7 +234,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 掛け算の難しいレベルでは11から99の数が生成される() {
+    fun 掛け算の難しいレベルでは10から100の数が生成される() {
         // Given: 掛け算モードと難しいレベルを指定する
         val operationType = OperationType.Multiplication
         val level = Level.Difficult
@@ -243,11 +244,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(operationType, level, quizRange)
 
-        // Then: 全問の左右オペランドが11〜99である
+        // Then: 全問の左右オペランドが10〜100である
         assertTrue(quiz.questions.all { question ->
             question is Multiplication &&
-                    question.leftOperand in 11..99 &&
-                    question.rightOperand in 11..99
+                    question.leftOperand in 10..100 &&
+                    question.rightOperand in 10..100
         })
     }
 
@@ -291,7 +292,7 @@ class GenerateQuizTest {
     }
 
     @Test
-    fun 割り算の難しいレベルでは11から99の数が生成される() {
+    fun 割り算の難しいレベルでは10から100の数が生成される() {
         // Given: 割り算モードと難しいレベルを指定する
         val operationType = OperationType.Division
         val level = Level.Difficult
@@ -301,11 +302,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(operationType, level, quizRange)
 
-        // Then: 全問の除数と商が11〜99である
+        // Then: 全問の除数と商が10〜100である
         assertTrue(quiz.questions.all { question ->
             question is Division &&
-                    question.divisor in 11..99 &&
-                    question.correctAnswer in 11..99
+                    question.divisor in 10..100 &&
+                    question.correctAnswer in 10..100
         })
     }
 

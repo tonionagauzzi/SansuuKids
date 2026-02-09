@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.logic
 
+import com.vitantonio.nagauzzi.sansuukids.logic.quiz.MedalEligibility
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange

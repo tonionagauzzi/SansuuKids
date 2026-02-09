@@ -32,7 +32,7 @@ internal fun DifficultyAdjustmentScreen(
     level: Level,
     operationType: OperationType,
     quizRange: QuizRange,
-    onRangeChanged: (OperationType, Int, Int) -> Unit,
+    onQuizRangeChanged: (newRange: QuizRange) -> Unit,
     onReset: (OperationType) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -66,7 +66,7 @@ internal fun DifficultyAdjustmentScreen(
                 level = level,
                 operationType = operationType,
                 quizRange = quizRange,
-                onRangeChanged = onRangeChanged,
+                onQuizRangeChanged = onQuizRangeChanged,
                 modifier = Modifier
                     .padding(16.dp)
                     .weight(1f)
@@ -84,7 +84,7 @@ private fun DifficultyAdjustmentScreenPreview() {
             level = Level.Normal,
             operationType = OperationType.Addition,
             quizRange = QuizRange.Custom(OperationType.Addition, Level.Difficult, 1, 9999),
-            onRangeChanged = { _, _, _ -> },
+            onQuizRangeChanged = { _ -> },
             onReset = {},
             onBackClick = {},
             modifier = Modifier.background(MaterialTheme.colorScheme.background)

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 internal class FakeDifficultyRepository : DifficultyRepository {
     private val customRanges = MutableStateFlow<List<QuizRange.Custom>>(emptyList())
 
-    override fun getCustomRange(operationType: OperationType, level: Level): Flow<QuizRange> {
+    override fun getQuizRange(operationType: OperationType, level: Level): Flow<QuizRange> {
         return customRanges.map { ranges ->
             ranges.find {
                 it.operationType == operationType && it.level == level
@@ -19,15 +19,12 @@ internal class FakeDifficultyRepository : DifficultyRepository {
         }
     }
 
-    override suspend fun setCustomRange(
-        operationType: OperationType,
-        level: Level,
-        min: Int,
-        max: Int
-    ) {
-        val newRange = QuizRange.Custom(operationType, level, min, max)
+    override suspend fun set(quizRange: QuizRange) {
+        val newRange = QuizRange.Custom(
+            quizRange.operationType, quizRange.level, quizRange.min, quizRange.max
+        )
         customRanges.value = customRanges.value
-            .filter { !(it.operationType == operationType && it.level == level) } + newRange
+            .filter { !(it.operationType == quizRange.operationType && it.level == quizRange.level) } + newRange
     }
 
     override suspend fun resetToDefault(operationType: OperationType, level: Level) {

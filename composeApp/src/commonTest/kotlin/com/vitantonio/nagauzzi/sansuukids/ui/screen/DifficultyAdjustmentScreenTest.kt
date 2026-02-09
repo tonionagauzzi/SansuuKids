@@ -24,7 +24,7 @@ class DifficultyAdjustmentScreenTest {
                     level = Level.Normal,
                     operationType = OperationType.Addition,
                     quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
-                    onRangeChanged = { _, _, _ -> },
+                    onQuizRangeChanged = {},
                     onReset = {},
                     onBackClick = {}
                 )
@@ -47,7 +47,7 @@ class DifficultyAdjustmentScreenTest {
                     level = Level.Normal,
                     operationType = OperationType.Addition,
                     quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
-                    onRangeChanged = { _, _, _ -> },
+                    onQuizRangeChanged = {},
                     onReset = {},
                     onBackClick = { clicked = true }
                 )
@@ -70,7 +70,7 @@ class DifficultyAdjustmentScreenTest {
                     level = Level.Normal,
                     operationType = OperationType.Addition,
                     quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
-                    onRangeChanged = { _, _, _ -> },
+                    onQuizRangeChanged = {},
                     onReset = {},
                     onBackClick = {}
                 )
@@ -92,7 +92,7 @@ class DifficultyAdjustmentScreenTest {
                     level = Level.Normal,
                     operationType = OperationType.Addition,
                     quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
-                    onRangeChanged = { _, _, _ -> },
+                    onQuizRangeChanged = {},
                     onReset = {},
                     onBackClick = {}
                 )
@@ -114,7 +114,7 @@ class DifficultyAdjustmentScreenTest {
                     level = Level.Normal,
                     operationType = OperationType.Addition,
                     quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
-                    onRangeChanged = { _, _, _ -> },
+                    onQuizRangeChanged = {},
                     onReset = {},
                     onBackClick = {}
                 )
@@ -141,7 +141,7 @@ class DifficultyAdjustmentScreenTest {
                         min = 1,
                         max = 99
                     ),
-                    onRangeChanged = { _, _, _ -> },
+                    onQuizRangeChanged = {},
                     onReset = {},
                     onBackClick = {}
                 )
@@ -168,7 +168,7 @@ class DifficultyAdjustmentScreenTest {
                         min = 11,
                         max = 50
                     ),
-                    onRangeChanged = { _, _, _ -> },
+                    onQuizRangeChanged = {},
                     onReset = {},
                     onBackClick = {}
                 )
@@ -195,7 +195,7 @@ class DifficultyAdjustmentScreenTest {
                         min = 1,
                         max = 50
                     ),
-                    onRangeChanged = { _, _, _ -> },
+                    onQuizRangeChanged = {},
                     onReset = {},
                     onBackClick = {}
                 )

@@ -16,17 +16,14 @@ internal interface DifficultyRepository {
      * @param level 難易度レベル
      * @return カスタム出題範囲（カスタム値がない場合はデフォルト範囲）
      */
-    fun getCustomRange(operationType: OperationType, level: Level): Flow<QuizRange>
+    fun getQuizRange(operationType: OperationType, level: Level): Flow<QuizRange>
 
     /**
      * カスタム出題範囲を設定する。
      *
-     * @param operationType 演算タイプ
-     * @param level 難易度レベル
-     * @param min 最小値
-     * @param max 最大値
+     * @param quizRange カスタム出題範囲
      */
-    suspend fun setCustomRange(operationType: OperationType, level: Level, min: Int, max: Int)
+    suspend fun set(quizRange: QuizRange)
 
     /**
      * カスタム出題範囲をデフォルトにリセットする。

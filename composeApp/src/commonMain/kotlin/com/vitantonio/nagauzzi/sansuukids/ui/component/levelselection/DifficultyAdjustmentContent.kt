@@ -14,24 +14,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.vitantonio.nagauzzi.sansuukids.logic.levelselection.stepQuizRange
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
+import com.vitantonio.nagauzzi.sansuukids.model.getMaximumValue
+import com.vitantonio.nagauzzi.sansuukids.model.getMinimumValue
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
-import kotlin.math.roundToInt
 import org.jetbrains.compose.resources.stringResource
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.difficulty_medal_disabled
 import sansuukids.composeapp.generated.resources.difficulty_range_label
-
-private const val SLIDER_MIN_VALUE = 1
 
 @Composable
 internal fun DifficultyAdjustmentContent(
     level: Level,
     operationType: OperationType,
     quizRange: QuizRange,
-    onRangeChanged: (OperationType, Int, Int) -> Unit,
+    onQuizRangeChanged: (newRange: QuizRange) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -42,30 +42,21 @@ internal fun DifficultyAdjustmentContent(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         OperationRangeSlider(
-            operationType = operationType,
-            currentMin = quizRange.min,
-            currentMax = quizRange.max,
-            sliderMax = getSliderMax(operationType, level),
-            step = getSliderStep(operationType, level),
+            quizRange = quizRange,
             medalDisabled = quizRange.min < QuizRange.Default(operationType, level).min ||
                     quizRange.max < QuizRange.Default(operationType, level).max,
-            onRangeChanged = { min, max -> onRangeChanged(operationType, min, max) }
+            onQuizRangeChanged = { newRange -> onQuizRangeChanged(newRange) }
         )
     }
 }
 
 @Composable
 private fun OperationRangeSlider(
-    operationType: OperationType,
-    currentMin: Int,
-    currentMax: Int,
-    sliderMax: Int,
-    step: Int,
+    quizRange: QuizRange,
     medalDisabled: Boolean,
-    onRangeChanged: (Int, Int) -> Unit
+    onQuizRangeChanged: (newRange: QuizRange) -> Unit
 ) {
-    val tag = operationType.name.lowercase()
-    val stepCount = maxOf(0, (sliderMax / step) - 1)
+    val tag = quizRange.operationType.name.lowercase()
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -74,25 +65,30 @@ private fun OperationRangeSlider(
         Text(
             text = stringResource(
                 Res.string.difficulty_range_label,
-                stringResource(operationType.labelRes),
-                currentMin,
-                currentMax
+                stringResource(quizRange.operationType.labelRes),
+                quizRange.min,
+                quizRange.max
             ),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.testTag("difficulty_label_$tag")
         )
 
+        val minimumValue = quizRange.operationType.getMinimumValue(level = quizRange.level)
+        val maximumValue = quizRange.operationType.getMaximumValue(level = quizRange.level)
         RangeSlider(
-            value = currentMin.toFloat()..currentMax.toFloat(),
+            value = quizRange.min.toFloat()..quizRange.max.toFloat(),
             onValueChange = { range ->
-                val newMin = roundToStep(range.start, step, sliderMax)
-                val newMax = roundToStep(range.endInclusive, step, sliderMax)
-                if (newMin < newMax) {
-                    onRangeChanged(newMin, newMax)
-                }
+                // スライダーが表示中の値をプログラム的な値に補正して新しい最小値および最大値とする
+                onQuizRangeChanged(
+                    stepQuizRange(
+                        quizRange = quizRange,
+                        newMin = range.start,
+                        newMax = range.endInclusive
+                    )
+                )
             },
-            valueRange = SLIDER_MIN_VALUE.toFloat()..sliderMax.toFloat(),
-            steps = stepCount,
+            valueRange = 1f..maximumValue.toFloat(),
+            steps = maxOf(0, (maximumValue / minimumValue) - 1),
             modifier = Modifier
                 .fillMaxWidth()
                 .testTag("difficulty_slider_$tag")
@@ -108,61 +104,3 @@ private fun OperationRangeSlider(
         }
     }
 }
-
-internal fun roundToStep(value: Float, step: Int, maxValue: Int): Int {
-    val offset = value - SLIDER_MIN_VALUE
-    val rounded = (offset / step).roundToInt() * step + SLIDER_MIN_VALUE
-    return rounded.coerceIn(SLIDER_MIN_VALUE, maxValue)
-}
-
-/**
- * 演算タイプとレベルに応じたスライダー上限を返す。
- */
-private fun getSliderMax(operationType: OperationType, level: Level): Int =
-    when (operationType) {
-        OperationType.Addition -> when (level) {
-            Level.Easy -> 19
-            Level.Normal -> 199
-            Level.Difficult -> 9999
-        }
-
-        OperationType.Subtraction -> when (level) {
-            Level.Easy -> 19
-            Level.Normal -> 199
-            Level.Difficult -> 9999
-        }
-
-        OperationType.Multiplication, OperationType.Division -> when (level) {
-            Level.Easy -> 19
-            Level.Normal -> 49
-            Level.Difficult -> 199
-        }
-
-        OperationType.All -> 1 // 全ての難易度調整には未対応
-    }
-
-/**
- * 演算タイプとレベルに応じたスライダーのステップを返す。
- */
-private fun getSliderStep(operationType: OperationType, level: Level): Int =
-    when (operationType) {
-        OperationType.Addition -> when (level) {
-            Level.Easy -> 1
-            Level.Normal -> 10
-            Level.Difficult -> 100
-        }
-
-        OperationType.Subtraction -> when (level) {
-            Level.Easy -> 1
-            Level.Normal -> 10
-            Level.Difficult -> 100
-        }
-
-        OperationType.Multiplication, OperationType.Division -> when (level) {
-            Level.Easy -> 1
-            Level.Normal -> 1
-            Level.Difficult -> 10
-        }
-
-        OperationType.All -> 1 // 全ての難易度調整には未対応
-    }

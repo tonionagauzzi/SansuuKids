@@ -1,4 +1,4 @@
-package com.vitantonio.nagauzzi.sansuukids.logic
+package com.vitantonio.nagauzzi.sansuukids.logic.quiz
 
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType

@@ -1,10 +1,10 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.vitantonio.nagauzzi.sansuukids.logic.AwardMedal
-import com.vitantonio.nagauzzi.sansuukids.logic.CalculateScore
-import com.vitantonio.nagauzzi.sansuukids.logic.GenerateQuiz
-import com.vitantonio.nagauzzi.sansuukids.logic.MedalEligibility
+import com.vitantonio.nagauzzi.sansuukids.logic.quiz.AwardMedal
+import com.vitantonio.nagauzzi.sansuukids.logic.quiz.CalculateScore
+import com.vitantonio.nagauzzi.sansuukids.logic.quiz.GenerateQuiz
+import com.vitantonio.nagauzzi.sansuukids.logic.quiz.MedalEligibility
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType

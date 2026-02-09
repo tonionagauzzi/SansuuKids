@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.map
 internal class DifficultyRepositoryImpl(
     private val dataStore: DataStore<Preferences> = DataStoreProvider.dataStore
 ) : DifficultyRepository {
-    override fun getCustomRange(operationType: OperationType, level: Level): Flow<QuizRange> {
+    override fun getQuizRange(operationType: OperationType, level: Level): Flow<QuizRange> {
         return dataStore.data.map { preferences ->
             val defaultRange = QuizRange.Default(operationType, level)
             val min = preferences[minKey(operationType, level)] ?: return@map defaultRange
@@ -25,15 +25,10 @@ internal class DifficultyRepositoryImpl(
         }
     }
 
-    override suspend fun setCustomRange(
-        operationType: OperationType,
-        level: Level,
-        min: Int,
-        max: Int
-    ) {
+    override suspend fun set(quizRange: QuizRange) {
         dataStore.edit { preferences ->
-            preferences[minKey(operationType, level)] = min
-            preferences[maxKey(operationType, level)] = max
+            preferences[minKey(quizRange.operationType, quizRange.level)] = quizRange.min
+            preferences[maxKey(quizRange.operationType, quizRange.level)] = quizRange.max
         }
     }
 
