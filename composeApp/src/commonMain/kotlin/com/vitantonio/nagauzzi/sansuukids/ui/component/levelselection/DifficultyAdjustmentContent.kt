@@ -57,7 +57,11 @@ internal fun DifficultyAdjustmentContent(
                     displayRange.max < defaultRange.max,
             onQuizRangeChanging = { newRange -> draggingRange = newRange },
             onQuizRangeChangeFinished = {
-                draggingRange?.let { onQuizRangeChanged(it) }
+                draggingRange?.let { newRange ->
+                    if (newRange.min != quizRange.min || newRange.max != quizRange.max) {
+                        onQuizRangeChanged(newRange)
+                    }
+                }
             }
         )
     }
