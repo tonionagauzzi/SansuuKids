@@ -18,6 +18,7 @@ import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
+import kotlin.math.roundToInt
 import org.jetbrains.compose.resources.stringResource
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.difficulty_medal_disabled
@@ -63,7 +64,7 @@ private fun OperationRangeSlider(
     onRangeChanged: (Int, Int) -> Unit
 ) {
     val tag = operationType.name.lowercase()
-    val steps = maxOf(0, ((sliderMax - SLIDER_MIN_VALUE) / step) - 1)
+    val stepCount = maxOf(0, (sliderMax / step) - 1)
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -83,14 +84,14 @@ private fun OperationRangeSlider(
         RangeSlider(
             value = currentMin.toFloat()..currentMax.toFloat(),
             onValueChange = { range ->
-                val newMin = roundToStep(range.start, step)
-                val newMax = roundToStep(range.endInclusive, step)
-                if (newMin <= newMax) {
+                val newMin = roundToStep(range.start, step, sliderMax)
+                val newMax = roundToStep(range.endInclusive, step, sliderMax)
+                if (newMin < newMax) {
                     onRangeChanged(newMin, newMax)
                 }
             },
             valueRange = SLIDER_MIN_VALUE.toFloat()..sliderMax.toFloat(),
-            steps = steps,
+            steps = stepCount,
             modifier = Modifier
                 .fillMaxWidth()
                 .testTag("difficulty_slider_$tag")
@@ -107,10 +108,10 @@ private fun OperationRangeSlider(
     }
 }
 
-private fun roundToStep(value: Float, step: Int): Int {
+private fun roundToStep(value: Float, step: Int, maxValue: Int): Int {
     val offset = value - SLIDER_MIN_VALUE
-    val rounded = (offset / step).toInt() * step + SLIDER_MIN_VALUE
-    return rounded.coerceAtLeast(SLIDER_MIN_VALUE)
+    val rounded = (offset / step).roundToInt() * step - SLIDER_MIN_VALUE
+    return rounded.coerceIn(SLIDER_MIN_VALUE, maxValue)
 }
 
 /**
@@ -119,21 +120,21 @@ private fun roundToStep(value: Float, step: Int): Int {
 private fun getSliderMax(operationType: OperationType, level: Level): Int =
     when (operationType) {
         OperationType.Addition -> when (level) {
-            Level.Easy -> 20
-            Level.Normal -> 100
+            Level.Easy -> 19
+            Level.Normal -> 199
             Level.Difficult -> 9999
         }
 
         OperationType.Subtraction -> when (level) {
-            Level.Easy -> 20
-            Level.Normal -> 200
+            Level.Easy -> 19
+            Level.Normal -> 199
             Level.Difficult -> 9999
         }
 
         OperationType.Multiplication, OperationType.Division -> when (level) {
-            Level.Easy -> 20
-            Level.Normal -> 50
-            Level.Difficult -> 200
+            Level.Easy -> 19
+            Level.Normal -> 49
+            Level.Difficult -> 199
         }
 
         OperationType.All -> 1 // 全ての難易度調整には未対応
@@ -146,20 +147,20 @@ private fun getSliderStep(operationType: OperationType, level: Level): Int =
     when (operationType) {
         OperationType.Addition -> when (level) {
             Level.Easy -> 1
-            Level.Normal -> 1
-            Level.Difficult -> 10
+            Level.Normal -> 10
+            Level.Difficult -> 100
         }
 
         OperationType.Subtraction -> when (level) {
             Level.Easy -> 1
-            Level.Normal -> 1
-            Level.Difficult -> 10
+            Level.Normal -> 10
+            Level.Difficult -> 100
         }
 
         OperationType.Multiplication, OperationType.Division -> when (level) {
             Level.Easy -> 1
             Level.Normal -> 1
-            Level.Difficult -> 1
+            Level.Difficult -> 10
         }
 
         OperationType.All -> 1 // 全ての難易度調整には未対応

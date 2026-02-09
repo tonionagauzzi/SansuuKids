@@ -19,6 +19,7 @@ class LevelSelectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 LevelSelectionScreen(
+                    isEnabledSetting = true,
                     onClick = { clickedLevel = it },
                     onSettingClick = {},
                     onBackClick = {}
@@ -40,6 +41,7 @@ class LevelSelectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 LevelSelectionScreen(
+                    isEnabledSetting = true,
                     onClick = {},
                     onSettingClick = { clickedLevel = it },
                     onBackClick = {}
@@ -61,6 +63,7 @@ class LevelSelectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 LevelSelectionScreen(
+                    isEnabledSetting = true,
                     onClick = { clickedLevel = it },
                     onSettingClick = {},
                     onBackClick = {}
@@ -82,6 +85,7 @@ class LevelSelectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 LevelSelectionScreen(
+                    isEnabledSetting = true,
                     onClick = {},
                     onSettingClick = { clickedLevel = it },
                     onBackClick = {}
@@ -103,6 +107,7 @@ class LevelSelectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 LevelSelectionScreen(
+                    isEnabledSetting = true,
                     onClick = { clickedLevel = it },
                     onSettingClick = {},
                     onBackClick = {}
@@ -124,6 +129,7 @@ class LevelSelectionScreenTest {
         setContent {
             SansuuKidsTheme {
                 LevelSelectionScreen(
+                    isEnabledSetting = true,
                     onClick = {},
                     onSettingClick = { clickedLevel = it },
                     onBackClick = {}
