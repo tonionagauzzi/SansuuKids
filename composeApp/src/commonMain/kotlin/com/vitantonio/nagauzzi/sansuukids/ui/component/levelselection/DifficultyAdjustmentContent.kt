@@ -108,9 +108,9 @@ private fun OperationRangeSlider(
     }
 }
 
-private fun roundToStep(value: Float, step: Int, maxValue: Int): Int {
+internal fun roundToStep(value: Float, step: Int, maxValue: Int): Int {
     val offset = value - SLIDER_MIN_VALUE
-    val rounded = (offset / step).roundToInt() * step - SLIDER_MIN_VALUE
+    val rounded = (offset / step).roundToInt() * step + SLIDER_MIN_VALUE
     return rounded.coerceIn(SLIDER_MIN_VALUE, maxValue)
 }
 
