@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.sansuukids.model
 
+import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.StringResource
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.mode_addition
@@ -13,6 +14,7 @@ import sansuukids.composeapp.generated.resources.mode_subtraction
  *
  * 難易度調整で使用する演算の種類。
  */
+@Serializable
 internal enum class OperationType {
     Addition,
     Subtraction,
