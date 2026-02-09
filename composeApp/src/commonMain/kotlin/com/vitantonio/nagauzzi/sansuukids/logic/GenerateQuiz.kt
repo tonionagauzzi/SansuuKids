@@ -77,18 +77,6 @@ private fun generateQuestion(
 }
 
 /**
- * カスタム範囲リストから該当する演算タイプとレベルの範囲を検索する。
- *
- * 見つからない場合はデフォルト範囲を返す。
- */
-private fun List<QuizRange>.findRange(
-    operationType: OperationType,
-    level: Level
-): QuizRange =
-    find { it.operationType == operationType && it.level == level }
-        ?: QuizRange.Default(operationType, level)
-
-/**
  * 足し算の問題を生成する。
  *
  * @param random 乱数生成器
