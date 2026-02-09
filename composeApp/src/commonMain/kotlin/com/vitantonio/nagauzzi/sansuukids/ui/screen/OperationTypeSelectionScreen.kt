@@ -24,7 +24,7 @@ import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.mode_selection_title
 
 @Composable
-fun OperationTypeSelectionScreen(
+internal fun OperationTypeSelectionScreen(
     onAdditionClick: () -> Unit,
     onSubtractionClick: () -> Unit,
     onMultiplicationClick: () -> Unit,
