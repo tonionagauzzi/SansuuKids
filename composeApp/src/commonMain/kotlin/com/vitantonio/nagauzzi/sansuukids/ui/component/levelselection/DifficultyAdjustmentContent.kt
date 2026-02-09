@@ -47,7 +47,8 @@ internal fun DifficultyAdjustmentContent(
             currentMax = quizRange.max,
             sliderMax = getSliderMax(operationType, level),
             step = getSliderStep(operationType, level),
-            medalDisabled = quizRange.min < QuizRange.Default(operationType, level).min,
+            medalDisabled = quizRange.min < QuizRange.Default(operationType, level).min ||
+                    quizRange.max < QuizRange.Default(operationType, level).max,
             onRangeChanged = { min, max -> onRangeChanged(operationType, min, max) }
         )
     }

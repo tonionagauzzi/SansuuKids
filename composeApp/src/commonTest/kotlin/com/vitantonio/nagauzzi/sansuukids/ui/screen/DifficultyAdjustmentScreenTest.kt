@@ -104,4 +104,107 @@ class DifficultyAdjustmentScreenTest {
         // Then: リセットボタンが表示される
         onNodeWithTag("action_button").assertIsDisplayed()
     }
+
+    @Test
+    fun デフォルトの出題範囲ではメダル無効警告が表示されない() = runComposeUiTest {
+        // Given: デフォルトの出題範囲で難易度調整画面を表示する
+        setContent {
+            SansuuKidsTheme {
+                DifficultyAdjustmentScreen(
+                    level = Level.Normal,
+                    operationType = OperationType.Addition,
+                    quizRange = QuizRange.Default(OperationType.Addition, Level.Normal),
+                    onRangeChanged = { _, _, _ -> },
+                    onReset = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // When: 画面が表示される
+
+        // Then: メダル無効警告が表示されない
+        onNodeWithTag("difficulty_warning_addition").assertDoesNotExist()
+    }
+
+    @Test
+    fun 最小値をデフォルトより小さくするとメダル無効警告が表示される() = runComposeUiTest {
+        // Given: 最小値をデフォルト(11)より小さく設定した難易度調整画面を表示する
+        setContent {
+            SansuuKidsTheme {
+                DifficultyAdjustmentScreen(
+                    level = Level.Normal,
+                    operationType = OperationType.Addition,
+                    quizRange = QuizRange.Custom(
+                        operationType = OperationType.Addition,
+                        level = Level.Normal,
+                        min = 1,
+                        max = 99
+                    ),
+                    onRangeChanged = { _, _, _ -> },
+                    onReset = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // When: 画面が表示される
+
+        // Then: メダル無効警告が表示される
+        onNodeWithTag("difficulty_warning_addition").assertIsDisplayed()
+    }
+
+    @Test
+    fun 最大値をデフォルトより小さくするとメダル無効警告が表示される() = runComposeUiTest {
+        // Given: 最大値をデフォルト(99)より小さく設定した難易度調整画面を表示する
+        setContent {
+            SansuuKidsTheme {
+                DifficultyAdjustmentScreen(
+                    level = Level.Normal,
+                    operationType = OperationType.Addition,
+                    quizRange = QuizRange.Custom(
+                        operationType = OperationType.Addition,
+                        level = Level.Normal,
+                        min = 11,
+                        max = 50
+                    ),
+                    onRangeChanged = { _, _, _ -> },
+                    onReset = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // When: 画面が表示される
+
+        // Then: メダル無効警告が表示される
+        onNodeWithTag("difficulty_warning_addition").assertIsDisplayed()
+    }
+
+    @Test
+    fun 最小値と最大値の両方をデフォルトより小さくするとメダル無効警告が表示される() = runComposeUiTest {
+        // Given: 最小値と最大値の両方をデフォルト(min=11, max=99)より小さく設定した難易度調整画面を表示する
+        setContent {
+            SansuuKidsTheme {
+                DifficultyAdjustmentScreen(
+                    level = Level.Normal,
+                    operationType = OperationType.Addition,
+                    quizRange = QuizRange.Custom(
+                        operationType = OperationType.Addition,
+                        level = Level.Normal,
+                        min = 1,
+                        max = 50
+                    ),
+                    onRangeChanged = { _, _, _ -> },
+                    onReset = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // When: 画面が表示される
+
+        // Then: メダル無効警告が表示される
+        onNodeWithTag("difficulty_warning_addition").assertIsDisplayed()
+    }
 }
