@@ -48,3 +48,16 @@ internal sealed interface QuizRange {
         }
     }
 }
+
+/**
+ * メダル獲得が可能かどうかを判定する。
+ * カスタム設定でデフォルトより簡単（minが低い、またはmaxが低い）にした場合、メダルは獲得不可とする。
+ * minやmaxを上げて難しくした場合は、メダル獲得可能。
+ *
+ * @return メダル獲得可能な場合true
+ */
+internal val QuizRange.isMedalEnabled: Boolean
+    get() {
+        val defaultRange = QuizRange.Default(operationType, level)
+        return min >= defaultRange.min && max >= defaultRange.max
+    }

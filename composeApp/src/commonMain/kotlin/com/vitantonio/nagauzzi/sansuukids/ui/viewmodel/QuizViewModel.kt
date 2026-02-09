@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import com.vitantonio.nagauzzi.sansuukids.logic.quiz.AwardMedal
 import com.vitantonio.nagauzzi.sansuukids.logic.quiz.CalculateScore
 import com.vitantonio.nagauzzi.sansuukids.logic.quiz.GenerateQuiz
-import com.vitantonio.nagauzzi.sansuukids.logic.quiz.MedalEligibility
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
 import com.vitantonio.nagauzzi.sansuukids.model.UserAnswer
+import com.vitantonio.nagauzzi.sansuukids.model.isMedalEnabled
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -19,7 +19,6 @@ internal class QuizViewModel(
     private val generateQuiz = GenerateQuiz()
     private val calculateScore = CalculateScore()
     private val awardMedal = AwardMedal()
-    private val medalEligibility = MedalEligibility()
 
     private val operationType get() = quizRange.operationType
     private val level get() = quizRange.level
@@ -41,13 +40,7 @@ internal class QuizViewModel(
         )
 
     val earnedMedal: Medal
-        get() = if (
-            medalEligibility(
-                operationType = operationType,
-                level = level,
-                quizRange = quizRange
-            )
-        ) {
+        get() = if (quizRange.isMedalEnabled) {
             awardMedal(
                 isQuizComplete = currentQuizState.isQuizComplete,
                 correctCount = currentQuizState.correctCount,

@@ -23,6 +23,7 @@ import com.vitantonio.nagauzzi.sansuukids.logic.levelselection.stepQuizRange
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.model.getSliderMaxBound
 import com.vitantonio.nagauzzi.sansuukids.model.getSliderMinBound
+import com.vitantonio.nagauzzi.sansuukids.model.isMedalEnabled
 import com.vitantonio.nagauzzi.sansuukids.model.labelRes
 import org.jetbrains.compose.resources.stringResource
 import sansuukids.composeapp.generated.resources.Res
@@ -53,8 +54,7 @@ internal fun DifficultyAdjustmentContent(
     ) {
         OperationRangeSlider(
             quizRange = displayRange,
-            medalDisabled = displayRange.min < defaultRange.min ||
-                    displayRange.max < defaultRange.max,
+            isMedalEnabled = displayRange.isMedalEnabled,
             onQuizRangeChanging = { newRange -> draggingRange = newRange },
             onQuizRangeChangeFinished = {
                 draggingRange?.let { newRange ->
@@ -70,7 +70,7 @@ internal fun DifficultyAdjustmentContent(
 @Composable
 private fun OperationRangeSlider(
     quizRange: QuizRange,
-    medalDisabled: Boolean,
+    isMedalEnabled: Boolean,
     onQuizRangeChanging: (newRange: QuizRange) -> Unit,
     onQuizRangeChangeFinished: () -> Unit
 ) {
@@ -113,7 +113,7 @@ private fun OperationRangeSlider(
                 .testTag("difficulty_slider_$tag")
         )
 
-        if (medalDisabled) {
+        if (!isMedalEnabled) {
             Text(
                 text = stringResource(Res.string.difficulty_medal_disabled),
                 style = MaterialTheme.typography.headlineSmall,
