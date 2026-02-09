@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
 import com.vitantonio.nagauzzi.sansuukids.ui.component.levelselection.LevelSelectionContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
@@ -24,10 +25,11 @@ import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.level_selection_title
 
 @Composable
-fun LevelSelectionScreen(
+internal fun LevelSelectionScreen(
     onEasyClick: () -> Unit,
     onNormalClick: () -> Unit,
     onDifficultClick: () -> Unit,
+    onSettingsClick: (Level) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -61,8 +63,9 @@ fun LevelSelectionScreen(
                     onEasyClick = onEasyClick,
                     onNormalClick = onNormalClick,
                     onDifficultClick = onDifficultClick,
+                    onSettingsClick = onSettingsClick,
                     modifier = if (isLandscape) {
-                        Modifier.fillMaxWidth(0.3f)
+                        Modifier.fillMaxWidth(0.4f)
                     } else {
                         Modifier.fillMaxWidth()
                     }
@@ -83,6 +86,7 @@ private fun LevelSelectionScreenPreview() {
             onEasyClick = {},
             onNormalClick = {},
             onDifficultClick = {},
+            onSettingsClick = {},
             onBackClick = {},
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )

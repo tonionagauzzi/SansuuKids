@@ -14,6 +14,7 @@ import com.vitantonio.nagauzzi.sansuukids.data.MedalRepositoryProvider
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.fake.FakeDifficultyRepository
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.fake.FakeSettingRepository
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
@@ -29,6 +30,7 @@ import kotlin.test.assertEquals
 class NavigationIntegrationTest {
     private val medalRepository = MedalRepositoryProvider.medalRepository
     private val settingRepository = FakeSettingRepository()
+    private val difficultyRepository = FakeDifficultyRepository()
 
     @Test
     fun ホーム画面が初期画面として表示される() = runComposeUiTest {
@@ -50,7 +52,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -87,7 +90,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -123,7 +127,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -157,7 +162,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -194,7 +200,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -232,7 +239,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -273,7 +281,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -310,7 +319,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -346,7 +356,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -383,7 +394,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -419,7 +431,8 @@ class NavigationIntegrationTest {
                             key = key,
                             navigationState = navigationState,
                             medalRepository = medalRepository,
-                            settingRepository = settingRepository
+                            settingRepository = settingRepository,
+                            difficultyRepository = difficultyRepository
                         )
                     }
                 )
@@ -457,7 +470,8 @@ class NavigationIntegrationTest {
                                 key = key,
                                 navigationState = navigationState,
                                 medalRepository = medalRepository,
-                                settingRepository = settingRepository
+                                settingRepository = settingRepository,
+                                difficultyRepository = difficultyRepository
                             )
                         }
                     )
@@ -513,7 +527,8 @@ class NavigationIntegrationTest {
                                 key = key,
                                 navigationState = navigationState,
                                 medalRepository = medalRepository,
-                                settingRepository = settingRepository
+                                settingRepository = settingRepository,
+                                difficultyRepository = difficultyRepository
                             )
                         }
                     )

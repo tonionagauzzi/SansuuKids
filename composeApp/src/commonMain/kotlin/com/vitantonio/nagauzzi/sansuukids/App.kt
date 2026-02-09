@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.vitantonio.nagauzzi.sansuukids.data.DifficultyRepositoryProvider
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepositoryProvider
 import com.vitantonio.nagauzzi.sansuukids.data.SettingRepositoryProvider
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.fadeTransition
@@ -36,7 +37,8 @@ fun App() {
                     key = key,
                     navigationState = navigationState,
                     medalRepository = MedalRepositoryProvider.medalRepository,
-                    settingRepository = SettingRepositoryProvider.settingRepository
+                    settingRepository = SettingRepositoryProvider.settingRepository,
+                    difficultyRepository = DifficultyRepositoryProvider.difficultyRepository
                 )
             }
         )

@@ -2,14 +2,21 @@ package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
+import com.vitantonio.nagauzzi.sansuukids.data.DifficultyRepository
 import com.vitantonio.nagauzzi.sansuukids.data.MedalRepository
 import com.vitantonio.nagauzzi.sansuukids.data.SettingRepository
+import com.vitantonio.nagauzzi.sansuukids.logic.MedalEligibility
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.operationTypes
+import com.vitantonio.nagauzzi.sansuukids.ui.component.levelselection.DifficultyAdjustmentDialog
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.AnswerCheckRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.LevelSelectionRoute
@@ -34,7 +41,8 @@ internal fun navigationEntryProvider(
     key: SansuuKidsRoute,
     navigationState: NavigationState,
     medalRepository: MedalRepository,
-    settingRepository: SettingRepository
+    settingRepository: SettingRepository,
+    difficultyRepository: DifficultyRepository
 ): NavEntry<SansuuKidsRoute> {
     return when (key) {
         HomeRoute -> NavEntry(key) {
@@ -88,6 +96,31 @@ internal fun navigationEntryProvider(
         }
 
         is LevelSelectionRoute -> NavEntry(key) {
+            val scope = rememberCoroutineScope()
+            var showDifficultyDialog by remember { mutableStateOf<Level?>(null) }
+
+            showDifficultyDialog?.let { level ->
+                val customRanges by difficultyRepository.getCustomRanges(key.mode, level)
+                    .collectAsStateWithLifecycle(emptyList())
+
+                DifficultyAdjustmentDialog(
+                    level = level,
+                    operationTypes = key.mode.operationTypes,
+                    customRanges = customRanges,
+                    onRangeChanged = { operationType, min, max ->
+                        scope.launch {
+                            difficultyRepository.setCustomRange(operationType, level, min, max)
+                        }
+                    },
+                    onReset = { operationType ->
+                        scope.launch {
+                            difficultyRepository.resetToDefault(operationType, level)
+                        }
+                    },
+                    onDismiss = { showDifficultyDialog = null }
+                )
+            }
+
             LevelSelectionScreen(
                 onEasyClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.Easy)) },
                 onNormalClick = { navigationState.navigateTo(QuizRoute(key.mode, Level.Normal)) },
@@ -99,13 +132,25 @@ internal fun navigationEntryProvider(
                         )
                     )
                 },
+                onSettingsClick = { level -> showDifficultyDialog = level },
                 onBackClick = { navigationState.navigateBack() }
             )
         }
 
         is QuizRoute -> NavEntry(key) {
+            val customRanges by difficultyRepository.getCustomRanges(key.mode, key.level)
+                .collectAsStateWithLifecycle(emptyList())
+            val medalEligible = remember(customRanges) {
+                MedalEligibility()(key.mode, key.level, customRanges)
+            }
+
             val viewModel = viewModel {
-                QuizViewModel(mode = key.mode, level = key.level)
+                QuizViewModel(
+                    mode = key.mode,
+                    level = key.level,
+                    customRanges = customRanges,
+                    medalEligible = medalEligible
+                )
             }
             val quizState by viewModel.quizState.collectAsStateWithLifecycle()
 

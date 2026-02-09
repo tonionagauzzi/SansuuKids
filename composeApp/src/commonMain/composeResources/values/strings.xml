@@ -49,4 +49,11 @@
     <string name="medal_collection_not_earned">-</string>
     <string name="medal_detail_title">%1$s - %2$s</string>
     <string name="medal_detail_count">×%1$d</string>
+    <string name="difficulty_adjustment_title">Difficulty Settings</string>
+    <string name="difficulty_range_label">%1$s Range</string>
+    <string name="difficulty_min_value">Min: %1$d</string>
+    <string name="difficulty_max_value">Max: %1$d</string>
+    <string name="difficulty_medal_disabled">Medals disabled (easier than default)</string>
+    <string name="difficulty_reset">Reset</string>
+    <string name="difficulty_close">Close</string>
 </resources>

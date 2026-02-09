@@ -2,10 +2,12 @@ package com.vitantonio.nagauzzi.sansuukids.logic
 
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
+import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Subtraction
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Multiplication
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Division
+import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -74,7 +76,7 @@ class GenerateQuizTest {
 
     // 足し算のレベル別テスト
     @Test
-    fun 足し算の簡単レベルでは1から5の数が生成される() {
+    fun 足し算の簡単レベルでは1から9の数が生成される() {
         // Given: 足し算モードと簡単レベルを指定する
         val mode = Mode.Addition
         val level = Level.Easy
@@ -83,16 +85,16 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の左右オペランドが1〜5である（答えが2桁にならないように）
+        // Then: 全問の左右オペランドが1〜9である
         assertTrue(quiz.questions.all { question ->
             question is Addition &&
-                    question.leftOperand in 1..5 &&
-                    question.rightOperand in 1..5
+                    question.leftOperand in 1..9 &&
+                    question.rightOperand in 1..9
         })
     }
 
     @Test
-    fun 足し算の普通レベルでは11から50の数が生成される() {
+    fun 足し算の普通レベルでは11から99の数が生成される() {
         // Given: 足し算モードと普通レベルを指定する
         val mode = Mode.Addition
         val level = Level.Normal
@@ -101,11 +103,11 @@ class GenerateQuizTest {
         // When: クイズを生成する
         val quiz = generateQuiz(mode, level)
 
-        // Then: 全問の左右オペランドが11〜50である（答えが3桁にならないように）
+        // Then: 全問の左右オペランドが11〜99である
         assertTrue(quiz.questions.all { question ->
             question is Addition &&
-                    question.leftOperand in 11..50 &&
-                    question.rightOperand in 11..50
+                    question.leftOperand in 11..99 &&
+                    question.rightOperand in 11..99
         })
     }
 
@@ -378,6 +380,81 @@ class GenerateQuizTest {
         // Then: 全問の正解が左を右で割った値である
         assertTrue(quiz.questions.all { question ->
             question is Division && question.dividend / question.divisor == question.correctAnswer
+        })
+    }
+
+    // カスタム範囲のテスト
+    @Test
+    fun カスタム範囲で足し算の出題範囲を変更できる() {
+        // Given: 足し算の簡単レベルでカスタム範囲を1〜10に設定する
+        val customRanges = listOf(
+            QuizRange.Custom(OperationType.Addition, Level.Easy, min = 1, max = 10)
+        )
+        val generateQuiz = GenerateQuiz()
+
+        // When: カスタム範囲でクイズを生成する
+        val quiz = generateQuiz(Mode.Addition, Level.Easy, customRanges)
+
+        // Then: 全問の左右オペランドが1〜10である
+        assertTrue(quiz.questions.all { question ->
+            question is Addition &&
+                    question.leftOperand in 1..10 &&
+                    question.rightOperand in 1..10
+        })
+    }
+
+    @Test
+    fun カスタム範囲で引き算の出題範囲を変更できる() {
+        // Given: 引き算の普通レベルでカスタム範囲を5〜50に設定する
+        val customRanges = listOf(
+            QuizRange.Custom(OperationType.Subtraction, Level.Normal, min = 5, max = 50)
+        )
+        val generateQuiz = GenerateQuiz()
+
+        // When: カスタム範囲でクイズを生成する
+        val quiz = generateQuiz(Mode.Subtraction, Level.Normal, customRanges)
+
+        // Then: 全問の左右オペランドが5〜50である
+        assertTrue(quiz.questions.all { question ->
+            question is Subtraction &&
+                    question.leftOperand in 5..50 &&
+                    question.rightOperand in 5..50
+        })
+    }
+
+    @Test
+    fun カスタム範囲で掛け算の出題範囲を変更できる() {
+        // Given: 掛け算の簡単レベルでカスタム範囲を1〜5に設定する
+        val customRanges = listOf(
+            QuizRange.Custom(OperationType.Multiplication, Level.Easy, min = 1, max = 5)
+        )
+        val generateQuiz = GenerateQuiz()
+
+        // When: カスタム範囲でクイズを生成する
+        val quiz = generateQuiz(Mode.Multiplication, Level.Easy, customRanges)
+
+        // Then: 全問の左右オペランドが1〜5である
+        assertTrue(quiz.questions.all { question ->
+            question is Multiplication &&
+                    question.leftOperand in 1..5 &&
+                    question.rightOperand in 1..5
+        })
+    }
+
+    @Test
+    fun カスタム範囲が空の場合はデフォルト範囲で出題される() {
+        // Given: カスタム範囲が空
+        val customRanges = emptyList<QuizRange>()
+        val generateQuiz = GenerateQuiz()
+
+        // When: クイズを生成する
+        val quiz = generateQuiz(Mode.Addition, Level.Easy, customRanges)
+
+        // Then: デフォルト範囲（1〜9）で生成される
+        assertTrue(quiz.questions.all { question ->
+            question is Addition &&
+                    question.leftOperand in 1..9 &&
+                    question.rightOperand in 1..9
         })
     }
 

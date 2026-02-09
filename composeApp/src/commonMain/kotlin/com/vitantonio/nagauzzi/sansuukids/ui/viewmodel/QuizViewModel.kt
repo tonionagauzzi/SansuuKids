@@ -8,6 +8,7 @@ import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.model.Mode
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math
+import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
 import com.vitantonio.nagauzzi.sansuukids.model.UserAnswer
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,13 +16,15 @@ import kotlinx.coroutines.flow.StateFlow
 
 internal class QuizViewModel(
     mode: Mode,
-    level: Level
+    level: Level,
+    customRanges: List<QuizRange> = emptyList(),
+    private val medalEligible: Boolean = true
 ) : ViewModel() {
     private val generateQuiz = GenerateQuiz()
     private val calculateScore = CalculateScore()
     private val awardMedal = AwardMedal()
 
-    private val mutableQuizState = MutableStateFlow(QuizState(generateQuiz(mode, level)))
+    private val mutableQuizState = MutableStateFlow(QuizState(generateQuiz(mode, level, customRanges)))
     val quizState: StateFlow<QuizState> = mutableQuizState
 
     private var currentQuizState: QuizState
@@ -37,11 +40,14 @@ internal class QuizViewModel(
         )
 
     val earnedMedal: Medal
-        get() = awardMedal(
-            isQuizComplete = currentQuizState.isQuizComplete,
-            correctCount = currentQuizState.correctCount,
-            totalCount = currentQuizState.quiz.questions.size
-        )
+        get() {
+            if (!medalEligible) return Medal.Nothing
+            return awardMedal(
+                isQuizComplete = currentQuizState.isQuizComplete,
+                correctCount = currentQuizState.correctCount,
+                totalCount = currentQuizState.quiz.questions.size
+            )
+        }
 
     fun appendDigit(digit: Int) {
         require(digit in 0..9) { "Digit must be between 0 and 9" }
