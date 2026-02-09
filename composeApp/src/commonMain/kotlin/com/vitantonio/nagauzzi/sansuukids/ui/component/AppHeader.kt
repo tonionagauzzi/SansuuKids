@@ -61,7 +61,7 @@ internal fun AppHeader(
                     )
                 }
 
-                if (!actionString.isEmpty()) {
+                if (actionString.isNotEmpty()) {
                     Button(
                         onClick = onActionClick,
                         colors = ButtonDefaults.buttonColors(
