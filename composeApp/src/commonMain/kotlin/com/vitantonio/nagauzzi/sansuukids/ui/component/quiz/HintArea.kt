@@ -99,7 +99,10 @@ internal fun HintArea(
         }
 
         // 引き算の場合、1つのエリアに表示し、引く数ぶんの絵文字に強調色をつける
-        is Subtraction -> Box(modifier = modifier) {
+        is Subtraction -> Box(
+            modifier = modifier,
+            contentAlignment = Alignment.Center
+        ) {
             FlowRow(
                 modifier = Modifier
                     .background(
@@ -160,7 +163,10 @@ private fun GridHint(
     modifier: Modifier = Modifier,
     rowHighlight: (Int) -> Boolean = { false },
 ) {
-    Box(modifier = modifier) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
         Column(
             modifier = Modifier
                 .background(
