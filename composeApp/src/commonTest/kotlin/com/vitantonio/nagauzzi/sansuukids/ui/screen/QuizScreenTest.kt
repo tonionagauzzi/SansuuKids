@@ -12,6 +12,9 @@ import androidx.compose.ui.test.runComposeUiTest
 import com.vitantonio.nagauzzi.sansuukids.model.Level
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Division
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Multiplication
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Subtraction
 import com.vitantonio.nagauzzi.sansuukids.model.Quiz
 import com.vitantonio.nagauzzi.sansuukids.model.QuizState
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
@@ -306,6 +309,111 @@ class QuizScreenTest {
 
         // Then: ヒントエリアが表示される
         onNodeWithTag("hint_area").assertIsDisplayed()
+    }
+
+    @Test
+    fun たしざんでヒント有効の場合ヒントエリアが表示される() = runComposeUiTest {
+        // Given: かんたんモードでたしざんのヒント有効のクイズ画面を表示
+        val questions = (1..quizSize).map { index ->
+            Addition(leftOperand = index + 2, rightOperand = 1)
+        }
+        val quiz = Quiz(questions, OperationType.Addition, Level.Easy)
+        val quizState = QuizState(quiz)
+        setContent {
+            SansuuKidsTheme {
+                QuizScreen(
+                    quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = true,
+                    onDigitClick = {},
+                    onDeleteClick = {},
+                    onSubmitClick = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // Then: 足し算ヒントエリアが表示される
+        onNodeWithTag("hint_addition_left").assertIsDisplayed()
+        onNodeWithTag("hint_addition_right").assertIsDisplayed()
+    }
+
+    @Test
+    fun ひきざんでヒント有効の場合ヒントエリアが表示される() = runComposeUiTest {
+        // Given: かんたんモードでひきざんのヒント有効のクイズ画面を表示
+        val questions = (1..quizSize).map { index ->
+            Subtraction(leftOperand = index + 2, rightOperand = 1)
+        }
+        val quiz = Quiz(questions, OperationType.Subtraction, Level.Easy)
+        val quizState = QuizState(quiz)
+        setContent {
+            SansuuKidsTheme {
+                QuizScreen(
+                    quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = true,
+                    onDigitClick = {},
+                    onDeleteClick = {},
+                    onSubmitClick = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // Then: 引き算ヒントエリアが表示される
+        onNodeWithTag("hint_subtraction").assertIsDisplayed()
+    }
+
+    @Test
+    fun かけざんでヒント有効の場合ヒントエリアが表示される() = runComposeUiTest {
+        // Given: かんたんモードでかけざんのヒント有効のクイズ画面を表示
+        val questions = (1..quizSize).map { index ->
+            Multiplication(leftOperand = index + 1, rightOperand = 2)
+        }
+        val quiz = Quiz(questions, OperationType.Multiplication, Level.Easy)
+        val quizState = QuizState(quiz)
+        setContent {
+            SansuuKidsTheme {
+                QuizScreen(
+                    quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = true,
+                    onDigitClick = {},
+                    onDeleteClick = {},
+                    onSubmitClick = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // Then: 掛け算ヒントエリアが表示される
+        onNodeWithTag("hint_multiplication").assertIsDisplayed()
+    }
+
+    @Test
+    fun わりざんでヒント有効の場合ヒントエリアが表示される() = runComposeUiTest {
+        // Given: かんたんモードでわりざんのヒント有効のクイズ画面を表示
+        val questions = (1..quizSize).map {
+            Division(dividend = 6, divisor = 2)
+        }
+        val quiz = Quiz(questions, OperationType.Division, Level.Easy)
+        val quizState = QuizState(quiz)
+        setContent {
+            SansuuKidsTheme {
+                QuizScreen(
+                    quizState = quizState,
+                    perQuestionAnswerCheckEnabled = false,
+                    hintDisplayEnabled = true,
+                    onDigitClick = {},
+                    onDeleteClick = {},
+                    onSubmitClick = {},
+                    onBackClick = {}
+                )
+            }
+        }
+
+        // Then: 割り算ヒントエリアが表示される
+        onNodeWithTag("hint_division").assertIsDisplayed()
     }
 
     @Test

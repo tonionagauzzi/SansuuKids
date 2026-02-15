@@ -2,6 +2,9 @@ package com.vitantonio.nagauzzi.sansuukids.ui.component.quiz
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -24,9 +27,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Division
+import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Multiplication
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Subtraction
 
-private val fruitEmojis = listOf("🍎", "🍊", "🍋", "🍇", "🍓", "🍑", "🍒", "🍌", "🥝", "🍐")
+private val fruitEmojis = listOf("🍎", "🍊", "🍋", "🍇", "🍓", "🍑", "🍈", "🍌", "🥝", "🍐")
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -122,7 +127,70 @@ internal fun HintArea(
             }
         }
 
-        // 他のタイプはヒントなし
-        else -> {}
+        // 掛け算の場合、左オペランド列×右オペランド行のグリッドで表示
+        is Multiplication -> Column(
+            modifier = Modifier
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceContainerLowest,
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState())
+                .testTag("hint_multiplication")
+        ) {
+            repeat(question.rightOperand) {
+                Row {
+                    repeat(question.leftOperand) {
+                        Text(
+                            text = fruitEmoji,
+                            style = if (question.leftOperand <= 10) {
+                                MaterialTheme.typography.bodyLarge
+                            } else if (question.leftOperand <= 15) {
+                                MaterialTheme.typography.bodyMedium
+                            } else {
+                                MaterialTheme.typography.bodySmall
+                            },
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
+        }
+
+        // 割り算の場合、答え列×除数行のグリッドで表示し、2行目以降を強調色にする
+        is Division -> Column(
+            modifier = Modifier
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceContainerLowest,
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState())
+                .testTag("hint_division")
+        ) {
+            repeat(question.divisor) { rowIndex ->
+                Row(
+                    modifier = if (rowIndex > 0) {
+                        Modifier.background(color = MaterialTheme.colorScheme.errorContainer)
+                    } else {
+                        Modifier
+                    }
+                ) {
+                    repeat(question.correctAnswer) {
+                        Text(
+                            text = fruitEmoji,
+                            style = if (question.correctAnswer <= 10) {
+                                MaterialTheme.typography.bodyLarge
+                            } else if (question.correctAnswer <= 15) {
+                                MaterialTheme.typography.bodyMedium
+                            } else {
+                                MaterialTheme.typography.bodySmall
+                            },
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
+        }
     }
 }
