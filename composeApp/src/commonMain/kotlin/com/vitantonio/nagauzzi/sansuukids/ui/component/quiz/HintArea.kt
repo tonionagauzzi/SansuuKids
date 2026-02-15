@@ -99,32 +99,34 @@ internal fun HintArea(
         }
 
         // 引き算の場合、1つのエリアに表示し、引く数ぶんの絵文字に強調色をつける
-        is Subtraction -> FlowRow(
-            modifier = Modifier
-                .background(
-                    color = MaterialTheme.colorScheme.surfaceContainerLowest,
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .padding(16.dp)
-                .testTag("hint_subtraction"),
-            horizontalArrangement = Arrangement.Start,
-            verticalArrangement = Arrangement.Top
-        ) {
-            repeat(question.correctAnswer) {
-                Text(
-                    text = fruitEmoji,
-                    style = MaterialTheme.typography.headlineMedium,
-                    textAlign = TextAlign.Center
-                )
-            }
-            repeat(question.rightOperand) {
-                Text(
-                    text = fruitEmoji,
-                    modifier = Modifier
-                        .background(color = MaterialTheme.colorScheme.errorContainer),
-                    style = MaterialTheme.typography.headlineMedium,
-                    textAlign = TextAlign.Center
-                )
+        is Subtraction -> Box(modifier = modifier) {
+            FlowRow(
+                modifier = Modifier
+                    .background(
+                        color = MaterialTheme.colorScheme.surfaceContainerLowest,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(16.dp)
+                    .testTag("hint_subtraction"),
+                horizontalArrangement = Arrangement.Start,
+                verticalArrangement = Arrangement.Top
+            ) {
+                repeat(question.correctAnswer) {
+                    Text(
+                        text = fruitEmoji,
+                        style = MaterialTheme.typography.headlineMedium,
+                        textAlign = TextAlign.Center
+                    )
+                }
+                repeat(question.rightOperand) {
+                    Text(
+                        text = fruitEmoji,
+                        modifier = Modifier
+                            .background(color = MaterialTheme.colorScheme.errorContainer),
+                        style = MaterialTheme.typography.headlineMedium,
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
         }
 
