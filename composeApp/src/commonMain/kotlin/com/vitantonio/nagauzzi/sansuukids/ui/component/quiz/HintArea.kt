@@ -154,8 +154,8 @@ private fun GridHint(
     columns: Int,
     rows: Int,
     fruitEmoji: String,
-    modifier: Modifier = Modifier,
     testTag: String,
+    modifier: Modifier = Modifier,
     rowHighlight: (Int) -> Boolean = { false },
 ) {
     Box(modifier = modifier) {
