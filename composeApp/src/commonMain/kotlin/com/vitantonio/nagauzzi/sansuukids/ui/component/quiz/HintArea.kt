@@ -143,12 +143,10 @@ internal fun HintArea(
                     repeat(question.leftOperand) {
                         Text(
                             text = fruitEmoji,
-                            style = if (question.leftOperand <= 10) {
-                                MaterialTheme.typography.bodyLarge
-                            } else if (question.leftOperand <= 15) {
-                                MaterialTheme.typography.bodyMedium
-                            } else {
-                                MaterialTheme.typography.bodySmall
+                            style = when {
+                                question.leftOperand <= 10 -> MaterialTheme.typography.bodyLarge
+                                question.leftOperand <= 15 -> MaterialTheme.typography.bodyMedium
+                                else -> MaterialTheme.typography.bodySmall
                             },
                             textAlign = TextAlign.Center
                         )
@@ -179,12 +177,10 @@ internal fun HintArea(
                     repeat(question.correctAnswer) {
                         Text(
                             text = fruitEmoji,
-                            style = if (question.correctAnswer <= 10) {
-                                MaterialTheme.typography.bodyLarge
-                            } else if (question.correctAnswer <= 15) {
-                                MaterialTheme.typography.bodyMedium
-                            } else {
-                                MaterialTheme.typography.bodySmall
+                            style = when {
+                                question.correctAnswer <= 10 -> MaterialTheme.typography.bodyLarge
+                                question.correctAnswer <= 15 -> MaterialTheme.typography.bodyMedium
+                                else -> MaterialTheme.typography.bodySmall
                             },
                             textAlign = TextAlign.Center
                         )
