@@ -233,7 +233,7 @@ internal fun navigationEntryProvider(
                     navigationState.navigateBack()
                 },
                 onFinishClick = {
-                    navigationState.popToHome()
+                    navigationState.navigateBack()
                 }
             )
         }
