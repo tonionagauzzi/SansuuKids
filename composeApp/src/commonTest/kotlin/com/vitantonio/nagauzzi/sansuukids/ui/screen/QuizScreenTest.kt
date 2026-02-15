@@ -10,7 +10,6 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import com.vitantonio.nagauzzi.sansuukids.model.Level
-import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Addition
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Division
 import com.vitantonio.nagauzzi.sansuukids.model.Question.Math.Multiplication
@@ -34,7 +33,7 @@ class QuizScreenTest {
                 rightOperand = 1
             )
         }
-        return Quiz(questions, OperationType.Addition, level)
+        return Quiz(questions, level)
     }
 
     @Test
@@ -317,7 +316,7 @@ class QuizScreenTest {
         val questions = (1..quizSize).map { index ->
             Addition(leftOperand = index + 2, rightOperand = 1)
         }
-        val quiz = Quiz(questions, OperationType.Addition, Level.Easy)
+        val quiz = Quiz(questions, Level.Easy)
         val quizState = QuizState(quiz)
         setContent {
             SansuuKidsTheme {
@@ -344,7 +343,7 @@ class QuizScreenTest {
         val questions = (1..quizSize).map { index ->
             Subtraction(leftOperand = index + 2, rightOperand = 1)
         }
-        val quiz = Quiz(questions, OperationType.Subtraction, Level.Easy)
+        val quiz = Quiz(questions, Level.Easy)
         val quizState = QuizState(quiz)
         setContent {
             SansuuKidsTheme {
@@ -370,7 +369,7 @@ class QuizScreenTest {
         val questions = (1..quizSize).map { index ->
             Multiplication(leftOperand = index + 1, rightOperand = 2)
         }
-        val quiz = Quiz(questions, OperationType.Multiplication, Level.Easy)
+        val quiz = Quiz(questions, Level.Easy)
         val quizState = QuizState(quiz)
         setContent {
             SansuuKidsTheme {
@@ -396,7 +395,7 @@ class QuizScreenTest {
         val questions = (1..quizSize).map {
             Division(dividend = 6, divisor = 2)
         }
-        val quiz = Quiz(questions, OperationType.Division, Level.Easy)
+        val quiz = Quiz(questions, Level.Easy)
         val quizState = QuizState(quiz)
         setContent {
             SansuuKidsTheme {

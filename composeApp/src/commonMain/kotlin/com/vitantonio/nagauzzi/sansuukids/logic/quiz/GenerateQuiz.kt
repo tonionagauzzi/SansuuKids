@@ -39,7 +39,7 @@ internal class GenerateQuiz(private val totalQuestions: Int = QUIZ_SIZE) {
         while (questions.size < totalQuestions) {
             questions.add(generateQuestion(operationType, level, random, quizRange))
         }
-        return Quiz(questions.toList(), operationType, level)
+        return Quiz(questions.toList(), level)
     }
 }
 
