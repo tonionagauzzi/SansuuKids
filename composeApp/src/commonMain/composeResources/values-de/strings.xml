@@ -35,7 +35,7 @@
     <string name="result_medal_emoji_bronze">🥉</string>
     <string name="result_medal_emoji_star">⭐️</string>
     <string name="result_retry">Nochmal</string>
-    <string name="result_home">Start</string>
+    <string name="result_home">Startseite</string>
     <string name="result_check_answers">Antworten prüfen</string>
     <string name="answer_check_correct">Richtig!</string>
     <string name="answer_check_incorrect">Leider falsch</string>
