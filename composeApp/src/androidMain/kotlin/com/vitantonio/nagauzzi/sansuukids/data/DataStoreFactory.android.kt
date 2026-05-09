@@ -2,14 +2,18 @@ package com.vitantonio.nagauzzi.sansuukids.data
 
 import android.content.Context
 
-private var appContext: Context? = null
+object DataStoreInitializer {
+    private var appContext: Context? = null
 
-fun initializeDataStore(context: Context) {
-    appContext = context.applicationContext
+    fun initialize(context: Context) {
+        appContext = context.applicationContext
+    }
+
+    internal val context: Context
+        get() = requireNotNull(appContext) {
+            "DataStore not initialized. Call DataStoreInitializer.initialize(context) first."
+        }
 }
 
-internal actual fun getDataStorePath(): String {
-    return requireNotNull(appContext) {
-        "DataStore not initialized. Call initializeDataStore(context) first."
-    }.filesDir.resolve(DATA_STORE_FILE_NAME).absolutePath
-}
+internal actual fun getDataStorePath(): String =
+    DataStoreInitializer.context.filesDir.resolve(DATA_STORE_FILE_NAME).absolutePath
