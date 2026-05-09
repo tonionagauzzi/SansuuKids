@@ -22,7 +22,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
 import com.vitantonio.nagauzzi.sansuukids.ui.component.levelselection.DifficultyAdjustmentContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.difficulty_adjustment_title
 import sansuukids.composeapp.generated.resources.difficulty_reset

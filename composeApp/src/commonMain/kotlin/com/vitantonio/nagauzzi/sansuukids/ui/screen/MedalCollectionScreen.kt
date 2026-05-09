@@ -38,7 +38,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.component.GridCell
 import com.vitantonio.nagauzzi.sansuukids.ui.component.medal.MedalDetailDialog
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.medal_collection_title
 

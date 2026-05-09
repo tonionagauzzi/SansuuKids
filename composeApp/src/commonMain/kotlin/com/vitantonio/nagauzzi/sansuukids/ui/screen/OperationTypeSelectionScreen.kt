@@ -19,7 +19,7 @@ import com.vitantonio.nagauzzi.sansuukids.ui.component.AppHeader
 import com.vitantonio.nagauzzi.sansuukids.ui.component.operationtypeselection.OperationTypeSelectionContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import sansuukids.composeapp.generated.resources.Res
 import sansuukids.composeapp.generated.resources.mode_selection_title
 
