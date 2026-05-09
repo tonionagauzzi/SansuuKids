@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.ui.component.result.ResultContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun ResultScreen(
