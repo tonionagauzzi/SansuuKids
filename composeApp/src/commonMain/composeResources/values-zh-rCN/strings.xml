@@ -46,7 +46,7 @@
     <string name="answer_check_finish">完成</string>
     <string name="medal_collection_title">奖牌图鉴</string>
     <string name="medal_collection_back">返回</string>
-    <string name="medal_collection_not_earned">—</string>
+    <string name="medal_collection_not_earned">-</string>
     <string name="medal_detail_title">%1$s - %2$s</string>
     <string name="medal_detail_count">×%1$d</string>
     <string name="difficulty_adjustment_title">设置（%1$s）</string>
