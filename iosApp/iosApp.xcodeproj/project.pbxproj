@@ -112,6 +112,10 @@
 				en,
 				Base,
 				ja,
+				de,
+				fr,
+				es,
+				"zh-Hans",
 			);
 			mainGroup = 627237730B189C205655A3D5;
 			minimizedProjectReferenceProxies = 1;
