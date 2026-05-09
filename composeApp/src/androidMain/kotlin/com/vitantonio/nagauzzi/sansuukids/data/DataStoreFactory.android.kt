@@ -4,7 +4,7 @@ import android.content.Context
 
 private var appContext: Context? = null
 
-internal fun initializeDataStore(context: Context) {
+fun initializeDataStore(context: Context) {
     appContext = context.applicationContext
 }
 
