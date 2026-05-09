@@ -19,8 +19,8 @@ android {
         applicationId = "com.vitantonio.nagauzzi.sansuukids"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 7
-        versionName = "0.3.1"
+        versionCode = 8
+        versionName = "0.3.2"
     }
     packaging {
         resources {
