@@ -30,14 +30,10 @@ internal data class QuizState(
      * 問題が存在しない場合は完了扱いとして1.0を返す。
      */
     val progress: Float
-        get() {
-            val totalQuestionsCount = quiz.questions.size
-            return if (totalQuestionsCount == 0) {
-                1.0f
-            } else {
-                currentQuestionIndex / totalQuestionsCount.toFloat()
-            }
-        }
+        get() = quizProgress(
+            completedCount = currentQuestionIndex,
+            totalCount = quiz.questions.size
+        )
 
     /**
      * 回答に桁を追加できるかどうか。
@@ -77,3 +73,10 @@ internal data class QuizState(
     val correctCount: Int
         get() = userAnswers.count { it.isCorrect }
 }
+
+/**
+ * 進捗率（0.0〜1.0）。完了した問題数を総問題数で割った値。
+ * 問題が存在しない場合は完了扱いとして1.0を返す。
+ */
+internal fun quizProgress(completedCount: Int, totalCount: Int): Float =
+    if (totalCount == 0) 1.0f else completedCount / totalCount.toFloat()
