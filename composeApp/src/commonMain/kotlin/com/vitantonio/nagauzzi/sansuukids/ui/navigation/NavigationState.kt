@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ResultRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import kotlinx.serialization.json.Json
 
@@ -20,6 +21,11 @@ internal class NavigationState(
     }
 
     fun navigateBack(): SansuuKidsRoute? {
+        // 完了済みのクイズ画面に戻るとメダル加算と結果画面への遷移が再実行されるため、
+        // 結果画面では戻る操作を無効にする
+        if (backStack.lastOrNull() is ResultRoute) {
+            return null
+        }
         return backStack.removeLastOrNull()
     }
 
