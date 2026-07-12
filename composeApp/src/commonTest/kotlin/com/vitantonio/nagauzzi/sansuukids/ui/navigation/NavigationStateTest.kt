@@ -3,11 +3,13 @@ package com.vitantonio.nagauzzi.sansuukids.ui.navigation
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.SaverScope
 import com.vitantonio.nagauzzi.sansuukids.model.Level
+import com.vitantonio.nagauzzi.sansuukids.model.Medal
 import com.vitantonio.nagauzzi.sansuukids.model.OperationType
 import com.vitantonio.nagauzzi.sansuukids.model.QuizRange
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.HomeRoute as TestRouteA
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.OperationTypeSelectionRoute as TestRouteB
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.QuizRoute
+import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.ResultRoute
 import com.vitantonio.nagauzzi.sansuukids.ui.navigation.key.SansuuKidsRoute
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -70,6 +72,29 @@ class NavigationStateTest {
 
         // Then: nullが返される
         assertNull(removed)
+    }
+
+    @Test
+    fun navigateBackで結果画面が最前面の場合は何も削除しない() {
+        // Given: 最前面が結果画面のNavigationStateを初期化する
+        val resultRoute = ResultRoute(
+            operationType = OperationType.Addition,
+            level = Level.Easy,
+            score = 100,
+            medal = Medal.Gold,
+            questions = emptyList(),
+            userAnswers = emptyList()
+        )
+        val backStack = mutableStateListOf(TestRouteA, TestRouteB, resultRoute)
+        val navigationState = NavigationState(backStack)
+
+        // When: navigateBackで戻るナビゲーションを実行する
+        val removed = navigationState.navigateBack()
+
+        // Then: 何も削除されず、nullが返される
+        assertNull(removed)
+        assertEquals(3, navigationState.entries.size)
+        assertEquals(resultRoute, navigationState.entries[2])
     }
 
     @Test
