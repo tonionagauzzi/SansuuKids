@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.vitantonio.nagauzzi.sansuukids.model.QuizProgress
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import sansuukids.composeapp.generated.resources.Res
@@ -30,9 +31,7 @@ import sansuukids.composeapp.generated.resources.quiz_progress
 
 @Composable
 internal fun ProgressHeader(
-    currentQuestionIndex: Int,
-    totalQuestionsSize: Int,
-    progress: Float,
+    progress: QuizProgress,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -60,8 +59,6 @@ internal fun ProgressHeader(
         }
 
         ProgressBar(
-            currentQuestionIndex = currentQuestionIndex,
-            totalQuestionsSize = totalQuestionsSize,
             progress = progress,
             modifier = Modifier.width(150.dp).padding(end = 16.dp)
         )
@@ -70,9 +67,7 @@ internal fun ProgressHeader(
 
 @Composable
 private fun ProgressBar(
-    currentQuestionIndex: Int,
-    totalQuestionsSize: Int,
-    progress: Float,
+    progress: QuizProgress,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -81,14 +76,15 @@ private fun ProgressBar(
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = stringResource(Res.string.quiz_progress, currentQuestionIndex, totalQuestionsSize),
+            // 表示は1から始まる
+            text = stringResource(Res.string.quiz_progress, progress.completedCount + 1, progress.totalCount),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.testTag("progress_text")
         )
         LinearProgressIndicator(
-            progress = { progress },
+            progress = { progress.rate },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(8.dp)

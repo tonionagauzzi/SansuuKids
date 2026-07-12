@@ -261,13 +261,30 @@ class QuizViewModelTest {
         // Then: 全ての回答が削除される
         assertEquals(0, viewModel.quizState.value.userAnswers.size)
 
-        // When: 再度回答する
+        // When: 復元された入力を消して再度回答する
+        viewModel.deleteLastDigit()
         viewModel.appendDigit(3)
         viewModel.submitAnswer()
 
         // Then: 新しい回答が記録される
         assertEquals(1, viewModel.quizState.value.userAnswers.size)
         assertEquals(3, viewModel.quizState.value.userAnswers[0].answer)
+    }
+
+    @Test
+    fun cancelLastAnswerで取り消した回答が入力欄に復元される() {
+        // Given: 1問目に7と回答し、2問目で9を入力中のViewModel
+        val viewModel = createViewModel(OperationType.Addition, Level.Easy)
+        viewModel.appendDigit(7)
+        viewModel.submitAnswer()
+        viewModel.appendDigit(9)
+
+        // When: 直前の回答を取り消す
+        viewModel.cancelLastAnswer()
+
+        // Then: 1問目に戻り、2問目で入力中だった数字ではなく取り消した回答が入力欄に復元される
+        assertEquals(0, viewModel.quizState.value.currentQuestionIndex)
+        assertEquals(7, viewModel.quizState.value.currentInput)
     }
 
     @Test

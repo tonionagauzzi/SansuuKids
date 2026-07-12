@@ -87,6 +87,7 @@ internal class QuizViewModel(
         val userAnswers = currentQuizState.userAnswers
         if (userAnswers.isNotEmpty()) {
             currentQuizState = currentQuizState.copy(
+                currentInput = userAnswers.last().answer,
                 userAnswers = userAnswers.dropLast(1)
             )
         }

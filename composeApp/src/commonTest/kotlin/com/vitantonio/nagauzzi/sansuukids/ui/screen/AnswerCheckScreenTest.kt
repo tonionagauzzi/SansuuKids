@@ -1,7 +1,9 @@
 package com.vitantonio.nagauzzi.sansuukids.ui.screen
 
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertRangeInfoEquals
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
@@ -184,6 +186,39 @@ class AnswerCheckScreenTest {
         // Then: 1問目が表示され、もどるボタンが表示される
         onNodeWithTag("question_text").assertTextContains("1 + 2 = 3", substring = true)
         onNodeWithTag("back_button").assertIsDisplayed()
+    }
+
+    @Test
+    fun 進捗バーは見終えた問題数に応じて満ちる() = runComposeUiTest {
+        // Given: 2問の答え合わせ画面（1問目を表示）
+        val questions = listOf(
+            Question.Math.Addition(1, 2),
+            Question.Math.Addition(3, 4)
+        )
+        val userAnswers = listOf(
+            UserAnswer(0, 3, true),
+            UserAnswer(1, 7, true)
+        )
+
+        setContent {
+            SansuuKidsTheme {
+                AnswerCheckScreen(
+                    questions = questions,
+                    userAnswers = userAnswers,
+                    onBackClick = {},
+                    onFinishClick = {}
+                )
+            }
+        }
+
+        // Then: 1問目では見終えた問題が0問なのでバーは0%
+        onNodeWithTag("progress_bar").assertRangeInfoEquals(ProgressBarRangeInfo(0f, 0f..1f))
+
+        // When: 次ボタンで2問目に移動する
+        onNodeWithTag("next_button").performClick()
+
+        // Then: 見終えた問題が1問（全2問）なのでバーは50%
+        onNodeWithTag("progress_bar").assertRangeInfoEquals(ProgressBarRangeInfo(0.5f, 0f..1f))
     }
 
     @Test

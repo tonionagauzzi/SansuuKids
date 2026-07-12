@@ -44,8 +44,6 @@ internal fun QuizScreen(
             verticalArrangement = Arrangement.Top
         ) {
             ProgressHeader(
-                currentQuestionIndex = quizState.currentQuestionIndex + 1,
-                totalQuestionsSize = quizState.quiz.questions.size,
                 progress = quizState.progress,
                 onBackClick = onBackClick
             )

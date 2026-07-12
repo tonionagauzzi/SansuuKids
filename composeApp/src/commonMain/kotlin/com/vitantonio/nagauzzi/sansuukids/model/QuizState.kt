@@ -26,18 +26,12 @@ internal data class QuizState(
         get() = quiz.questions.getOrElse(currentQuestionIndex) { Question.None }
 
     /**
-     * クイズの進捗率（0.0〜1.0）。
-     * 問題が存在しない場合は完了扱いとして1.0を返す。
+     * クイズの進捗。
      */
-    val progress: Float
-        get() {
-            val totalQuestionsCount = quiz.questions.size
-            return if (totalQuestionsCount == 0) {
-                1.0f
-            } else {
-                currentQuestionIndex / totalQuestionsCount.toFloat()
-            }
-        }
+    val progress = QuizProgress(
+        completedCount = userAnswers.size,
+        totalCount = quiz.questions.size
+    )
 
     /**
      * 回答に桁を追加できるかどうか。
