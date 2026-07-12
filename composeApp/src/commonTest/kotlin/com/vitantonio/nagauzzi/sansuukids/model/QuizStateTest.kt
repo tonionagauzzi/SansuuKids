@@ -101,15 +101,15 @@ class QuizStateTest {
     }
 
     @Test
-    fun progressは現在の回答済み問題数に応じた値を返す() {
+    fun progressは現在の回答済み問題数に応じた進捗を返す() {
         // Given: テスト用クイズ
         val quiz = createTestQuiz()
 
         // When: 0問回答済み
         val state1 = QuizState(quiz, userAnswers = emptyList())
 
-        // Then: 進捗は0.0（0/10）
-        assertEquals(0.0f, state1.progress)
+        // Then: 進捗は0問完了（0/10）
+        assertEquals(QuizProgress(completedCount = 0, totalCount = 10), state1.progress)
 
         // When: 1問回答済み
         val state2 = QuizState(
@@ -118,33 +118,8 @@ class QuizStateTest {
             )
         )
 
-        // Then: 進捗は0.1（1/10）
-        assertEquals(0.1f, state2.progress)
-    }
-
-    @Test
-    fun quizProgressは完了した問題数に応じた進捗率を返す() {
-        // Given: 全10問中3問完了した状態
-        val completedCount = 3
-        val totalCount = 10
-
-        // When: 進捗率を計算する
-        val progress = quizProgress(completedCount, totalCount)
-
-        // Then: 進捗は0.3（3/10）
-        assertEquals(0.3f, progress)
-    }
-
-    @Test
-    fun quizProgressは問題が存在しない場合は完了扱いとして1を返す() {
-        // Given: 問題が存在しない状態
-        val totalCount = 0
-
-        // When: 進捗率を計算する
-        val progress = quizProgress(completedCount = 0, totalCount = totalCount)
-
-        // Then: 完了扱いとして進捗は1.0
-        assertEquals(1.0f, progress)
+        // Then: 進捗は1問完了（1/10）
+        assertEquals(QuizProgress(completedCount = 1, totalCount = 10), state2.progress)
     }
 
     @Test

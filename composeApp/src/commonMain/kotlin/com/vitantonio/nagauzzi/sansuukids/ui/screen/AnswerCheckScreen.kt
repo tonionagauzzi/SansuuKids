@@ -15,8 +15,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.vitantonio.nagauzzi.sansuukids.model.Question
+import com.vitantonio.nagauzzi.sansuukids.model.QuizProgress
 import com.vitantonio.nagauzzi.sansuukids.model.UserAnswer
-import com.vitantonio.nagauzzi.sansuukids.model.quizProgress
 import com.vitantonio.nagauzzi.sansuukids.ui.component.ProgressHeader
 import com.vitantonio.nagauzzi.sansuukids.ui.component.answercheck.AnswerCheckContent
 import com.vitantonio.nagauzzi.sansuukids.ui.theme.SansuuKidsTheme
@@ -51,9 +51,7 @@ internal fun AnswerCheckScreen(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             ProgressHeader(
-                currentQuestionIndex = currentIndex + 1, // 表示は1から始まる
-                totalQuestionsSize = questions.size,
-                progress = quizProgress(completedCount = currentIndex, totalCount = questions.size),
+                progress = QuizProgress(completedCount = currentIndex, totalCount = questions.size),
                 onBackClick = onBackClick
             )
 
