@@ -28,11 +28,10 @@ internal data class QuizState(
     /**
      * クイズの進捗。
      */
-    val progress: QuizProgress
-        get() = QuizProgress(
-            completedCount = userAnswers.size,
-            totalCount = quiz.questions.size
-        )
+    val progress = QuizProgress(
+        completedCount = userAnswers.size,
+        totalCount = quiz.questions.size
+    )
 
     /**
      * 回答に桁を追加できるかどうか。
