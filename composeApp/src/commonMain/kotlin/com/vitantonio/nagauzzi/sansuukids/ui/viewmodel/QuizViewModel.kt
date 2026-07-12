@@ -87,7 +87,6 @@ internal class QuizViewModel(
         val userAnswers = currentQuizState.userAnswers
         if (userAnswers.isNotEmpty()) {
             currentQuizState = currentQuizState.copy(
-                // 取り消した回答を入力欄に復元し、修正して再決定できるようにする
                 currentInput = userAnswers.last().answer,
                 userAnswers = userAnswers.dropLast(1)
             )

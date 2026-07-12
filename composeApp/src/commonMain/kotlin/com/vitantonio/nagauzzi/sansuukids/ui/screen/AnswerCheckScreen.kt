@@ -52,7 +52,6 @@ internal fun AnswerCheckScreen(
             ProgressHeader(
                 currentQuestionIndex = currentIndex + 1, // 表示は1から始まる
                 totalQuestionsSize = questions.size,
-                // バーは見終えた問題数に応じて満ちる（クイズ画面の回答済みベースと統一）
                 progress = currentIndex / questions.size.toFloat(),
                 onBackClick = onBackClick
             )
